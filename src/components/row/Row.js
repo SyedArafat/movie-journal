@@ -1,6 +1,17 @@
  import { useState, useEffect } from 'react'; 
  import axios from '../../axios';
  import "./Row.css";
+ import CardWrapper from "../Movies/CardWrapper";
+import CardImage from "..//Movies/CardImage";
+import CardTitle from "../Movies/CardTitle";
+import CardDescription from "../Movies/CardDescription";
+import CardFeatureWrapper from "../Movies/CardFeatureWrapper";
+import CardFeatureClose from "../Movies/CardFeatureClose";
+import PlayerVideo from "../Movies/PlayerVideo";
+ import PlayButton from "../Header/PlayButton";
+ import PlayerOverlay from "../Movies/PlayerOverlay";
+
+
  import React from 'react';
 
  const base_url = "https://image.tmdb.org/t/p/original/";
@@ -8,6 +19,10 @@
  function Row({title, fetchUrl, isLargeRow }) {
      const [movies, setMovies] = useState([]);
      const [trailerUrl, setTrailerUrl] = useState("");
+    const [showCardFeature, setShowCardFeature] = useState(false);
+     const [activeItem, setActiveItem] = useState(false);
+     const [showPlayer, setShowPlayer] = useState(false);
+
     
      useEffect(() => {
         async function fetchData() {
@@ -28,17 +43,9 @@
      };
 
      const handleClick = (movie) => {
-         // if(trailerUrl) {
-         //     setTrailerUrl('');
-         // } else {
-         //     movieTrailer(movie?.name || "")
-         //     .then(url => {
-         //         console.log(url);
-         //         const urlParams = new URLSearchParams(new URL(url).search);
-         //         setTrailerUrl(urlParams.get('v'));
-         //     })
-         //     .catch((error) => console.log(error));
-         // }
+         setShowCardFeature(true);
+         setActiveItem(movie);
+         console.log(activeItem);
      }
     
      return (
@@ -56,7 +63,45 @@
                     />
                  ))}
              </div>
-             {/*{trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}*/}
+            {/* (showCardFeature) ? {*/}
+            {/*    <CardFeatureWrapper*/}
+            {/*    style={{*/}
+            {/*      backgroundImage: `url($${base_url}${ isLargeRow ? activeItem.poster_path : activeItem.backdrop_path})`,*/}
+            {/*    }}*/}
+            {/*  >*/}
+            {/*    <CardTitle>{activeItem.name}</CardTitle>*/}
+            {/*    <CardDescription>{activeItem.description}</CardDescription>*/}
+            {/*    <CardFeatureClose onClick={() => setShowCardFeature(false)} />*/}
+            {/*    <PlayButton onClick={() => setShowPlayer(true)}>*/}
+            {/*      Play*/}
+            {/*    </PlayButton>*/}
+            {/*    {showPlayer ? (*/}
+            {/*      <PlayerOverlay onClick={() => setShowPlayer(false)}>*/}
+            {/*        <PlayerVideo src="../videos/video.mp4" type="video/mp4" />*/}
+            {/*      </PlayerOverlay>*/}
+            {/*    ) : null}*/}
+            {/*  </CardFeatureWrapper>*/}
+            {/*} : null*/}
+             {showCardFeature ? (
+                 <CardFeatureWrapper
+                     style={{
+                       backgroundImage: `url(${base_url}${ isLargeRow ? activeItem.poster_path : activeItem.backdrop_path})`,
+
+                     }}
+                 >
+                     <CardTitle>{activeItem.name}</CardTitle>
+                     <CardDescription>{activeItem.description}</CardDescription>
+                     <CardFeatureClose onClick={() => setShowCardFeature(false)} />
+                     <PlayButton onClick={() => setShowPlayer(true)}>
+                         Play
+                     </PlayButton>
+                     {showPlayer ? (
+                         <PlayerOverlay onClick={() => setShowPlayer(false)}>
+                             <PlayerVideo src="../videos/video.mp4" type="video/mp4" />
+                         </PlayerOverlay>
+                     ) : null}
+                 </CardFeatureWrapper>
+             ) : null}
         </div>
     )
  }
