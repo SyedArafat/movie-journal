@@ -3,7 +3,7 @@ import "./HeaderStyles.css";
 
 function PlayButton({ children, ...restProps }) {
     return (
-        <button className="play-button" type="button" {...restProps}>
+        <button className="banner-button" type="button" {...restProps}>
             {children}
         </button>
     );

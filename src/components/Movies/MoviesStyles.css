@@ -52,13 +52,14 @@
 }
 
 .card-feature-wrapper {
+  padding: 20px;
   background-size: contain;
   position: relative;
   height: 360px;
   background-position-x: right;
   background-repeat: no-repeat;
-  background-color: black;
-  padding-top: 30px;
+  background-color: #1f232a;
+  /*padding-top: 30px;*/
 }
 
 .card-title {
@@ -70,10 +71,19 @@
 }
 
 .card-description {
-  color: white;
+  /*color: white;*/
+  /*max-width: 500px;*/
+  /*font-size: 18px;*/
+  /*font-weight: 500;*/
+  width: 45rem;
+  line-height: 1.8;
+  padding-top: 1rem;
+  font-size: 0.9rem;
   max-width: 500px;
-  font-size: 18px;
+  /*height: 80px;*/
   font-weight: 500;
+  margin-bottom: 30px;
+
 }
 
 .card-feature-close {

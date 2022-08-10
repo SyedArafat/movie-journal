@@ -1,7 +1,7 @@
  import { useState, useEffect } from 'react'; 
  import axios from '../../axios';
  import "./Row.css";
- import CardWrapper from "../Movies/CardWrapper";
+import CardWrapper from "../Movies/CardWrapper";
 import CardImage from "..//Movies/CardImage";
 import CardTitle from "../Movies/CardTitle";
 import CardDescription from "../Movies/CardDescription";
@@ -10,6 +10,8 @@ import CardFeatureClose from "../Movies/CardFeatureClose";
 import PlayerVideo from "../Movies/PlayerVideo";
  import PlayButton from "../Header/PlayButton";
  import PlayerOverlay from "../Movies/PlayerOverlay";
+ import AllCardsWrapper from "../Movies/AllCardsWrapper";
+
 
 
  import React from 'react';
@@ -51,7 +53,7 @@ import PlayerVideo from "../Movies/PlayerVideo";
      return (
          <div className="row">  
              <h2>{title}</h2>
-
+             <AllCardsWrapper>
              <div className = "row-posters">
                  {movies.map(movie => (
                     <img
@@ -63,6 +65,7 @@ import PlayerVideo from "../Movies/PlayerVideo";
                     />
                  ))}
              </div>
+             </AllCardsWrapper>
             {/* (showCardFeature) ? {*/}
             {/*    <CardFeatureWrapper*/}
             {/*    style={{*/}
@@ -85,12 +88,12 @@ import PlayerVideo from "../Movies/PlayerVideo";
              {showCardFeature ? (
                  <CardFeatureWrapper
                      style={{
-                       backgroundImage: `url(${base_url}${ isLargeRow ? activeItem.poster_path : activeItem.backdrop_path})`,
+                       backgroundImage: `url(${base_url}${ activeItem.backdrop_path })`,
 
                      }}
                  >
-                     <CardTitle>{activeItem.name}</CardTitle>
-                     <CardDescription>{activeItem.description}</CardDescription>
+                     <CardTitle>{activeItem.name ? activeItem.name : activeItem.title}</CardTitle>
+                     <CardDescription>{activeItem.overview}</CardDescription>
                      <CardFeatureClose onClick={() => setShowCardFeature(false)} />
                      <PlayButton onClick={() => setShowPlayer(true)}>
                          Play
