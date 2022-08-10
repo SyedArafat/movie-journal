@@ -11,7 +11,8 @@ import PlayerVideo from "../Movies/PlayerVideo";
 import PlayButton from "../Header/PlayButton";
 import PlayerOverlay from "../Movies/PlayerOverlay";
 import AllCardsWrapper from "../Movies/AllCardsWrapper";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faPlayCircle} from '@fortawesome/free-solid-svg-icons';
 
 import React from 'react';
 
@@ -76,6 +77,7 @@ function Row({title, fetchUrl, isLargeRow}) {
                     <CardDescription>{activeItem.overview}</CardDescription>
                     <CardFeatureClose onClick={() => setShowCardFeature(false)}/>
                     <PlayButton onClick={() => setShowPlayer(true)}>
+                        <FontAwesomeIcon icon={faPlayCircle} /> {"\u00a0\u00a0"}
                         Play
                     </PlayButton>
                     {showPlayer ? (
