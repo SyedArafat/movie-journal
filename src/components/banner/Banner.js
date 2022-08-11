@@ -10,6 +10,7 @@ function Banner(props = null) {
     const [movie, setMovie] = useState([]);
 
     useEffect(() => {
+        console.log("AD1");
         async function fetchData() {
             if(Object.keys(props).length === 0) {
                 const request = await axios.get(requests.fetchTrending);
@@ -24,7 +25,7 @@ function Banner(props = null) {
         }
 
         fetchData();
-    }, []);
+    }, [props]);
 
     return (
         <header className="banner"

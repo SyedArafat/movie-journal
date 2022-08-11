@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPlayCircle} from '@fortawesome/free-solid-svg-icons';
 
 import React from 'react';
+import Banner from "../banner/Banner";
 
 const base_url = "https://image.tmdb.org/t/p/original/";
 
@@ -66,27 +67,8 @@ function Row({title, fetchUrl, isLargeRow}) {
                     ))}
                 </div>
             </AllCardsWrapper>
-            {showCardFeature ? (
-                <CardFeatureWrapper
-                    style={{
-                        backgroundImage: `url(${base_url}${activeItem.backdrop_path})`,
+            {showCardFeature ? <Banner props = {activeItem} /> : null}
 
-                    }}
-                >
-                    <CardTitle>{activeItem.name ? activeItem.name : activeItem.title}</CardTitle>
-                    <CardDescription>{activeItem.overview}</CardDescription>
-                    <CardFeatureClose onClick={() => setShowCardFeature(false)}/>
-                    <PlayButton onClick={() => setShowPlayer(true)}>
-                        <FontAwesomeIcon icon={faPlayCircle} /> {"\u00a0\u00a0"}
-                        Play
-                    </PlayButton>
-                    {showPlayer ? (
-                        <PlayerOverlay onClick={() => setShowPlayer(false)}>
-                            <PlayerVideo src="../videos/video.mp4" type="video/mp4"/>
-                        </PlayerOverlay>
-                    ) : null}
-                </CardFeatureWrapper>
-            ) : null}
         </div>
     )
 }
