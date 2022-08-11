@@ -5,15 +5,20 @@
 }
 
 .banner-contents {
-  margin-left: 30px;
-  padding-top: 140px;
-  height: 310px;
+  /*margin-left: 30px;*/
+  /*padding-top: 140px;*/
+  /*height: 310px;*/
+  background: linear-gradient(90deg, #1f1e1e 33%, transparent);
+  width: 70%;
+  padding-top: 9rem;
+  height: 100%;
+  padding-left: 5rem;
 }
 
 .banner-title {
   font-size: 3rem;
   font-weight: 800;
-  padding-bottom: 0.3rem;
+  padding-bottom: 1rem;
 }
 
 .banner-description {
@@ -21,8 +26,8 @@
   line-height: 1.8;
   padding-top: 1rem;
   font-size: 0.9rem;
-  max-width: 360px;
-  height: 80px;
+  max-width: 425px;
+  /* height: 80px; */
   font-weight: 500;
 }
 
@@ -54,4 +59,57 @@
     rgba(37, 37, 37, 0.61),
     #111
   );
+}
+
+.title-info-metadata-wrapper {
+  margin-top: 16px;
+}
+
+.title-info-metadata-item {
+  color: #a3a3a3;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.title-info-metadata-wrapper .info-spacer {
+  color: #a3a3a3;
+  margin: 0 4px;
+}
+
+.title-info-metadata-item {
+  color: #a3a3a3;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.maturity-rating .maturity-number {
+  border: 1px solid #a1a1a1;
+  padding: 0 5px;
+}
+
+.maturity-rating {
+  display: inline-block;
+}
+
+.title-data-info-item-label {
+  color: #a3a3a3;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  margin-right: 5px;
+}
+
+.title-data-info-item-list {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.title-info-talent {
+  padding-top: 10px;
 }

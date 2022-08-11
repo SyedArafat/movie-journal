@@ -1,26 +1,19 @@
 import './App.css';
-import Row from './components/row/Row';
-import requests from './requests';
-import Banner from './components/banner/Banner';
-import Nav from './components/navbar/Nav';
-import React from 'react';
-import Footer from './compounds/FooterCompound';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import HomePage from "./pages/HomePage";
+import SigninPage from "./pages/SigninPage";
+import SignupPage from "./pages/SignupPage";
 
 function App() {
   return (
-      <div className="App">
-        <Nav />
-        <Banner />
-        <Row isLargeRow={true} title = "NETFLIX ORIGINALS" fetchUrl = {requests.fetchNetflixOriginals} />
-        <Row title = "Trending Now" fetchUrl = {requests.fetchTrending} />
-        <Row title = "Top Rated" fetchUrl = {requests.fetchTopRated} />
-        <Footer />
-        {/* <Row title = "Action Movies" fetchUrl = {requests.fetchActionMovies} /> */}
-        {/* <Row title = "Comedy Movies" fetchUrl = {requests.fetchComedyMovies} /> */}
-        {/* <Row title = "Romance Movies" fetchUrl = {requests.fetchRomanceMovies} /> */}
-        {/* <Row title = "Documentaries" fetchUrl = {requests.fetchDocumentaries} /> */}
-        {/* <Row title = "Horror Movies" fetchUrl = {requests.fetchHorrorMovies} /> */}
-      </div>
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<HomePage />} />
+          <Route exact path="/signin" element={<SigninPage />} />
+          <Route exact path="/signup" element={<SignupPage />} />
+        </Routes>
+      </Router>
   );
 }
 

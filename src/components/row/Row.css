@@ -35,3 +35,11 @@
   transform: scale(1.09);
   opacity: 1;
 }
+
+.movie-content {
+  background: linear-gradient(90deg, #000 50%, transparent);
+  width: 70%;
+  padding-top: 3rem;
+  height: 100%;
+  padding-left: 5rem;
+}
