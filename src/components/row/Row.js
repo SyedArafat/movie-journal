@@ -1,30 +1,22 @@
 import {useState, useEffect} from 'react';
 import axios from '../../axios';
 import "./Row.css";
-import CardWrapper from "../Movies/CardWrapper";
-import CardImage from "..//Movies/CardImage";
-import CardTitle from "../Movies/CardTitle";
-import CardDescription from "../Movies/CardDescription";
-import CardFeatureWrapper from "../Movies/CardFeatureWrapper";
-import CardFeatureClose from "../Movies/CardFeatureClose";
-import PlayerVideo from "../Movies/PlayerVideo";
-import PlayButton from "../Header/PlayButton";
-import PlayerOverlay from "../Movies/PlayerOverlay";
 import AllCardsWrapper from "../Movies/AllCardsWrapper";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faPlayCircle} from '@fortawesome/free-solid-svg-icons';
-
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
 import React from 'react';
-import Banner from "../banner/Banner";
+import MovieModal from "./MovieModal";
+import CardFeatureClose from "../Movies/CardFeatureClose";
 
 const base_url = "https://image.tmdb.org/t/p/original/";
 
 function Row({title, fetchUrl, isLargeRow}) {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const [movies, setMovies] = useState([]);
-    const [trailerUrl, setTrailerUrl] = useState("");
     const [showCardFeature, setShowCardFeature] = useState(false);
     const [activeItem, setActiveItem] = useState(false);
-    const [showPlayer, setShowPlayer] = useState(false);
 
 
     useEffect(() => {
@@ -38,17 +30,20 @@ function Row({title, fetchUrl, isLargeRow}) {
         fetchData();
     }, [fetchUrl]);
 
-    const opts = {
-        height: "390",
-        width: "100%",
-        playerVars: {
-            autoplay: 1,
-        },
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: "80%",
+        bgcolor: 'black',
+        border: '2px solid #000',
     };
 
     const handleClick = (movie) => {
         setShowCardFeature(true);
         setActiveItem(movie);
+        handleOpen();
     }
 
     return (
@@ -67,7 +62,18 @@ function Row({title, fetchUrl, isLargeRow}) {
                     ))}
                 </div>
             </AllCardsWrapper>
-            {showCardFeature ? <Banner props = {activeItem} /> : null}
+            {showCardFeature ?
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box id="modal-modal-description" sx={style}>
+                        <MovieModal props={activeItem}/>
+                        <CardFeatureClose onClick={() => setShowCardFeature(false)} />*/}
+                    </Box>
+                </Modal> : null}
 
         </div>
     )

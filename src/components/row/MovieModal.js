@@ -1,24 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import axios from '../../axios';
-import requests from '../../requests';
-import './Banner.css';
+import '../banner/Banner.css';
 import {faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
-function Banner(props = null) {
+function MovieModal(props = null) {
     const [movie, setMovie] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
-            if (Object.keys(props).length === 0) {
-                const request = await axios.get(requests.fetchTrending);
-                setMovie(request.data.results[
-                    Math.floor(Math.random() * request.data.results.length - 1)
-                    ]);
-            } else {
-                setMovie(props.props)
-            }
+            setMovie(props.props)
         }
 
         fetchData();
@@ -32,16 +23,11 @@ function Banner(props = null) {
                     backgroundPosition: "center center"
                 }}
         >
-            <div className="banner-contents">
-                <h1 className="banner-title">
+            <div className="model-banner-contents">
+                <div className="banner-title">
                     {movie?.title || movie?.name || movie?.original_name}
-                </h1>
-                <div className="banner-buttons">
-                    <button className="banner-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
-                        Play
-                    </button>
-                    <button className="banner-button"><FontAwesomeIcon icon={faPlus}/> Wish List</button>
                 </div>
+
                 <div className="title-info-metadata-wrapper" data-uia="title-info-metadata-wrapper"><span
                     className="title-info-metadata-item item-year" data-uia="item-year">2021</span><span
                     role="presentation" className="info-spacer"> | </span><span
@@ -55,9 +41,16 @@ function Banner(props = null) {
                     data-uia="item-genre">Hindi-Language Movies</a>
                 </div>
 
-                <h1 className="banner-description">
+                <div className="banner-description">
                     {movie?.overview}
-                </h1>
+                </div>
+
+                <div className="modal-banner-buttons">
+                    <button className="banner-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
+                        Play
+                    </button>
+                    <button className="banner-button"><FontAwesomeIcon icon={faPlus}/> Wish List</button>
+                </div>
 
 
                 <div className="title-info-talent">
@@ -73,4 +66,4 @@ function Banner(props = null) {
     )
 }
 
-export default Banner;
+export default MovieModal;

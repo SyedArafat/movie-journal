@@ -5,14 +5,19 @@
 }
 
 .banner-contents {
-  /*margin-left: 30px;*/
-  /*padding-top: 140px;*/
-  /*height: 310px;*/
   background: linear-gradient(90deg, #1f1e1e 33%, transparent);
   width: 70%;
   padding-top: 9rem;
   height: 100%;
   padding-left: 5rem;
+}
+
+.model-banner-contents {
+  background: linear-gradient(90deg, #1f1e1e 33%, transparent);
+  width: 70%;
+  padding-top: 3rem;
+  padding-left: 5rem;
+  height: 32.5rem;
 }
 
 .banner-title {
@@ -38,12 +43,13 @@
   border: none;
   font-weight: 700;
   border-radius: 0.2vw;
-  padding-right: 2rem;
-  padding-left: 2rem;
   margin-right: 1rem;
-  padding-top: 0.5rem;
   background-color: rgba(51, 51, 51, 0.5);
-  padding-bottom: 0.5rem;
+  padding: 0.5rem 2rem;
+}
+
+.modal-banner-buttons {
+  padding: 20px;
 }
 
 .banner-button:hover {
@@ -52,7 +58,8 @@
   transition: all 0.2s;
 }
 .banner-fadeBottom {
-  height: 7.4rem;
+  display: none;
+  /*height: 7.4rem;*/
   background-image: linear-gradient(
     180deg,
     transparent,
