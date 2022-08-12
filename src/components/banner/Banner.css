@@ -5,6 +5,13 @@
   margin-bottom: 20px;
 }
 
+.modal-banner {
+  color: white;
+  object-fit: cover;
+  height: 568px;
+
+}
+
 .banner-contents {
   background: linear-gradient(90deg, #1f1e1e 33%, transparent);
   width: 70%;
