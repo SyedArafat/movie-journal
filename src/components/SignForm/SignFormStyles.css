@@ -13,6 +13,14 @@
   margin-bottom: 100px;
 }
 
+.sign-form-wrapper p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
 @media (max-width: 550px) {
   .sign-form-wrapper {
     padding: 40px 20px 40px;

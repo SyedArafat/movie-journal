@@ -1,10 +1,5 @@
 /* ############### Header Section ############### */
 
-* {
-    box-sizing: border-box;
-    text-decoration: none;
-}
-
 .header-wrapper-home {
     background-position: top left;
     background-size: cover;
