@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import '../banner/Banner.css';
-import {faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
+import {faEye, faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Rating} from "react-simple-star-rating";
 
 
 function MovieModal(props = null) {
     const [movie, setMovie] = useState([]);
+
 
     useEffect(() => {
         async function fetchData() {
@@ -14,6 +16,14 @@ function MovieModal(props = null) {
 
         fetchData();
     }, [props]);
+
+    const [rating, setRating] = useState(0) // initial rating value
+
+    // Catch Rating value
+    const handleRating = (rate) => {
+        setRating(rate)
+        // other logic
+    }
 
     return (
         <header className="modal-banner"
@@ -44,12 +54,17 @@ function MovieModal(props = null) {
                 <div className="banner-description">
                     {movie?.overview}
                 </div>
-
+                <div className={"modal-rating"}>
+                    <Rating  onClick={handleRating} iconsCount={5} allowHalfIcon={true} size={34} transition={true} showTooltip={true}  ratingValue={rating} />
+                </div>
                 <div className="modal-banner-buttons">
                     <button className="banner-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
-                        Play
+                        Watched
                     </button>
-                    <button className="banner-button"><FontAwesomeIcon icon={faPlus}/> Wish List</button>
+                    <button className="banner-button"><FontAwesomeIcon icon={faEye}/> {"\u00a0\u00a0"}
+                        Details
+                    </button>
+                    <button className="banner-button"><FontAwesomeIcon icon={faPlus}/> Watch List</button>
                 </div>
 
 
