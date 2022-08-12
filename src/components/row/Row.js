@@ -37,7 +37,6 @@ function Row({title, fetchUrl, isLargeRow}) {
         transform: 'translate(-50%, -50%)',
         width: "80%",
         bgcolor: 'black',
-        border: '2px solid #000',
     };
 
     const handleClick = (movie) => {
@@ -71,7 +70,7 @@ function Row({title, fetchUrl, isLargeRow}) {
                 >
                     <Box id="modal-modal-description" sx={style}>
                         <MovieModal props={activeItem}/>
-                        <CardFeatureClose onClick={() => setShowCardFeature(false)} />*/}
+                        <CardFeatureClose onClick={() => setShowCardFeature(false)} />
                     </Box>
                 </Modal> : null}
 

@@ -1,12 +1,17 @@
 /* ############### Header Section ############### */
 
+* {
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
 .header-wrapper-home {
-    /*background: url("/images/misc/home-bg.jpg");*/
     background-position: top left;
     background-size: cover;
     background-repeat: no-repeat;
     padding: 30px 50px;
 }
+
 
 .header-wrapper-browse {
     /*background: url("/images/misc/joker1.jpg");*/
@@ -63,7 +68,6 @@
 .signin-button {
     display: block;
     background-color: #e50914;
-    width: 84px;
     height: fit-content;
     color: #fff;
     border: 0;

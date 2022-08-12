@@ -40,9 +40,9 @@
   align-items: center;
   justify-content: space-between;
   height: 70px;
-  width: 94%;
+  width: 100%;
 }
-.container img {
+.header-logo {
   height: 25px;
 }
 

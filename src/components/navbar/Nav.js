@@ -3,9 +3,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import "./Nav.css";
 import {ArrowDropDown, Notifications} from "@mui/icons-material";
 import {Link} from "react-router-dom";
+import SigninButton from "../Header/SigninButton";
+import Logo from "./Logo";
 
 function Nav() {
     const [show, handleShow] = useState(false);
+    const [signedIn, handleSignin] = useState(false);
 
     useEffect(() => {
         window.addEventListener("scroll", () => {
@@ -23,7 +26,7 @@ function Nav() {
             <div className={`container nav ${show && "nav-black"}`}>
                 {/*<div className=>*/}
                 <div className="left">
-                    <img src={`${process.env.PUBLIC_URL}/net.png`} alt=""/>
+                    <Logo />
                     {/*<Routes>*/}
                     {/*<Route path={"/"} element={<CardDescription>{"Hello Word"}</CardDescription>}/>*/}
                     {/*<link to={"/signin"}><span>Movies</span></link>*/}
@@ -35,18 +38,26 @@ function Nav() {
                 </div>
 
                 <div className="right">
-                    <SearchIcon className={"icon"}/>
-                    <span>Kids</span>
-                    <Notifications className={"icon"}/>
-                    <img src={`${process.env.PUBLIC_URL}/default_profile.jpeg`} alt=""/>
-                    <div className="profile">
-                        <ArrowDropDown className={"icon"}/>
-                        <div className="options">
-                            <span>Watch List</span>
-                            <span>Settings</span>
-                            <span>Logout</span>
+                    {signedIn ?
+                        <div>
+                            <SearchIcon className={"icon"}/>
+                            <span>Kids</span>
+                            <Notifications className={"icon"}/>
+                            <img src={`${process.env.PUBLIC_URL}/default_profile.jpeg`} alt=""/>
+                            <div className="profile">
+                                <ArrowDropDown className={"icon"}/>
+                                <div className="options">
+                                    <span>Watch List</span>
+                                    <span>Settings</span>
+                                    <span>Logout</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        :
+
+                        <SigninButton>Sign In</SigninButton>
+                    }
+
                 </div>
                 {/*</div>*/}
             </div>
