@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from '../../axios';
-import requests from '../../requests';
+import requests from '../../config/requests';
 import './Banner.css';
 import {faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

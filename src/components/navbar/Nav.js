@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import SigninButton from "../Header/SigninButton";
 import Logo from "./Logo";
 
-function Nav() {
+function Nav({dynamicClass}) {
     const [show, handleShow] = useState(false);
     const [signedIn, handleSignin] = useState(false);
 
@@ -22,8 +22,8 @@ function Nav() {
         };
     }, [])
     return (
-        <div className="navbar">
-            <div className={`container nav ${show && "nav-black"}`}>
+        <div className={`navbar`}>
+            <div className={`container nav  ${dynamicClass} ${show && "nav-black"}`}>
                 {/*<div className=>*/}
                 <div className="left">
                     <Logo />

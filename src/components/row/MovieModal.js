@@ -1,21 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import '../banner/Banner.css';
-import {faEye, faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
+import {faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Rating} from "react-simple-star-rating";
+import {faEye} from "@fortawesome/free-regular-svg-icons";
+import {Link} from "react-router-dom";
 
 
-function MovieModal(props = null) {
+function MovieModal({props, isTv}) {
     const [movie, setMovie] = useState([]);
-
 
     useEffect(() => {
         async function fetchData() {
-            setMovie(props.props)
+            setMovie(props)
         }
 
         fetchData();
-    }, [props]);
+    }, [props, isTv]);
 
     const [rating, setRating] = useState(0) // initial rating value
 
@@ -55,15 +56,18 @@ function MovieModal(props = null) {
                     {movie?.overview}
                 </div>
                 <div className={"modal-rating"}>
-                    <Rating  onClick={handleRating} iconsCount={5} allowHalfIcon={true} size={34} transition={true} showTooltip={true}  ratingValue={rating} />
+                    <Rating onClick={handleRating} allowHalfIcon={true} size={34} transition={true} showTooltip={true}
+                            ratingValue={rating}/>
                 </div>
                 <div className="modal-banner-buttons">
                     <button className="banner-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
                         Watched
                     </button>
-                    <button className="banner-button"><FontAwesomeIcon icon={faEye}/> {"\u00a0\u00a0"}
-                        Details
-                    </button>
+                    <Link to={isTv ? "/tv/" + movie.id : "/movie/" + movie.id}>
+                        <button className="banner-button"><FontAwesomeIcon icon={faEye}/> {"\u00a0\u00a0"}
+                            Details
+                        </button>
+                    </Link>
                     <button className="banner-button"><FontAwesomeIcon icon={faPlus}/> Watch List</button>
                 </div>
 

@@ -11,10 +11,12 @@ import CardFeatureClose from "../Movies/CardFeatureClose";
 const base_url = "https://image.tmdb.org/t/p/original/";
 
 function Row({title, fetchUrl, isLargeRow}) {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [movies, setMovies] = useState([]);
+    const [isTV, setIsTV] = useState(false);
+    // let isTV = false;
     const [showCardFeature, setShowCardFeature] = useState(false);
     const [activeItem, setActiveItem] = useState(false);
 
@@ -42,6 +44,11 @@ function Row({title, fetchUrl, isLargeRow}) {
     const handleClick = (movie) => {
         setShowCardFeature(true);
         setActiveItem(movie);
+        // console.log(movie.first_air_date !== undefined);
+        if(movie.first_air_date !== undefined) {
+            setIsTV(true);
+        }
+
         handleOpen();
     }
 
@@ -69,7 +76,7 @@ function Row({title, fetchUrl, isLargeRow}) {
                     aria-describedby="modal-modal-description"
                 >
                     <Box id="modal-modal-description" sx={style}>
-                        <MovieModal props={activeItem}/>
+                        <MovieModal props={activeItem} isTv={isTV}/>
                         <CardFeatureClose onClick={() => setShowCardFeature(false)} />
                     </Box>
                 </Modal> : null}

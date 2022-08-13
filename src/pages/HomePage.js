@@ -1,7 +1,7 @@
 import Nav from "../components/navbar/Nav";
 import Banner from "../components/banner/Banner";
 import Row from "../components/row/Row";
-import requests from "../requests";
+import requests from "../config/requests";
 import Footer from "../compounds/FooterCompound";
 
 function HomePage() {
