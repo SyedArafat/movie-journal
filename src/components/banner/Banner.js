@@ -4,6 +4,7 @@ import requests from '../../config/requests';
 import './Banner.css';
 import {faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import MovieKeyData from "../Movies/MovieKeyData";
 
 
 function Banner(props = null) {
@@ -42,18 +43,7 @@ function Banner(props = null) {
                     </button>
                     <button className="banner-button"><FontAwesomeIcon icon={faPlus}/> Wish List</button>
                 </div>
-                <div className="title-info-metadata-wrapper" data-uia="title-info-metadata-wrapper"><span
-                    className="title-info-metadata-item item-year" data-uia="item-year">2021</span><span
-                    role="presentation" className="info-spacer"> | </span><span
-                    className="title-info-metadata-item item-maturity" data-uia="item-maturity"><span
-                    className="maturity-rating"><span className="maturity-number">18+ </span></span></span><span
-                    role="presentation" className="info-spacer"> | </span><span
-                    className="title-info-metadata-item item-runtime" data-uia="item-runtime"><span
-                    className="duration">1h 54m</span></span><span role="presentation"
-                                                                   className="info-spacer"> | </span><a
-                    className="title-info-metadata-item item-genre" href="https://www.netflix.com/bd/browse/genre/58806"
-                    data-uia="item-genre">Hindi-Language Movies</a>
-                </div>
+                <MovieKeyData />
 
                 <h1 className="banner-description">
                     {movie?.overview}

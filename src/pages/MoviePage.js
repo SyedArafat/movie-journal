@@ -7,9 +7,12 @@ import MovieInfoBar from "../components/MoviePage/MovieInfoBar.component";
 import Nav from "../components/navbar/Nav";
 import FourColGrid from "../components/MoviePage/element/FourColGrid/FourColGrid.component";
 import Actor from "../components/MoviePage/element/Actor/Actor.component";
+import Spinner from "../components/Spinner/Spinner.component";
+import Footer from "../compounds/FooterCompound";
 
 function MoviePage() {
     const [movie, setMovie] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [credits, setCredits] = useState([]);
     const {movieId} = useParams();
     const {type} = useParams();
@@ -37,17 +40,16 @@ function MoviePage() {
     }
 
     if (credits.crew !== undefined) {
-        // actors = credits.cast.filter((member) => member.known_for_department === "Acting");
         actors = credits.cast.slice(0,4);
     }
-    console.log(actors);
-    return (
 
+    return (
         <div className="rmdb-movie">
             {movie ?
                 <div>
                     <Nav dynamicClass={"single-page-nav"}/>
-                    <MovieInfo movie={movie} directors={directors}/>
+                    <MovieInfo movie={movie} type={type} directors={directors}/>
+
                     <MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue}/>
                 </div>
                 : null}
@@ -60,8 +62,9 @@ function MoviePage() {
                     </FourColGrid>
                 </div>
                 : null }
-            {/*{!actors && !loading ? <h1>No movie found</h1> : null }*/}
-            {/*{loading ? <Spinner /> : null}*/}
+            {/*<MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue}/>*/}
+            <Footer />
+            {loading ? <Spinner /> : null}
         </div>
 
     );

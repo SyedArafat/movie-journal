@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Rating} from "react-simple-star-rating";
 import {faEye} from "@fortawesome/free-regular-svg-icons";
 import {Link} from "react-router-dom";
+import MovieRating from "./MovieRating";
 
 
 function MovieModal({props, isTv}) {
@@ -17,14 +18,6 @@ function MovieModal({props, isTv}) {
 
         fetchData();
     }, [props, isTv]);
-
-    const [rating, setRating] = useState(0) // initial rating value
-
-    // Catch Rating value
-    const handleRating = (rate) => {
-        setRating(rate)
-        // other logic
-    }
 
     return (
         <header className="modal-banner"
@@ -55,10 +48,9 @@ function MovieModal({props, isTv}) {
                 <div className="banner-description">
                     {movie?.overview}
                 </div>
-                <div className={"modal-rating"}>
-                    <Rating onClick={handleRating} allowHalfIcon={true} size={34} transition={true} showTooltip={true}
-                            ratingValue={rating}/>
-                </div>
+
+                <MovieRating />
+
                 <div className="modal-banner-buttons">
                     <button className="banner-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
                         Watched

@@ -5,7 +5,7 @@ import AllCardsWrapper from "../Movies/AllCardsWrapper";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import React from 'react';
-import MovieModal from "./MovieModal";
+import MovieModal from "../Movies/MovieModal";
 import CardFeatureClose from "../Movies/CardFeatureClose";
 
 const base_url = "https://image.tmdb.org/t/p/original/";
