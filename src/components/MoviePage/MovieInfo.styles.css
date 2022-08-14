@@ -65,7 +65,7 @@
 .rmdb-score {
   position: absolute;
   margin: 0;
-  right: 0px;
+  right: -15px;
   top: -3px;
 }
 

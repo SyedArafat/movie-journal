@@ -1,9 +1,11 @@
 import React from 'react';
 import { IMAGE_BASE_URL, POSTER_SIZE, BACKDROP_SIZE } from '../../config/config';
 import PropTypes from 'prop-types';
-// import FontAwesome from 'react-fontawesome';
 import MovieThumb from './MovieThumb.component';
 import './MovieInfo.styles.css';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faFilm} from "@fortawesome/free-solid-svg-icons";
+
 
 const MovieInfo = ({ movie, directors }) => (
   <div className="rmdb-movieinfo"
@@ -19,20 +21,19 @@ const MovieInfo = ({ movie, directors }) => (
         />
       </div>
       <div className="rmdb-movieinfo-text">
-        <h1>{movie.title}</h1>
-        <h3>PLOT</h3>
+        <h1> {movie?.title || movie?.name || movie?.original_name} </h1>
         <p>{movie.overview}</p>
-        <h3>IMDB RATING</h3>
+        <h3>TMDB RATING</h3>
         <div className="rmdb-rating">
           <meter min="0" max="100" optimum="100" low="40" high="70" value={ movie.vote_average * 10}></meter>
-          <p className="rmdb-score">{movie.vote_average}</p>
+          <p className="rmdb-score">{parseFloat(movie.vote_average).toFixed(2)}</p>
         </div>
         {directors.length > 1 ? <h3>DIRECTORS</h3> : <h3>DIRECTOR</h3>}
         {directors.map( (element, i) => {
           return <p key={i} className="rmdb-director">{element.name}</p>
         })}
       </div>
-      {/*<FontAwesome className="fa-film" name="film" size="5x" />*/}
+      <FontAwesomeIcon icon={faFilm} name="film" size="5x" />
     </div>
   </div>
 )
