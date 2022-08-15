@@ -5,8 +5,11 @@ import "./EpisodeStyle.css";
 import {API_KEY, API_URL} from "../../config/config";
 import axios from "../../axios";
 import Episode from "./Episode";
+import MovieRating from "../Movies/MovieRating";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlayCircle} from "@fortawesome/free-solid-svg-icons";
 
-function Seasons({id, numberOfSeasons}) {
+function Seasons({id, name, numberOfSeasons}) {
     const [episodes, setEpisodes] = useState(false);
     useEffect(() => {
         async function fetchData() {
@@ -24,31 +27,46 @@ function Seasons({id, numberOfSeasons}) {
         setEpisodes(request.data.episodes);
 
     }
-    let seasons = []
+    let seasonsDropDown = []
     for (let i = 1; i <= numberOfSeasons; i++) {
-        seasons.push(<option key={i} value={i}>Season {i}</option>);
+        seasonsDropDown.push(<option key={i} value={i}>Season {i}</option>);
     }
 
     // console.log(episodes);
     return (
         <div>
             {episodes ?
-                <div style={{ margin: "0px 20px" }} className="rmdb-movie-grid">
-                    <h2>Episodes</h2>
-                    <Form.Select
-                        onChange={handleChange}
-                        aria-label="Season 1">
-                        {
-                            seasons
-                        }
-                    </Form.Select>
-                    <FourColGrid >
-                        {episodes.map( (element, i) => (
-                            <Episode key={i} episode={element} />
+                <div style={{margin: "0px 20px"}} className="rmdb-movie-grid">
+                    <h2>Episodes | <span className={"section-subheader-text"}>{name}</span></h2>
+                    <div className={"season-option-section"}>
+                        <div style={{
+                            float: "left"
+                        }}>
+                            <Form.Select
+                                onChange={handleChange}
+                                aria-label="Season 1">
+                                {
+                                    seasonsDropDown
+                                }
+                            </Form.Select>
+                        </div>
+                        <div style={{
+                            float: "right"
+                        }}>
+                            <MovieRating dynamicClass="watch-button-in-page"/>
+                            <button className="banner-button watch-button"><FontAwesomeIcon
+                                icon={faPlayCircle}/> {"\u00a0\u00a0"}
+                                Watched
+                            </button>
+                        </div>
+                    </div>
+                    <FourColGrid>
+                        {episodes.map((element, i) => (
+                            <Episode key={i} episode={element}/>
                         ))}
                     </FourColGrid>
                 </div>
-                : null }
+                : null}
 
         </div>
     );

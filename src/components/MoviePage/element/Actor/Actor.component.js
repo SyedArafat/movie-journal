@@ -5,7 +5,7 @@ import './Actor.styles.css';
 
 const Actor = ({ actor }) => {
 
-  const POSTER_SIZE = "w154";
+  const POSTER_SIZE = "w342";
 
   return (
     <div className="rmdb-actor">

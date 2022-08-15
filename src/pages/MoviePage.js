@@ -44,7 +44,7 @@ function MoviePage() {
         actors = credits.cast.slice(0,4);
     }
 
-    console.log(movie.number_of_seasons);
+    // console.log(movie.number_of_seasons);
 
     return (
         <div className="rmdb-movie">
@@ -67,8 +67,10 @@ function MoviePage() {
                     </FourColGrid>
                 </div>
                 : null }
-
-            <Seasons id={movieId} numberOfSeasons = {movie.number_of_seasons} />
+            {type === "tv" ?
+                <Seasons id={movieId} name = {movie?.title || movie?.name || movie?.original_name}  numberOfSeasons={movie.number_of_seasons}/>
+                : null
+            }
             {/*<MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue}/>*/}
             <Footer />
             {loading ? <Spinner /> : null}

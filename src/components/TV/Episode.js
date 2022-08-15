@@ -6,7 +6,7 @@ import {format} from "date-fns";
 
 const Episode = ({ episode }) => {
 
-    const POSTER_SIZE = "w154";
+    const POSTER_SIZE = "w342";
 
     return (
         <div className="episode-box">
