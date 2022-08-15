@@ -7,8 +7,10 @@ import Modal from '@mui/material/Modal';
 import React from 'react';
 import MovieModal from "../Movies/MovieModal";
 import CardFeatureClose from "../Movies/CardFeatureClose";
+import {IMAGE_BASE_URL} from "../../config/config";
+import BadgeWatch from "../Movies/BadgeWatch";
 
-const base_url = "https://image.tmdb.org/t/p/original/";
+const base_url = `${IMAGE_BASE_URL}w500`;
 
 function Row({title, fetchUrl, isLargeRow}) {
     const [open, setOpen] = useState(false);
@@ -16,7 +18,6 @@ function Row({title, fetchUrl, isLargeRow}) {
     const handleClose = () => setOpen(false);
     const [movies, setMovies] = useState([]);
     const [isTV, setIsTV] = useState(false);
-    // let isTV = false;
     const [showCardFeature, setShowCardFeature] = useState(false);
     const [activeItem, setActiveItem] = useState(false);
 
@@ -44,8 +45,7 @@ function Row({title, fetchUrl, isLargeRow}) {
     const handleClick = (movie) => {
         setShowCardFeature(true);
         setActiveItem(movie);
-        // console.log(movie.first_air_date !== undefined);
-        if(movie.first_air_date !== undefined) {
+        if (movie.first_air_date !== undefined) {
             setIsTV(true);
         }
 
@@ -58,14 +58,18 @@ function Row({title, fetchUrl, isLargeRow}) {
             <AllCardsWrapper>
                 <div className="row-posters">
                     {movies.map(movie => (
-                        <img
-                            onClick={() => handleClick(movie)}
-                            className={`row-poster ${isLargeRow && "row-posterLarge"}`}
-                            key={movie.id}
-                            src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
-                            alt={movie.name}
-                        />
+                        <div key={movie.id} className={`row-poster ${isLargeRow && "row-posterLarge"}`}>
+                            <img
+                                onClick={() => handleClick(movie)}
+                                className={`row-poster ${isLargeRow && "row-posterLarge"}`}
+                                key={movie.id}
+                                src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
+                                alt={movie.name}
+                            />
+                            <BadgeWatch />
+                        </div>
                     ))}
+
                 </div>
             </AllCardsWrapper>
             {showCardFeature ?
@@ -77,7 +81,7 @@ function Row({title, fetchUrl, isLargeRow}) {
                 >
                     <Box id="modal-modal-description" sx={style}>
                         <MovieModal props={activeItem} isTv={isTV}/>
-                        <CardFeatureClose onClick={() => setShowCardFeature(false)} />
+                        <CardFeatureClose onClick={() => setShowCardFeature(false)}/>
                     </Box>
                 </Modal> : null}
 
