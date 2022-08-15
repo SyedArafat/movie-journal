@@ -9,6 +9,7 @@ import FourColGrid from "../components/MoviePage/element/FourColGrid/FourColGrid
 import Actor from "../components/MoviePage/element/Actor/Actor.component";
 import Spinner from "../components/Spinner/Spinner.component";
 import Footer from "../compounds/FooterCompound";
+import Seasons from "../components/TV/Seasons";
 
 function MoviePage() {
     const [movie, setMovie] = useState(false);
@@ -43,6 +44,8 @@ function MoviePage() {
         actors = credits.cast.slice(0,4);
     }
 
+    console.log(movie.number_of_seasons);
+
     return (
         <div className="rmdb-movie">
             {movie ?
@@ -51,6 +54,8 @@ function MoviePage() {
                     <MovieInfo movie={movie} type={type} directors={directors}/>
 
                     <MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue}/>
+
+
                 </div>
                 : null}
             {actors ?
@@ -62,6 +67,8 @@ function MoviePage() {
                     </FourColGrid>
                 </div>
                 : null }
+
+            <Seasons id={movieId} numberOfSeasons = {movie.number_of_seasons} />
             {/*<MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue}/>*/}
             <Footer />
             {loading ? <Spinner /> : null}

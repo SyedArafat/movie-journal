@@ -1,7 +1,7 @@
 import {Rating} from "react-simple-star-rating";
 import React, {useState} from "react";
 
-function MovieRating() {
+function MovieRating({dynamicClass}) {
     const [rating, setRating] = useState(0) // initial rating value
 
     // Catch Rating value
@@ -11,7 +11,7 @@ function MovieRating() {
     }
 
     return (
-        <div className={"modal-rating"}>
+        <div className={`modal-rating  ${dynamicClass}`}>
             <Rating onClick={handleRating} allowHalfIcon={true} size={34} transition={true} showTooltip={true}
                     ratingValue={rating}/>
         </div>

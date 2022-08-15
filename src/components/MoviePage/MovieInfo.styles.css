@@ -37,6 +37,10 @@
   overflow: hidden;
 }
 
+.watch-button-in-page {
+  float: left;
+}
+
 .rmdb-movieinfo-text h1 {
   font-family: 'Abel', sans-serif;
   font-size: 48px;

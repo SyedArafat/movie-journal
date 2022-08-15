@@ -18,7 +18,7 @@ function PageContent({movie, directors, type}) {
             </div>
             <div className="rmdb-movieinfo-text">
                 <h1> {movie?.title || movie?.name || movie?.original_name} </h1>
-                <MovieKeyData />
+                <MovieKeyData/>
                 <p>{movie.overview}</p>
                 <h3>TMDB RATING</h3>
                 <div className="rmdb-rating">
@@ -26,12 +26,16 @@ function PageContent({movie, directors, type}) {
                     <p className="rmdb-score">{parseFloat(movie.vote_average).toFixed(2)}</p>
                 </div>
                 {type === "movie" && <Director directors={directors}/>}
-                <h3>Personal Rating</h3>
-                <MovieRating />
+                <div>
+                    <h3>Personal Rating</h3>
+                    <MovieRating dynamicClass = "watch-button-in-page"/>
+                    <button className="banner-button watch-button"><FontAwesomeIcon
+                        icon={faPlayCircle}/> {"\u00a0\u00a0"}
+                        Watched
+                    </button>
+                </div>
                 <button className="banner-button-movie-page"><FontAwesomeIcon icon={faPlus}/> Watch List</button>
-                <button className="banner-button watch-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
-                    Watched
-                </button>
+
 
             </div>
             <FontAwesomeIcon icon={faFilm} name="film" size="5x"/>

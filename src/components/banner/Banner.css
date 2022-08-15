@@ -61,7 +61,9 @@
 }
 
 .watch-button {
-  margin-top: 1rem;
+  margin-top: 0.6rem;
+  margin-left: 3rem;
+  font-size: 17px;
 }
 
 .banner-button-movie-page:hover {
