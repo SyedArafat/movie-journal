@@ -6,10 +6,13 @@ import {faFilm, faPlayCircle, faPlus} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import MovieKeyData from "../Movies/MovieKeyData";
 import MovieRating from "../Movies/MovieRating";
+import WatchRibbon from "./element/Ribbon/WatchRibbon";
 
 function PageContent({movie, directors, type}) {
     return (
         <div className="rmdb-movieinfo-content">
+            <WatchRibbon />
+
             <div className="rmdb-movieinfo-thumb">
                 <MovieThumb
                     image={movie.poster_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}${movie.poster_path}` : './images/no_image.jpg'}

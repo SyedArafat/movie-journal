@@ -1,23 +1,18 @@
 .ribbon-horizontal{
     position: relative;
-    right: 0;
-    bottom:15.5rem;
-    border: 13px solid #148315;
+    right: 68px;
+    bottom:15.8rem;
+    /*border:13px solid #2099c2d9;*/
     border-right: 0;
-    border-left: 10px solid transparent;
+    /*border-left: 10px solid transparent;*/
     height: 0;
     line-height: 0;
-    width: 100px;
+    /*width: 80px;*/
     color: white;
     z-index: 0;
     -webkit-filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
-    letter-spacing: 1px;
-}
-.ribbon-horizontal span{
-    position: relative;
-    padding: 0 2px 0 8px;
-    text-align: center;
+    /*letter-spacing: 1px;*/
 }
 
 

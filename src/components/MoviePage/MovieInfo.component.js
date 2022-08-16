@@ -3,6 +3,7 @@ import {IMAGE_BASE_URL, POSTER_SIZE, BACKDROP_SIZE} from '../../config/config';
 import PropTypes from 'prop-types';
 import './MovieInfo.styles.css';
 import PageContent from "./PageContent";
+import WatchRibbon from "./element/Ribbon/WatchRibbon";
 
 const MovieInfo = ({movie, directors, type}) => (
     <div className="rmdb-movieinfo"

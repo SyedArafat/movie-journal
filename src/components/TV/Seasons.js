@@ -8,6 +8,7 @@ import Episode from "./Episode";
 import MovieRating from "../Movies/MovieRating";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlayCircle} from "@fortawesome/free-solid-svg-icons";
+import BadgeWatch from "../Movies/BadgeWatch";
 
 function Seasons({id, name, numberOfSeasons}) {
     const [episodes, setEpisodes] = useState(false);
@@ -49,11 +50,13 @@ function Seasons({id, name, numberOfSeasons}) {
                                     seasonsDropDown
                                 }
                             </Form.Select>
+
                         </div>
                         <div style={{
                             float: "right"
                         }}>
                             <MovieRating dynamicClass="watch-button-in-page"/>
+                            {/*<span><img style={{paddingTop: "7px", marginLeft: "14px"}} width={"45px"} src={"/images/icons/tick2.png"} /></span>*/}
                             <button className="banner-button watch-button"><FontAwesomeIcon
                                 icon={faPlayCircle}/> {"\u00a0\u00a0"}
                                 Watched

@@ -6,6 +6,8 @@ import {Rating} from "react-simple-star-rating";
 import {faEye} from "@fortawesome/free-regular-svg-icons";
 import {Link} from "react-router-dom";
 import MovieRating from "./MovieRating";
+import {BACKDROP_SIZE} from "../../config/config";
+import WatchRibbon from "../MoviePage/element/Ribbon/WatchRibbon";
 
 
 function MovieModal({props, isTv}) {
@@ -23,11 +25,14 @@ function MovieModal({props, isTv}) {
         <header className="modal-banner"
                 style={{
                     backgroundSize: "cover",
-                    backgroundImage: `url("https://image.tmdb.org/t/p/original/${movie?.backdrop_path}")`,
+                    backgroundImage: `url("https://image.tmdb.org/t/p/${BACKDROP_SIZE}${movie?.backdrop_path}")`,
                     backgroundPosition: "center center"
                 }}
         >
+
             <div className="model-banner-contents">
+
+                <WatchRibbon />
                 <div className="banner-title">
                     {movie?.title || movie?.name || movie?.original_name}
                 </div>
