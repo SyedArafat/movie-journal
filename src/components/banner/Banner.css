@@ -9,7 +9,12 @@
   color: white;
   object-fit: cover;
   height: 568px;
+  /*outline: thin;*/
 
+}
+
+.MuiBox-root {
+  outline: none;
 }
 
 .banner-contents {
@@ -26,6 +31,7 @@
   padding-top: 3rem;
   padding-left: 5rem;
   height: 100%;
+  /*outline: none;*/
 }
 
 .banner-title {

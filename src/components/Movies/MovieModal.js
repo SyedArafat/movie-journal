@@ -26,7 +26,8 @@ function MovieModal({props, isTv}) {
                 style={{
                     backgroundSize: "cover",
                     backgroundImage: `url("https://image.tmdb.org/t/p/${BACKDROP_SIZE}${movie?.backdrop_path}")`,
-                    backgroundPosition: "center center"
+                    backgroundPosition: "center center",
+                    outline: "none"
                 }}
         >
 

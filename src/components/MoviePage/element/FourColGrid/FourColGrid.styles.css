@@ -8,10 +8,21 @@
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 25px;
   position: relative;
+  background: #1a1d1a;
 }
 
 .rmdb-grid-element {
   animation: animateGrid 0.5s;
+}
+
+.background-grid {
+  background: #4b4b5454;
+}
+
+.search-header {
+  margin-top: 5%;
+  padding-top: 20px;
+  text-align: center;
 }
 
 @keyframes animateGrid {

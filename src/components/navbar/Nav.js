@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import "./Nav.css";
 import {ArrowDropDown, Notifications} from "@mui/icons-material";
@@ -6,9 +6,19 @@ import {Link} from "react-router-dom";
 import SigninButton from "../Header/SigninButton";
 import Logo from "./Logo";
 
-function Nav({dynamicClass}) {
+function Nav({dynamicClass, callback}) {
     const [show, handleShow] = useState(false);
     const [signedIn, handleSignin] = useState(true);
+
+    const doSearch = (event) => {
+       setTimeout( () => {
+            callback(event.target.value);
+        }, 500);
+    }
+
+    const clickSearch = () => {
+        handleShow(true);
+    }
 
     useEffect(() => {
         window.addEventListener("scroll", () => {
@@ -27,9 +37,6 @@ function Nav({dynamicClass}) {
                 {/*<div className=>*/}
                 <div className="left">
                     <Logo />
-                    {/*<Routes>*/}
-                    {/*<Route path={"/"} element={<CardDescription>{"Hello Word"}</CardDescription>}/>*/}
-                    {/*<link to={"/signin"}><span>Movies</span></link>*/}
                     <Link to="/signin"><span>Movies</span></Link>
                     <span>TV Shows</span>
                     <span>History</span>
@@ -41,7 +48,13 @@ function Nav({dynamicClass}) {
                     {signedIn ?
                         <div>
                             <div className="righticons d-flex flex-end flex-middle">
-                                <a href={"#"}> <SearchIcon fontSize={"large"} className={"icon"}/> </a>
+                                {/*<form action="/search" method="get">*/}
+                                    <input onChange={doSearch} className="search expandright" id="searchright" type="search" name="q" placeholder="Search" />
+                                    <label className="" htmlFor="searchright">
+                                        <SearchIcon onClick={clickSearch} fontSize={"large"} className={"icon button searchbutton"}/>
+                                    </label>
+                                {/*</form>*/}
+                                {/*<a href={"#"}> <SearchIcon fontSize={"large"} className={"icon"}/> </a>*/}
                                 <div className="dropdown notification">
                                     <img src="/images/icons/notification.svg" alt="notificatio icon"/>
                                     <div className="dropdown-content">

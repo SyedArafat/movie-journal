@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './FourColGrid.styles.css';
 
-const FourColGrid = ({ header, loading, children }) => {
+const FourColGrid = ({ header, loading, children, dynamicClass, headerClass }) => {
 
   const renderElements = () => {
     return children.map((element, i) => (
@@ -13,8 +13,8 @@ const FourColGrid = ({ header, loading, children }) => {
   }
 
   return (
-    <div className="rmdb-grid">
-      {header && !loading ? <h1>{header}</h1> : null}
+    <div className={`rmdb-grid ${dynamicClass}`}>
+      {header && !loading ? <h1 className={`${headerClass}`}>{header}</h1> : null}
       <div className="rmdb-grid-content">
          {renderElements()}
       </div>
