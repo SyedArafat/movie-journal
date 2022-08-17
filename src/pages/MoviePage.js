@@ -10,6 +10,7 @@ import Actor from "../components/MoviePage/element/Actor/Actor.component";
 import Spinner from "../components/Spinner/Spinner.component";
 import Footer from "../compounds/FooterCompound";
 import Seasons from "../components/TV/Seasons";
+import SearchResults from "../components/Search/SearchResults";
 
 function MoviePage() {
     const [movie, setMovie] = useState(false);
@@ -17,6 +18,21 @@ function MoviePage() {
     const [credits, setCredits] = useState([]);
     const {movieId} = useParams();
     const {type} = useParams();
+
+    const [movies, setMovies] = useState(false);
+    const [showSearch, setShowSearch] = useState(false);
+    const searchItems = async (searchTerm) => {
+        let endpoint = '';
+
+        if (searchTerm !== "" && searchTerm.length > 2) {
+            endpoint = `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query=${searchTerm}`;
+            let request = await axios.get(endpoint);
+            setMovies(request.data.results);
+            setShowSearch(true);
+        } else {
+            setShowSearch(false);
+        }
+    }
 
 
     useEffect(() => {
@@ -48,17 +64,21 @@ function MoviePage() {
 
     return (
         <div className="rmdb-movie">
-            {movie ?
+            <Nav callback={searchItems} dynamicClass={"single-page-nav"}/>
+            {
+                showSearch === false ? (
+                movie ?
                 <div>
-                    <Nav dynamicClass={"single-page-nav"}/>
                     <MovieInfo movie={movie} type={type} directors={directors}/>
 
                     <MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue}/>
 
 
                 </div>
-                : null}
-            {actors ?
+                : null) :
+                    <SearchResults movies={movies} />
+            }
+            {actors && showSearch === false ?
                 <div style={{ margin: "0px 20px" }} className="rmdb-movie-grid">
                     <FourColGrid header={'Actors'}>
                         {actors.map( (element, i) => (
@@ -67,7 +87,7 @@ function MoviePage() {
                     </FourColGrid>
                 </div>
                 : null }
-            {type === "tv" ?
+            {type === "tv" && showSearch === false ?
                 <Seasons id={movieId} name = {movie?.title || movie?.name || movie?.original_name}  numberOfSeasons={movie.number_of_seasons}/>
                 : null
             }

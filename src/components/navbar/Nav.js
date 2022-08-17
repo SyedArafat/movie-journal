@@ -10,6 +10,11 @@ function Nav({dynamicClass, callback}) {
     const [show, handleShow] = useState(false);
     const [signedIn, handleSignin] = useState(true);
 
+    const emptySearch = () => {
+        document.getElementById("searchright").value = "";
+        callback("");
+    }
+
     const doSearch = (event) => {
        setTimeout( () => {
             callback(event.target.value);
@@ -36,7 +41,7 @@ function Nav({dynamicClass, callback}) {
             <div className={`container nav  ${dynamicClass} ${show && "nav-black"}`}>
                 {/*<div className=>*/}
                 <div className="left">
-                    <Logo />
+                    <Link onClick={emptySearch} to={"/"}><Logo /></Link>
                     <Link to="/signin"><span>Movies</span></Link>
                     <span>TV Shows</span>
                     <span>History</span>
