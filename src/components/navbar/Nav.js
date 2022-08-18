@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import "./Nav.css";
-import {ArrowDropDown, Notifications} from "@mui/icons-material";
 import {Link} from "react-router-dom";
 import SigninButton from "../Header/SigninButton";
 import Logo from "./Logo";

@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import '../banner/Banner.css';
+import '../../banner/Banner.css';
 import {faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Rating} from "react-simple-star-rating";
 import {faEye} from "@fortawesome/free-regular-svg-icons";
 import {Link} from "react-router-dom";
-import MovieRating from "./MovieRating";
-import {BACKDROP_SIZE} from "../../config/config";
-import WatchRibbon from "../MoviePage/element/Ribbon/WatchRibbon";
+import MovieRating from "../MovieRating";
+import {BACKDROP_SIZE} from "../../../config/config";
+import WatchRibbon from "../../MoviePage/element/Ribbon/WatchRibbon";
 
 
 function MovieModal({props, isTv}) {
