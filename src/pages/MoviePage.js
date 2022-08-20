@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {API_KEY, API_URL} from "../config/config";
+import {API_KEY, API_URL, SEARCH_TYPE} from "../config/config";
 import axios from "../axios";
 import MovieInfo from "../components/MoviePage/MovieInfo.component";
 import MovieInfoBar from "../components/MoviePage/MovieInfoBar.component";
@@ -25,7 +25,7 @@ function MoviePage() {
         let endpoint = '';
 
         if (searchTerm !== "" && searchTerm.length > 2) {
-            endpoint = `${API_URL}search/multi?api_key=${API_KEY}&language=en-US&query=${searchTerm}`;
+            endpoint = `${API_URL}search/${SEARCH_TYPE}?api_key=${API_KEY}&language=en-US&query=${searchTerm}`;
             let request = await axios.get(endpoint);
             setMovies(request.data.results);
             setShowSearch(true);
@@ -60,7 +60,7 @@ function MoviePage() {
         actors = credits.cast.slice(0,4);
     }
 
-    // console.log(movie.number_of_seasons);
+    // console.log(movie);
 
     return (
         <div className="rmdb-movie">

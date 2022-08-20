@@ -26,8 +26,9 @@ function MovieModal({props, isTv}) {
     let detailsClickEvent = (parma) => {
         navigate(parma, { replace: true });
         window.location.reload();
-        console.log(parma);
     }
+
+    // console.log(movie);
 
     return (
         <header className="modal-banner"
