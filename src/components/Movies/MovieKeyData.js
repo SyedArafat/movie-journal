@@ -1,6 +1,6 @@
 import React from "react";
 
-function MovieKeyData() {
+function MovieKeyData({movie}) {
     return (
         <div className="title-info-metadata-wrapper" data-uia="title-info-metadata-wrapper"><span
             className="title-info-metadata-item item-year" data-uia="item-year">2021</span><span

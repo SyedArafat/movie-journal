@@ -7,6 +7,7 @@ import React from "react";
 import MovieKeyData from "../Movies/MovieKeyData";
 import MovieRating from "../Movies/MovieRating";
 import WatchRibbon from "./element/Ribbon/WatchRibbon";
+import {contentTitle} from "../../helpers";
 
 function PageContent({movie, directors, type}) {
     return (
@@ -20,8 +21,8 @@ function PageContent({movie, directors, type}) {
                 />
             </div>
             <div className="rmdb-movieinfo-text">
-                <h1> {movie?.title || movie?.name || movie?.original_name} </h1>
-                <MovieKeyData/>
+                <h2 style={{ fontSize: "2.1em"}}> {contentTitle(movie)} </h2>
+                <MovieKeyData movie={movie}/>
                 <p>{movie.overview}</p>
                 <h3>TMDB RATING</h3>
                 <div className="rmdb-rating">

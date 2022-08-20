@@ -7,6 +7,8 @@ import {Link, useNavigate} from "react-router-dom";
 import MovieRating from "../MovieRating";
 import {BACKDROP_SIZE, IMAGE_BASE_URL} from "../../../config/config";
 import WatchRibbon from "../../MoviePage/element/Ribbon/WatchRibbon";
+import {contentTitle} from "../../../helpers";
+import MovieKeyData from "../MovieKeyData";
 
 
 function MovieModal({props, isTv}) {
@@ -28,8 +30,6 @@ function MovieModal({props, isTv}) {
         window.location.reload();
     }
 
-    // console.log(movie);
-
     return (
         <header className="modal-banner"
                 style={{
@@ -44,21 +44,9 @@ function MovieModal({props, isTv}) {
 
                 <WatchRibbon />
                 <div className="banner-title">
-                    {movie?.title || movie?.name || movie?.original_name}
+                    { contentTitle(movie)}
                 </div>
-
-                <div className="title-info-metadata-wrapper" data-uia="title-info-metadata-wrapper"><span
-                    className="title-info-metadata-item item-year" data-uia="item-year">2021</span><span
-                    role="presentation" className="info-spacer"> | </span><span
-                    className="title-info-metadata-item item-maturity" data-uia="item-maturity"><span
-                    className="maturity-rating"><span className="maturity-number">18+ </span></span></span><span
-                    role="presentation" className="info-spacer"> | </span><span
-                    className="title-info-metadata-item item-runtime" data-uia="item-runtime"><span
-                    className="duration">1h 54m</span></span><span role="presentation"
-                                                                   className="info-spacer"> | </span><a
-                    className="title-info-metadata-item item-genre" href="https://www.netflix.com/bd/browse/genre/58806"
-                    data-uia="item-genre">Hindi-Language Movies</a>
-                </div>
+                <MovieKeyData movie={movie} />
 
                 <div className="banner-description">
                     {movie?.overview}

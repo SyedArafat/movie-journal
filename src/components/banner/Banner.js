@@ -44,7 +44,7 @@ function Banner(props = null) {
                     </button>
                     <button className="banner-button"><FontAwesomeIcon icon={faPlus}/> Wish List</button>
                 </div>
-                <MovieKeyData />
+                <MovieKeyData movie={movie}/>
 
                 <h1 className="banner-description">
                     {movie?.overview}

@@ -60,8 +60,6 @@ function MoviePage() {
         actors = credits.cast.slice(0,4);
     }
 
-    // console.log(movie);
-
     return (
         <div className="rmdb-movie">
             <Nav callback={searchItems} dynamicClass={"single-page-nav"}/>
