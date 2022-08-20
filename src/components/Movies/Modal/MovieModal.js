@@ -2,11 +2,10 @@ import React, {useState, useEffect} from 'react';
 import '../../banner/Banner.css';
 import {faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Rating} from "react-simple-star-rating";
 import {faEye} from "@fortawesome/free-regular-svg-icons";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import MovieRating from "../MovieRating";
-import {BACKDROP_SIZE} from "../../../config/config";
+import {BACKDROP_SIZE, IMAGE_BASE_URL} from "../../../config/config";
 import WatchRibbon from "../../MoviePage/element/Ribbon/WatchRibbon";
 
 
@@ -21,11 +20,20 @@ function MovieModal({props, isTv}) {
         fetchData();
     }, [props, isTv]);
 
+    let navigate = useNavigate();
+
+
+    let detailsClickEvent = (parma) => {
+        navigate(parma, { replace: true });
+        window.location.reload();
+        console.log(parma);
+    }
+
     return (
         <header className="modal-banner"
                 style={{
                     backgroundSize: "cover",
-                    backgroundImage: `url("https://image.tmdb.org/t/p/${BACKDROP_SIZE}${movie?.backdrop_path}")`,
+                    backgroundImage: `url("${IMAGE_BASE_URL}${BACKDROP_SIZE}${movie?.backdrop_path}")`,
                     backgroundPosition: "center center",
                     outline: "none"
                 }}
@@ -61,8 +69,8 @@ function MovieModal({props, isTv}) {
                     <button className="banner-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
                         Watched
                     </button>
-                    <Link to={isTv ? "/tv/" + movie.id : "/movie/" + movie.id}>
-                        <button className="banner-button"><FontAwesomeIcon icon={faEye}/> {"\u00a0\u00a0"}
+                    <Link onClick={() => {detailsClickEvent(isTv ? "/tv/" + movie.id : "/movie/" + movie.id)}} to={isTv ? "/tv/" + movie.id : "/movie/" + movie.id + "?from=internal"}>
+                        <button  className="banner-button"><FontAwesomeIcon icon={faEye}/> {"\u00a0\u00a0"}
                             Details
                         </button>
                     </Link>

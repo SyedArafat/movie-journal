@@ -5,6 +5,7 @@ import './Banner.css';
 import {faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import MovieKeyData from "../Movies/MovieKeyData";
+import {BACKDROP_SIZE, IMAGE_BASE_URL} from "../../config/config";
 
 
 function Banner(props = null) {
@@ -29,7 +30,7 @@ function Banner(props = null) {
         <header className="banner"
                 style={{
                     backgroundSize: "cover",
-                    backgroundImage: `url("https://image.tmdb.org/t/p/original/${movie?.backdrop_path}")`,
+                    backgroundImage: `url("${IMAGE_BASE_URL}${BACKDROP_SIZE}${movie?.backdrop_path}")`,
                     backgroundPosition: "center center"
                 }}
         >

@@ -25,7 +25,7 @@ function MoviePage() {
         let endpoint = '';
 
         if (searchTerm !== "" && searchTerm.length > 2) {
-            endpoint = `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query=${searchTerm}`;
+            endpoint = `${API_URL}search/multi?api_key=${API_KEY}&language=en-US&query=${searchTerm}`;
             let request = await axios.get(endpoint);
             setMovies(request.data.results);
             setShowSearch(true);
@@ -91,7 +91,7 @@ function MoviePage() {
                 <Seasons id={movieId} name = {movie?.title || movie?.name || movie?.original_name}  numberOfSeasons={movie.number_of_seasons}/>
                 : null
             }
-            {/*<MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue}/>*/}
+
             <Footer />
             {loading ? <Spinner /> : null}
         </div>
