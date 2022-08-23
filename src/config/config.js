@@ -13,11 +13,17 @@ const BACKDROP_SIZE = 'w1280';
 // w92, w154, w185, w342, w500, w780, original
 const POSTER_SIZE = 'w500';
 
+const BACKEND_API_BASE_URL = "http://localhost:8888";
+
+const BACKEND_REGISTER_URI = "/api/auth/register";
+
 export {
     API_URL,
     API_KEY,
     IMAGE_BASE_URL,
     BACKDROP_SIZE,
     POSTER_SIZE,
-    SEARCH_TYPE
+    SEARCH_TYPE,
+    BACKEND_API_BASE_URL,
+    BACKEND_REGISTER_URI,
 }

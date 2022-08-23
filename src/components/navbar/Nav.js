@@ -7,7 +7,7 @@ import Logo from "./Logo";
 
 function Nav({dynamicClass, callback}) {
     const [show, handleShow] = useState(false);
-    const [signedIn, handleSignin] = useState(true);
+    const [login, setLogin] = useState(false);
 
     const emptySearch = () => {
         document.getElementById("searchright").value = "";
@@ -49,7 +49,7 @@ function Nav({dynamicClass, callback}) {
                 </div>
 
                 <div className="right">
-                    {signedIn ?
+                    {login ?
                         <div>
                             <div className="righticons d-flex flex-end flex-middle">
                                 {/*<form action="/search" method="get">*/}
