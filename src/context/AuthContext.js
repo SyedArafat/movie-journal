@@ -1,26 +1,15 @@
-import React, {useContext, useState} from "react";
-import instance from "../axios";
+import React, {createContext, useState} from "react";
 
-const AuthContext = React.createContext();
+const AuthContext = createContext({});
 
-export function useAuth() {
-    return useContext(AuthContext);
-}
+export const AuthProvider = ({children}) => {
+    const [auth, setAuth] = useState({});
 
-export function AuthProvider({children}) {
-    const [currentUser, setCurrentUser] = useState();
-
-    function signup(name, email, password) {
-        instance().get();
-    }
-
-    const value = {
-        currentUser
-
-    }
     return (
-        <AuthContext.provider value={value}>
+        <AuthContext.Provider value={{auth, setAuth}}>
             {children}
-        </AuthContext.provider>
+        </AuthContext.Provider>
     );
 }
+
+export default AuthContext;

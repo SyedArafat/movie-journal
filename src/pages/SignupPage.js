@@ -19,9 +19,13 @@ import api from "../api/BackendApi";
 import data from "bootstrap/js/src/dom/data";
 import {BACKEND_REGISTER_URI} from "../config/config";
 import SignFormSuccess from "../components/SignForm/SignFormSuccess";
+import {Backdrop, CircularProgress} from "@mui/material";
+import Loader from "../components/Loader";
+import AuthContext from "../context/AuthContext";
 
 function SignupPage() {
     const history = useNavigate();
+
     // const { firebase } = useContext(FirebaseContext);
 
     const [name, setName] = useState("");
@@ -30,12 +34,14 @@ function SignupPage() {
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
 
 
     const IsInvalid = password === "" || emailAddress === "" || name === "" || passwordConfirmation === "" || password !== passwordConfirmation;
 
     async function handleSubmit(event) {
         event.preventDefault();
+        setLoading(true);
         let data = {
             "name": name,
             "email": emailAddress,
@@ -62,22 +68,7 @@ function SignupPage() {
 
         }
 
-        // firebase
-        //     .auth()
-        //     .createUserWithEmailAndPassword(emailAddress, password)
-        //     .then((result) =>
-        //         result.user
-        //             .updateProfile({
-        //                 displayName: firstName,
-        //             })
-        //             .then(() => {
-        //                 setFirstName("");
-        //                 setEmailAddress("");
-        //                 setPassword("");
-        //                 history.push("/browse");
-        //             })
-        //     )
-        //     .catch((error) => setError(error.message));
+        setLoading(false);
     }
 
     return (
@@ -90,6 +81,7 @@ function SignupPage() {
                 <NavBar className="navbar-signin">
                     <Logo/>
                 </NavBar>
+                <Loader loading={loading} />
                 <SignFormWrapper>
                     <SignFormBase onSubmit={handleSubmit} method="POST">
                         <SignFormTitle>Sign Up</SignFormTitle>

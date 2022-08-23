@@ -16,6 +16,7 @@ const POSTER_SIZE = 'w500';
 const BACKEND_API_BASE_URL = "http://localhost:8888";
 
 const BACKEND_REGISTER_URI = "/api/auth/register";
+const BACKEND_LOGIN_URI = "/api/auth/login";
 
 export {
     API_URL,
@@ -26,4 +27,5 @@ export {
     SEARCH_TYPE,
     BACKEND_API_BASE_URL,
     BACKEND_REGISTER_URI,
+    BACKEND_LOGIN_URI
 }

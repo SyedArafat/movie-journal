@@ -13,9 +13,18 @@ import SignFormLink from "../components/SignForm/SignFormLink";
 import SignFormCaptcha from "../components/SignForm/SignFormCaptcha";
 import SignFormError from "../components/SignForm/SignFormError";
 import Logo from "../components/navbar/Logo";
+import AuthContext from "../context/AuthContext";
+import api from "../api/BackendApi";
+import {BACKEND_LOGIN_URI} from "../config/config";
+import Loader from "../components/Loader";
+import json from "qs";
 
 function SigninPage() {
+    const {auth, setAuth } = useContext(AuthContext);
+    console.log(localStorage.getItem("user"));
     const navigate = useNavigate();
+    const [success, setSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
     // const { firebase } = useContext(FirebaseContext);
 
     const [emailAddress, setEmailAddress] = useState("");
@@ -24,18 +33,39 @@ function SigninPage() {
 
     const IsInvalid = password === "" || emailAddress === "";
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
+        setLoading(true);
+        let data = {
+            "email": emailAddress,
+            "password": password
+        };
+        try {
+            let response = await api.post(`${BACKEND_LOGIN_URI}`, data);
+            const accessToken = response?.data?.access_token;
+            const user =  response?.data?.user;
+            console.log(response);
+            setSuccess(true);
+            setPassword("");
+            setEmailAddress("");
+            setError("");
+            setAuth({user, accessToken});
+            localStorage.setItem('user_token', accessToken)
+        } catch (err) {
+            setSuccess(false);
+            if(!err?.response) {
+                setError("No Server Response");
+            } else if(err.response?.status === 400) {
+                setError("Invalid Input Data");
+            } else if(err.response?.status === 401) {
+                setError("Invalid Email or Password");
+            } else {
+                setError("Something Went Wrong! Try again Latter");
+            }
 
-        // firebase
-        //     .auth()
-        //     .signInWithEmailAndPassword(emailAddress, password)
-        //     .then(() => {
-        //         setEmailAddress("");
-        //         setPassword("");
-        //         history.push("/browse");
-        //     })
-        //     .catch((error) => setError(error.message));
+        }
+        setLoading(false);
+
     }
 
     return (
@@ -45,6 +75,7 @@ function SigninPage() {
                     backgroundImage: `url("${process.env.PUBLIC_URL}/images/misc/home-bg.jpg")`,
                 }}
             >
+                <Loader loading={loading} />
                 <NavBar className="navbar-signin">
                     <Logo />
                 </NavBar>
