@@ -9,8 +9,13 @@ import axios from "../axios";
 import SearchResults from "../components/Search/SearchResults";
 
 function HomePage() {
-    const [movies, setMovies] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
+    const [movies, setMovies] = useState(false);
+
+    if(localStorage.getItem("movie_journal_name") !== null || localStorage.getItem("movie_journal_name") === '') {
+
+    }
+
     const searchItems = async (searchTerm) => {
         let endpoint = '';
 

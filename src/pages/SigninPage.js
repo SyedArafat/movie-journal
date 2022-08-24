@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate, Redirect, useLocation} from "react-router-dom";
+// import { Redirect } from 'react-router';
 import HeaderWrapper from "../components/Header/HeaderWrapper";
 import NavBar from "../components/Header/NavBar";
 import FooterCompound from "../compounds/FooterCompound";
@@ -17,15 +18,22 @@ import AuthContext from "../context/AuthContext";
 import api from "../api/BackendApi";
 import {BACKEND_LOGIN_URI} from "../config/config";
 import Loader from "../components/Loader";
-import json from "qs";
 
 function SigninPage() {
-    const {auth, setAuth } = useContext(AuthContext);
-    console.log(localStorage.getItem("user"));
     const navigate = useNavigate();
+    const { login } = AuthContext();
+    const { state } = useLocation();
+
+    // const token = (localStorage.getItem("movie_journal_user_token"));
+    // console.log(token);
+    // if(token === null || token === "") {
+    //     setAuth(false);
+    //
+    // } else {
+    //     navigate("/");
+    // }
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
-    // const { firebase } = useContext(FirebaseContext);
 
     const [emailAddress, setEmailAddress] = useState("");
     const [password, setPassword] = useState("");
@@ -43,14 +51,20 @@ function SigninPage() {
         try {
             let response = await api.post(`${BACKEND_LOGIN_URI}`, data);
             const accessToken = response?.data?.access_token;
-            const user =  response?.data?.user;
+            const name =  response?.data?.name;
             console.log(response);
             setSuccess(true);
             setPassword("");
             setEmailAddress("");
             setError("");
-            setAuth({user, accessToken});
-            localStorage.setItem('user_token', accessToken)
+            login(accessToken).then(() => {
+                localStorage.setItem('movie_journal_user_token', accessToken);
+                localStorage.setItem('movie_journal_name', name);
+                navigate(state?.path || "/");
+            });
+            // localStorage.setItem('movie_journal_user_token', accessToken);
+            // localStorage.setItem('movie_journal_name', name);
+            // navigate("/");
         } catch (err) {
             setSuccess(false);
             if(!err?.response) {
