@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react";
-import {useNavigate, Redirect, useLocation} from "react-router-dom";
-// import { Redirect } from 'react-router';
+import React, { useState } from "react";
+import {useNavigate, useLocation} from "react-router-dom";
 import HeaderWrapper from "../components/Header/HeaderWrapper";
 import NavBar from "../components/Header/NavBar";
 import FooterCompound from "../compounds/FooterCompound";
@@ -14,24 +13,15 @@ import SignFormLink from "../components/SignForm/SignFormLink";
 import SignFormCaptcha from "../components/SignForm/SignFormCaptcha";
 import SignFormError from "../components/SignForm/SignFormError";
 import Logo from "../components/navbar/Logo";
-import AuthContext from "../context/AuthContext";
 import api from "../api/BackendApi";
 import {BACKEND_LOGIN_URI} from "../config/config";
 import Loader from "../components/Loader";
+import {SetToken} from "../auth/Authentication";
 
 function SigninPage() {
     const navigate = useNavigate();
-    const { login } = AuthContext();
     const { state } = useLocation();
 
-    // const token = (localStorage.getItem("movie_journal_user_token"));
-    // console.log(token);
-    // if(token === null || token === "") {
-    //     setAuth(false);
-    //
-    // } else {
-    //     navigate("/");
-    // }
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -52,21 +42,14 @@ function SigninPage() {
             let response = await api.post(`${BACKEND_LOGIN_URI}`, data);
             const accessToken = response?.data?.access_token;
             const name =  response?.data?.name;
-            console.log(response);
-            setSuccess(true);
+            const expiresAt =  response?.data?.expires_at;
             setPassword("");
             setEmailAddress("");
             setError("");
-            login(accessToken).then(() => {
-                localStorage.setItem('movie_journal_user_token', accessToken);
-                localStorage.setItem('movie_journal_name', name);
-                navigate(state?.path || "/");
-            });
-            // localStorage.setItem('movie_journal_user_token', accessToken);
-            // localStorage.setItem('movie_journal_name', name);
-            // navigate("/");
+            SetToken(accessToken, name, expiresAt);
+            navigate(state?.path || "/");
         } catch (err) {
-            setSuccess(false);
+            console.log(err);
             if(!err?.response) {
                 setError("No Server Response");
             } else if(err.response?.status === 400) {

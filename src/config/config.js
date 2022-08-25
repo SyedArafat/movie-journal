@@ -17,6 +17,10 @@ const BACKEND_API_BASE_URL = "http://localhost:8888";
 
 const BACKEND_REGISTER_URI = "/api/auth/register";
 const BACKEND_LOGIN_URI = "/api/auth/login";
+const BACKEND_LOGOUT_URI = "/api/auth/logout";
+const TOKEN_TAG = "movie_journal_user_token";
+const NAME_TAG = "movie_journal_name";
+const EXPIRES_AT_TAG = "movie_journal_expire_tag";
 
 export {
     API_URL,
@@ -27,5 +31,9 @@ export {
     SEARCH_TYPE,
     BACKEND_API_BASE_URL,
     BACKEND_REGISTER_URI,
-    BACKEND_LOGIN_URI
+    BACKEND_LOGIN_URI,
+    BACKEND_LOGOUT_URI,
+    TOKEN_TAG,
+    NAME_TAG,
+    EXPIRES_AT_TAG
 }

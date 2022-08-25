@@ -1,13 +1,17 @@
 import React, {useEffect, useState} from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import "./Nav.css";
-import {Link} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 import SigninButton from "../Header/SigninButton";
 import Logo from "./Logo";
+import {Authed, DeleteToken} from "../../auth/Authentication";
+import api from "../../api/BackendApi";
+import {BACKEND_LOGOUT_URI} from "../../config/config";
 
-function Nav({dynamicClass, callback}) {
+function Nav({dynamicClass, callback, setLoading}) {
+    const navigate = useNavigate();
     const [show, handleShow] = useState(false);
-    const [login, setLogin] = useState(false);
+    const [login] = useState(Authed);
 
     const emptySearch = () => {
         document.getElementById("searchright").value = "";
@@ -15,13 +19,26 @@ function Nav({dynamicClass, callback}) {
     }
 
     const doSearch = (event) => {
-       setTimeout( () => {
+
             callback(event.target.value);
-        }, 500);
+
     }
 
     const clickSearch = () => {
         handleShow(true);
+    }
+
+    const handleLogout = async () => {
+        setLoading(true);
+        await api.get(`${BACKEND_LOGOUT_URI}`).then(response => {
+            DeleteToken();
+            navigate("/signin");
+        }).catch(err => {
+            console.log("error");
+        });
+        setLoading(false);
+
+
     }
 
     useEffect(() => {
@@ -40,7 +57,7 @@ function Nav({dynamicClass, callback}) {
             <div className={`container nav  ${dynamicClass} ${show && "nav-black"}`}>
                 {/*<div className=>*/}
                 <div className="left">
-                    <Link onClick={emptySearch} to={"/"}><Logo /></Link>
+                    <Link onClick={emptySearch} to={"/"}><Logo/></Link>
                     <Link to="/signin"><span>Movies</span></Link>
                     <span>TV Shows</span>
                     <span>History</span>
@@ -53,10 +70,12 @@ function Nav({dynamicClass, callback}) {
                         <div>
                             <div className="righticons d-flex flex-end flex-middle">
                                 {/*<form action="/search" method="get">*/}
-                                    <input onChange={doSearch} className="search expandright" id="searchright" type="search" name="q" placeholder="Search" />
-                                    <label className="" htmlFor="searchright">
-                                        <SearchIcon onClick={clickSearch} fontSize={"large"} className={"icon button searchbutton"}/>
-                                    </label>
+                                <input onChange={doSearch} className="search expandright" id="searchright" type="search"
+                                       name="q" placeholder="Search"/>
+                                <label className="" htmlFor="searchright">
+                                    <SearchIcon onClick={clickSearch} fontSize={"large"}
+                                                className={"icon button searchbutton"}/>
+                                </label>
                                 {/*</form>*/}
                                 {/*<a href={"#"}> <SearchIcon fontSize={"large"} className={"icon"}/> </a>*/}
                                 <div className="dropdown notification">
@@ -86,31 +105,29 @@ function Nav({dynamicClass, callback}) {
                                 </div>
 
                                 <div className="dropdown">
-                                    <img src={`${process.env.PUBLIC_URL}/images/icons/user2.png`}  alt="user profile icon"
+                                    <img src={`${process.env.PUBLIC_URL}/images/icons/user2.png`}
+                                         alt="user profile icon"
                                          className="user-icon"/> <span className="profile-arrow"></span>
 
                                     <div className="dropdown-content">
                                         <div className="profile-links">
                                             <a href="#" className="profile-item d-flex flex-middle">
-                                                <img src={`${process.env.PUBLIC_URL}/default_profile.jpeg`}  alt="user profile icon"
+                                                <img src={`${process.env.PUBLIC_URL}/default_profile.jpeg`}
+                                                     alt="user profile icon"
                                                      className="user-icon"/>
                                                 <span>Rajesh</span>
                                             </a>
-                                            <a href="#" className="profile-item d-flex flex-middle">
-                                                <img src="/images/icons/user2.png" alt="user profile icon"
-                                                     className="user-icon"/>
-                                                <span>Karan</span>
+                                            <a href="#" onClick={handleLogout}
+                                               className="profile-item d-flex flex-middle">
+                                                {/*<img src="/images/icons/user2.png" alt="user profile icon"*/}
+                                                {/*     className="user-icon"/>*/}
+                                                <span>Logout</span>
                                             </a>
-                                            <a href="#" className="profile-item d-flex flex-middle">
-                                                <img src="/images/icons/user3.png" alt="user profile icon"
-                                                     className="user-icon"/>
-                                                <span>Pappy</span>
-                                            </a>
-                                            <a href="#" className="profile-item d-flex flex-middle">
-                                                <img src="/images/icons/user4.png" alt="user profile icon"
-                                                     className="user-icon"/>
-                                                <span>Denny</span>
-                                            </a>
+                                            {/*<a href="#" className="profile-item d-flex flex-middle">*/}
+                                            {/*    <img src="/images/icons/user3.png" alt="user profile icon"*/}
+                                            {/*         className="user-icon"/>*/}
+                                            {/*    <span>Pappy</span>*/}
+                                            {/*</a>*/}
                                         </div>
 
                                     </div>

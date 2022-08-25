@@ -4,19 +4,19 @@ import Row from "../components/row/Row";
 import requests from "../config/requests";
 import Footer from "../compounds/FooterCompound";
 import {API_KEY, API_URL, SEARCH_TYPE} from "../config/config";
-import {useState} from "react";
+import React, {useState} from "react";
 import axios from "../axios";
 import SearchResults from "../components/Search/SearchResults";
+import Loader from "../components/Loader";
 
 function HomePage() {
     const [showSearch, setShowSearch] = useState(false);
     const [movies, setMovies] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    if(localStorage.getItem("movie_journal_name") !== null || localStorage.getItem("movie_journal_name") === '') {
-
-    }
 
     const searchItems = async (searchTerm) => {
+        setLoading(true);
         let endpoint = '';
 
         if (searchTerm !== "" && searchTerm.length > 2) {
@@ -27,10 +27,12 @@ function HomePage() {
         } else {
             setShowSearch(false);
         }
+        setLoading(false);
     }
     return (
         <div className="App">
-            <Nav callback={searchItems}/>
+            <Nav callback={searchItems} setLoading={setLoading} />
+            <Loader loading={loading} />
             {showSearch === false ?
                 <div>
                     <Banner/>

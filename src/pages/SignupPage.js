@@ -14,20 +14,12 @@ import SignFormText from "../components/SignForm/SignFormText";
 import SignFormLink from "../components/SignForm/SignFormLink";
 import SignFormCaptcha from "../components/SignForm/SignFormCaptcha";
 import SignFormError from "../components/SignForm/SignFormError";
-import Warning from "../components/Header/Warning";
 import api from "../api/BackendApi";
-import data from "bootstrap/js/src/dom/data";
 import {BACKEND_REGISTER_URI} from "../config/config";
 import SignFormSuccess from "../components/SignForm/SignFormSuccess";
-import {Backdrop, CircularProgress} from "@mui/material";
 import Loader from "../components/Loader";
-import AuthContext from "../context/AuthContext";
 
 function SignupPage() {
-    const history = useNavigate();
-
-    // const { firebase } = useContext(FirebaseContext);
-
     const [name, setName] = useState("");
     const [emailAddress, setEmailAddress] = useState("");
     const [password, setPassword] = useState("");
