@@ -22,7 +22,6 @@ function SigninPage() {
     const navigate = useNavigate();
     const { state } = useLocation();
 
-    const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const [emailAddress, setEmailAddress] = useState("");
@@ -47,7 +46,7 @@ function SigninPage() {
             setEmailAddress("");
             setError("");
             SetToken(accessToken, name, expiresAt);
-            navigate(state?.path || "/");
+            navigate(state?.pathname || "/");
         } catch (err) {
             console.log(err);
             if(!err?.response) {

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {BACKEND_API_BASE_URL, TOKEN_TAG} from "../config/config";
+import {BACKEND_API_BASE_URL} from "../config/config";
 import {GetToken} from "../auth/Authentication";
 
 const api = axios.create({

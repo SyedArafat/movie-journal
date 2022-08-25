@@ -11,6 +11,7 @@ import Spinner from "../components/Spinner/Spinner.component";
 import Footer from "../compounds/FooterCompound";
 import Seasons from "../components/TV/Seasons";
 import SearchResults from "../components/Search/SearchResults";
+import Loader from "../components/Loader";
 
 function MoviePage() {
     const [movie, setMovie] = useState(false);
@@ -22,6 +23,7 @@ function MoviePage() {
     const [movies, setMovies] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
     const searchItems = async (searchTerm) => {
+        setLoading(true);
         let endpoint = '';
 
         if (searchTerm !== "" && searchTerm.length > 2) {
@@ -32,6 +34,7 @@ function MoviePage() {
         } else {
             setShowSearch(false);
         }
+        setLoading(false);
     }
 
 
@@ -62,7 +65,8 @@ function MoviePage() {
 
     return (
         <div className="rmdb-movie">
-            <Nav callback={searchItems} dynamicClass={"single-page-nav"}/>
+            <Nav callback={searchItems} setLoading={setLoading} dynamicClass={"single-page-nav"}/>
+            <Loader loading={loading} />
             {
                 showSearch === false ? (
                 movie ?
@@ -91,7 +95,6 @@ function MoviePage() {
             }
 
             <Footer />
-            {loading ? <Spinner /> : null}
         </div>
 
     );

@@ -1,4 +1,4 @@
-import {Navigate} from "react-router-dom";
+import {Navigate, useLocation} from "react-router-dom";
 import {EXPIRES_AT_TAG, NAME_TAG, TOKEN_TAG} from "../config/config";
 
 const GetToken = () => {return localStorage.getItem(TOKEN_TAG);}
@@ -21,7 +21,8 @@ const  Authed = () => {
 }
 
 const RequireAuth = ({children}) => {
-    return Authed() === true ? children : <Navigate to="/signin" replace />;
+    const location = useLocation();
+    return Authed() === true ? children : <Navigate to="/signin" state={location} />;
 }
 
 const ForcedNoRequireAuth = ({children}) => {
