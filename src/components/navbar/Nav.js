@@ -4,9 +4,12 @@ import "./Nav.css";
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import SigninButton from "../Header/SigninButton";
 import Logo from "./Logo";
-import {Authed, DeleteToken} from "../../auth/Authentication";
+import {Authed, DeleteToken, GetName, GetToken} from "../../auth/Authentication";
 import api from "../../api/BackendApi";
 import {BACKEND_LOGOUT_URI} from "../../config/config";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faReceipt} from "@fortawesome/free-solid-svg-icons";
+import {AccountBox, Logout, Man} from "@mui/icons-material";
 
 function Nav({dynamicClass, callback, setLoading}) {
     const navigate = useNavigate();
@@ -30,11 +33,17 @@ function Nav({dynamicClass, callback, setLoading}) {
 
     const handleLogout = async () => {
         setLoading(true);
-        await api.get(`${BACKEND_LOGOUT_URI}`).then(response => {
+        await api.get(`${BACKEND_LOGOUT_URI}`, {
+            "headers": {
+                "Authorization": `Bearer ${GetToken()}`
+            }
+        }).then(response => {
             DeleteToken();
             navigate("/signin");
         }).catch(err => {
-            console.log("error");
+            DeleteToken();
+            navigate("/signin");
+            // console.log(GetToken());
         });
         setLoading(false);
 
@@ -76,8 +85,6 @@ function Nav({dynamicClass, callback, setLoading}) {
                                     <SearchIcon onClick={clickSearch} fontSize={"large"}
                                                 className={"icon button searchbutton"}/>
                                 </label>
-                                {/*</form>*/}
-                                {/*<a href={"#"}> <SearchIcon fontSize={"large"} className={"icon"}/> </a>*/}
                                 <div className="dropdown notification">
                                     <img src="/images/icons/notification.svg" alt="notificatio icon"/>
                                     <div className="dropdown-content">
@@ -107,27 +114,22 @@ function Nav({dynamicClass, callback, setLoading}) {
                                 <div className="dropdown">
                                     <img src={`${process.env.PUBLIC_URL}/images/icons/user2.png`}
                                          alt="user profile icon"
-                                         className="user-icon"/> <span className="profile-arrow"></span>
+                                         className="user-icon"/>
+                                    <span className="profile-arrow"></span>
 
                                     <div className="dropdown-content">
                                         <div className="profile-links">
-                                            <a href="#" className="profile-item d-flex flex-middle">
-                                                <img src={`${process.env.PUBLIC_URL}/default_profile.jpeg`}
-                                                     alt="user profile icon"
-                                                     className="user-icon"/>
-                                                <span>Rajesh</span>
+                                            <a className="profile-item d-flex flex-middle">
+                                                <AccountBox />
+                                                <span>{GetName()}</span>
                                             </a>
-                                            <a href="#" onClick={handleLogout}
+                                            <div className={"line"}></div>
+                                            <a onClick={handleLogout}
                                                className="profile-item d-flex flex-middle">
-                                                {/*<img src="/images/icons/user2.png" alt="user profile icon"*/}
-                                                {/*     className="user-icon"/>*/}
+                                                <Logout />
                                                 <span>Logout</span>
                                             </a>
-                                            {/*<a href="#" className="profile-item d-flex flex-middle">*/}
-                                            {/*    <img src="/images/icons/user3.png" alt="user profile icon"*/}
-                                            {/*         className="user-icon"/>*/}
-                                            {/*    <span>Pappy</span>*/}
-                                            {/*</a>*/}
+
                                         </div>
 
                                     </div>

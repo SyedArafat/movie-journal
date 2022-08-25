@@ -17,7 +17,6 @@ const DeleteToken = () => {
 }
 
 const  Authed = () => {
-    // if(localStorage.getItem("movie_journal_token_expires_at"))
     return !!(GetToken() !== null && GetToken().length > 10);
 }
 
