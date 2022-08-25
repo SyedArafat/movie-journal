@@ -21,7 +21,6 @@ import {BACKEND_REGISTER_URI} from "../config/config";
 import SignFormSuccess from "../components/SignForm/SignFormSuccess";
 import {Backdrop, CircularProgress} from "@mui/material";
 import Loader from "../components/Loader";
-import AuthContext from "../context/AuthContext";
 
 function SignupPage() {
     const history = useNavigate();

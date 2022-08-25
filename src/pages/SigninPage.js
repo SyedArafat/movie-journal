@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import {useNavigate, Redirect, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 // import { Redirect } from 'react-router';
 import HeaderWrapper from "../components/Header/HeaderWrapper";
 import NavBar from "../components/Header/NavBar";
@@ -14,24 +14,14 @@ import SignFormLink from "../components/SignForm/SignFormLink";
 import SignFormCaptcha from "../components/SignForm/SignFormCaptcha";
 import SignFormError from "../components/SignForm/SignFormError";
 import Logo from "../components/navbar/Logo";
-import AuthContext from "../context/AuthContext";
 import api from "../api/BackendApi";
 import {BACKEND_LOGIN_URI} from "../config/config";
 import Loader from "../components/Loader";
 
 function SigninPage() {
     const navigate = useNavigate();
-    const { login } = AuthContext();
     const { state } = useLocation();
 
-    // const token = (localStorage.getItem("movie_journal_user_token"));
-    // console.log(token);
-    // if(token === null || token === "") {
-    //     setAuth(false);
-    //
-    // } else {
-    //     navigate("/");
-    // }
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -57,11 +47,11 @@ function SigninPage() {
             setPassword("");
             setEmailAddress("");
             setError("");
-            login(accessToken).then(() => {
-                localStorage.setItem('movie_journal_user_token', accessToken);
-                localStorage.setItem('movie_journal_name', name);
-                navigate(state?.path || "/");
-            });
+            // login(accessToken).then(() => {
+            //     localStorage.setItem('movie_journal_user_token', accessToken);
+            //     localStorage.setItem('movie_journal_name', name);
+            //     navigate(state?.path || "/");
+            // });
             // localStorage.setItem('movie_journal_user_token', accessToken);
             // localStorage.setItem('movie_journal_name', name);
             // navigate("/");
