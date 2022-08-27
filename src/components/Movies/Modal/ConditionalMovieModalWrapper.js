@@ -2,9 +2,11 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import MovieModal from "./MovieModal";
 import CardFeatureClose from "../CardFeatureClose";
-import React from "react";
+import React, {useState} from "react";
+import Loader from "../../Loader";
 
 function ConditionalMovieModalWrapper({modalOpen, onClose, activeItem, isTV}) {
+    const [loading, setLoading] = useState(false);
     const handleClose = () => {
         onClose(false);
     }
@@ -27,7 +29,8 @@ function ConditionalMovieModalWrapper({modalOpen, onClose, activeItem, isTV}) {
                 aria-describedby="modal-modal-description"
             >
                 <Box id="modal-modal-description" sx={style}>
-                    <MovieModal props={activeItem} isTv={isTV}/>
+                    <Loader loading={loading} />
+                    <MovieModal props={activeItem} isTv={isTV} setLoading={setLoading}/>
                     <CardFeatureClose onClick={handleClose}/>
                 </Box>
             </Modal>

@@ -1,13 +1,12 @@
 import {Rating} from "react-simple-star-rating";
 import React, {useState} from "react";
 
-function MovieRating({dynamicClass, toolTip = true}) {
-    const [rating, setRating] = useState(0) // initial rating value
+function MovieRating({dynamicClass, toolTip = true, setRating}) {
+    const [rating] = useState(0) // initial rating value
 
     // Catch Rating value
     const handleRating = (rate) => {
         setRating(rate)
-        // other logic
     }
 
     return (

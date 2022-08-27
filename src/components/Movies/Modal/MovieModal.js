@@ -5,14 +5,19 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-regular-svg-icons";
 import {Link, useNavigate} from "react-router-dom";
 import MovieRating from "../MovieRating";
-import {BACKDROP_SIZE, IMAGE_BASE_URL} from "../../../config/config";
+import {BACKDROP_SIZE, BACKEND_MEDIA_CONTENT_API, BACKEND_REGISTER_URI, IMAGE_BASE_URL} from "../../../config/config";
 import WatchRibbon from "../../MoviePage/element/Ribbon/WatchRibbon";
 import {contentTitle} from "../../../helpers";
 import MovieKeyData from "../MovieKeyData";
+import api from "../../../api/BackendApi";
+import {GetToken} from "../../../auth/Authentication";
 
 
-function MovieModal({props, isTv}) {
+function MovieModal({props, isTv, setLoading}) {
     const [movie, setMovie] = useState([]);
+    const [rating, setRating] = useState(0);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         async function fetchData() {
@@ -28,6 +33,44 @@ function MovieModal({props, isTv}) {
     let detailsClickEvent = (parma) => {
         navigate(parma, { replace: true });
         window.location.reload();
+    }
+
+    let watchClickEvent = async (watch) => {
+        if(!rating) {
+            alert("Rating is missing");
+            return false;
+        }
+        setLoading(true);
+
+        let data = {
+            "content": movie,
+            "type": isTv ? "TV" : "MOVIE",
+            "status": watch ? "WATCHED" : "WISHLIST",
+            "rating": rating
+        }
+
+        try {
+            let response = await api.post(`${BACKEND_MEDIA_CONTENT_API}`, data, {
+                "headers": {
+                    "Authorization": `Bearer ${GetToken()}`
+                }
+            });
+            setSuccess(true);
+            setError("");
+            console.log(response);
+        } catch (err) {
+            setSuccess(false);
+            if(!err?.response) {
+                setError("No Server Response");
+            } else if(err.response?.status === 400) {
+                setError("Invalid Input Data");
+            } else {
+                setError("Something Went Wrong! Try again Latter");
+            }
+        }
+        setLoading(false);
+
+        console.log(data);
     }
 
     return (
@@ -52,10 +95,10 @@ function MovieModal({props, isTv}) {
                     {movie?.overview}
                 </div>
 
-                <MovieRating />
+                <MovieRating setRating={setRating}/>
 
                 <div className="modal-banner-buttons">
-                    <button className="banner-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
+                    <button onClick={watchClickEvent} className="banner-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
                         Watched
                     </button>
                     <Link onClick={() => {detailsClickEvent(isTv ? "/tv/" + movie.id : "/movie/" + movie.id)}} to={isTv ? "/tv/" + movie.id : "/movie/" + movie.id + "?from=internal"}>

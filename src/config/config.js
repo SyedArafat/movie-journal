@@ -16,6 +16,7 @@ const POSTER_SIZE = 'w500';
 const BACKEND_API_BASE_URL = "http://localhost:8888";
 
 const BACKEND_REGISTER_URI = "/api/auth/register";
+const BACKEND_MEDIA_CONTENT_API = "/api/media/content";
 const BACKEND_LOGIN_URI = "/api/auth/login";
 const BACKEND_LOGOUT_URI = "/api/auth/logout";
 const TOKEN_TAG = "movie_journal_user_token";
@@ -35,5 +36,6 @@ export {
     BACKEND_LOGOUT_URI,
     TOKEN_TAG,
     NAME_TAG,
-    EXPIRES_AT_TAG
+    EXPIRES_AT_TAG,
+    BACKEND_MEDIA_CONTENT_API
 }

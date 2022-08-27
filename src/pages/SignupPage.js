@@ -57,7 +57,6 @@ function SignupPage() {
             } else {
                 setError("Something Went Wrong! Try again Latter");
             }
-
         }
 
         setLoading(false);
