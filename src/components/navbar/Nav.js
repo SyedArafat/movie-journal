@@ -7,9 +7,7 @@ import Logo from "./Logo";
 import {Authed, DeleteToken, GetName, GetToken} from "../../auth/Authentication";
 import api from "../../api/BackendApi";
 import {BACKEND_LOGOUT_URI} from "../../config/config";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faReceipt} from "@fortawesome/free-solid-svg-icons";
-import {AccountBox, Logout, Man} from "@mui/icons-material";
+import {AccountBox, Logout} from "@mui/icons-material";
 
 function Nav({dynamicClass, callback, setLoading}) {
     const navigate = useNavigate();
@@ -67,7 +65,7 @@ function Nav({dynamicClass, callback, setLoading}) {
                 {/*<div className=>*/}
                 <div className="left">
                     <Link onClick={emptySearch} to={"/"}><Logo/></Link>
-                    <Link to="/signin"><span>Movies</span></Link>
+                    <Link to="/"><span>Movies</span></Link>
                     <span>TV Shows</span>
                     <span>History</span>
                     <span>My List</span>

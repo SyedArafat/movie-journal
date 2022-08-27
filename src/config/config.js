@@ -19,6 +19,7 @@ const BACKEND_REGISTER_URI = "/api/auth/register";
 const BACKEND_MEDIA_CONTENT_API = "/api/media/content";
 const BACKEND_LOGIN_URI = "/api/auth/login";
 const BACKEND_LOGOUT_URI = "/api/auth/logout";
+const BACKEND_IS_WATCHED_URI = "/api/media/watched-status";
 const TOKEN_TAG = "movie_journal_user_token";
 const NAME_TAG = "movie_journal_name";
 const EXPIRES_AT_TAG = "movie_journal_expire_tag";
@@ -37,5 +38,6 @@ export {
     TOKEN_TAG,
     NAME_TAG,
     EXPIRES_AT_TAG,
-    BACKEND_MEDIA_CONTENT_API
+    BACKEND_MEDIA_CONTENT_API,
+    BACKEND_IS_WATCHED_URI
 }

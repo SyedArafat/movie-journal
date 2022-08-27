@@ -5,23 +5,43 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-regular-svg-icons";
 import {Link, useNavigate} from "react-router-dom";
 import MovieRating from "../MovieRating";
-import {BACKDROP_SIZE, BACKEND_MEDIA_CONTENT_API, BACKEND_REGISTER_URI, IMAGE_BASE_URL} from "../../../config/config";
+import {
+    BACKDROP_SIZE, BACKEND_IS_WATCHED_URI,
+    BACKEND_LOGOUT_URI,
+    BACKEND_MEDIA_CONTENT_API,
+    BACKEND_REGISTER_URI,
+    IMAGE_BASE_URL
+} from "../../../config/config";
 import WatchRibbon from "../../MoviePage/element/Ribbon/WatchRibbon";
 import {contentTitle} from "../../../helpers";
 import MovieKeyData from "../MovieKeyData";
 import api from "../../../api/BackendApi";
-import {GetToken} from "../../../auth/Authentication";
+import {DeleteToken, GetToken} from "../../../auth/Authentication";
 
 
 function MovieModal({props, isTv, setLoading}) {
     const [movie, setMovie] = useState([]);
     const [rating, setRating] = useState(0);
+    const [watched, setWatched] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState("");
 
     useEffect(() => {
         async function fetchData() {
             setMovie(props)
+            setLoading(true);
+            let type = isTv ? "tv" : "movie";
+            await api.get(`${BACKEND_IS_WATCHED_URI}/${type}/${props.id}`, {
+                "headers": {
+                    "Authorization": `Bearer ${GetToken()}`
+                }
+            }).then(response => {
+               setWatched(response.data.status);
+               setRating(response.data.rating);
+            }).catch(err => {
+                // console.log(GetToken());
+            });
+            setLoading(false);
         }
 
         fetchData();
@@ -43,10 +63,11 @@ function MovieModal({props, isTv, setLoading}) {
         setLoading(true);
 
         let data = {
-            "content": movie,
+            "content": JSON.stringify(movie),
             "type": isTv ? "TV" : "MOVIE",
             "status": watch ? "WATCHED" : "WISHLIST",
-            "rating": rating
+            "rating": rating,
+            "store_type": "watched"
         }
 
         try {
@@ -69,8 +90,7 @@ function MovieModal({props, isTv, setLoading}) {
             }
         }
         setLoading(false);
-
-        console.log(data);
+        setWatched(true);
     }
 
     return (
@@ -85,7 +105,7 @@ function MovieModal({props, isTv, setLoading}) {
 
             <div className="model-banner-contents">
 
-                <WatchRibbon />
+                {watched && <WatchRibbon />}
                 <div className="banner-title">
                     { contentTitle(movie)}
                 </div>
@@ -95,18 +115,18 @@ function MovieModal({props, isTv, setLoading}) {
                     {movie?.overview}
                 </div>
 
-                <MovieRating setRating={setRating}/>
+                <MovieRating storedRating={rating} isWatched={watched} setRating={setRating}/>
 
                 <div className="modal-banner-buttons">
-                    <button onClick={watchClickEvent} className="banner-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
+                    {!watched && <button onClick={watchClickEvent} className="banner-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
                         Watched
-                    </button>
+                    </button>}
                     <Link onClick={() => {detailsClickEvent(isTv ? "/tv/" + movie.id : "/movie/" + movie.id)}} to={isTv ? "/tv/" + movie.id : "/movie/" + movie.id + "?from=internal"}>
                         <button  className="banner-button"><FontAwesomeIcon icon={faEye}/> {"\u00a0\u00a0"}
                             Details
                         </button>
                     </Link>
-                    <button className="banner-button"><FontAwesomeIcon icon={faPlus}/> Watch List</button>
+                    {!watched && <button className="banner-button"><FontAwesomeIcon icon={faPlus}/> Watch List</button>}
                 </div>
 
 
