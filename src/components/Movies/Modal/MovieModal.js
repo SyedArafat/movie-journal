@@ -8,7 +8,7 @@ import MovieRating from "../MovieRating";
 import {
     BACKDROP_SIZE, BACKEND_IS_WATCHED_URI,
     BACKEND_LOGOUT_URI,
-    BACKEND_MEDIA_CONTENT_API,
+    BACKEND_MEDIA_CONTENT_API, BACKEND_MEDIA_REMOVE_API,
     BACKEND_REGISTER_URI,
     IMAGE_BASE_URL
 } from "../../../config/config";
@@ -84,6 +84,36 @@ function MovieModal({props, isTv, setLoading}) {
             "store_type": "wishlist",
         }
         await storeChoice(data);
+        setInWishlist(true);
+        setLoading(false);
+    }
+
+    let removeClickEvent = async () => {
+        setLoading(true);
+        let type = isTv ? "tv" : "movie";
+        let media_id = movie.id;
+        try {
+            let response = await api.post(`${BACKEND_MEDIA_REMOVE_API}/${type}/${media_id}`, {
+                "headers": {
+                    "Authorization": `Bearer ${GetToken()}`
+                }
+            });
+            setSuccess(true);
+            setInWishlist(false);
+            setWatched(false);
+            setRating(0);
+            setError("");
+            console.log(response);
+        } catch (err) {
+            setSuccess(false);
+            if(!err?.response) {
+                setError("No Server Response");
+            } else if(err.response?.status === 400) {
+                setError("Invalid Input Data");
+            } else {
+                setError("Something Went Wrong! Try again Latter");
+            }
+        }
         setLoading(false);
     }
 
@@ -146,7 +176,7 @@ function MovieModal({props, isTv, setLoading}) {
                             Details
                         </button>
                     </Link>
-                    {(watched || inWishlist) && <button  className="banner-button remove-button"><FontAwesomeIcon icon={faMinusCircle}/> {"\u00a0\u00a0"}
+                    {(watched || inWishlist) && <button onClick={removeClickEvent} className="banner-button remove-button"><FontAwesomeIcon icon={faMinusCircle}/> {"\u00a0\u00a0"}
                         Remove
                     </button>}
                     {!watched && !inWishlist && <button onClick={wishlistClickEvent} className="banner-button"><FontAwesomeIcon icon={faPlus}/> Watch List</button>}

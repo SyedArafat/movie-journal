@@ -17,6 +17,7 @@ const BACKEND_API_BASE_URL = "http://localhost:8888";
 
 const BACKEND_REGISTER_URI = "/api/auth/register";
 const BACKEND_MEDIA_CONTENT_API = "/api/media/content";
+const BACKEND_MEDIA_REMOVE_API = "/api/media/content/remove";
 const BACKEND_LOGIN_URI = "/api/auth/login";
 const BACKEND_LOGOUT_URI = "/api/auth/logout";
 const BACKEND_IS_WATCHED_URI = "/api/media/status";
@@ -39,5 +40,6 @@ export {
     NAME_TAG,
     EXPIRES_AT_TAG,
     BACKEND_MEDIA_CONTENT_API,
-    BACKEND_IS_WATCHED_URI
+    BACKEND_IS_WATCHED_URI,
+    BACKEND_MEDIA_REMOVE_API
 }
