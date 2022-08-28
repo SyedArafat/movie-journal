@@ -1,17 +1,18 @@
 import {useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {API_KEY, API_URL, SEARCH_TYPE} from "../config/config";
+import {API_KEY, API_URL, BACKEND_IS_WATCHED_URI, SEARCH_TYPE} from "../config/config";
 import axios from "../axios";
 import MovieInfo from "../components/MoviePage/MovieInfo.component";
 import MovieInfoBar from "../components/MoviePage/MovieInfoBar.component";
 import Nav from "../components/navbar/Nav";
 import FourColGrid from "../components/MoviePage/element/FourColGrid/FourColGrid.component";
 import Actor from "../components/MoviePage/element/Actor/Actor.component";
-import Spinner from "../components/Spinner/Spinner.component";
 import Footer from "../compounds/FooterCompound";
 import Seasons from "../components/TV/Seasons";
 import SearchResults from "../components/Search/SearchResults";
 import Loader from "../components/Loader";
+import api from "../api/BackendApi";
+import {GetToken} from "../auth/Authentication";
 
 function MoviePage() {
     const [movie, setMovie] = useState(false);
@@ -21,6 +22,9 @@ function MoviePage() {
     const {type} = useParams();
 
     const [movies, setMovies] = useState(false);
+    const [personalChoice, setPersonalChoice] = useState(false);
+    // const [watched, setWatched] = useState(false);
+    // const [inWishlist, setInWishlist] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
     const searchItems = async (searchTerm) => {
         setLoading(true);
@@ -40,13 +44,26 @@ function MoviePage() {
 
     useEffect(() => {
         async function fetchData() {
+            setLoading(true);
+            await api.get(`${BACKEND_IS_WATCHED_URI}/${type}/${movieId}`, {
+                "headers": {
+                    "Authorization": `Bearer ${GetToken()}`
+                }
+            }).then(response => {
+                setPersonalChoice(response.data);
+                // setWatched(response.data.watch_status);
+                // setRating(response.data.rating);
+                // setInWishlist(response.data.in_wishlist);
+            }).catch(err => {
+                // console.log(GetToken());
+            });
             let endpoint = `${API_URL}${type}/${movieId}?api_key=${API_KEY}&language=en-US`;
             const request = await axios.get(endpoint);
             setMovie(request.data);
             let creditEndpoint = `${API_URL}${type}/${movieId}/credits?api_key=${API_KEY}`;
             const creditRequest = await axios.get(creditEndpoint);
             setCredits(creditRequest.data);
-
+            setLoading(false);
         }
 
         fetchData();
@@ -71,7 +88,7 @@ function MoviePage() {
                 showSearch === false ? (
                 movie ?
                 <div>
-                    <MovieInfo movie={movie} type={type} directors={directors}/>
+                    <MovieInfo setLoading={setLoading} movie={movie} type={type} directors={directors} personalChoice={personalChoice}/>
 
                     <MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue}/>
 

@@ -83,11 +83,11 @@
   color: #fff;
   outline: none;
   border: none;
-  font-weight: 700;
-  border-radius: 0.2vw;
+  font-weight: 600;
+  border-radius: 0.15vw;
   margin-right: 1rem;
   background-color: rgba(51, 51, 51, 0.5);
-  padding: 0.5rem 2rem;
+  padding: 0.4rem 1.5rem;
 }
 
 .remove-button {

@@ -1,22 +1,20 @@
 import React, {useState, useEffect} from 'react';
 import '../../banner/Banner.css';
-import {faMinus, faMinusCircle, faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
+import {faMinusCircle, faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-regular-svg-icons";
 import {Link, useNavigate} from "react-router-dom";
 import MovieRating from "../MovieRating";
 import {
     BACKDROP_SIZE, BACKEND_IS_WATCHED_URI,
-    BACKEND_LOGOUT_URI,
     BACKEND_MEDIA_CONTENT_API, BACKEND_MEDIA_REMOVE_API,
-    BACKEND_REGISTER_URI,
     IMAGE_BASE_URL
 } from "../../../config/config";
 import WatchRibbon from "../../MoviePage/element/Ribbon/WatchRibbon";
 import {contentTitle} from "../../../helpers";
 import MovieKeyData from "../MovieKeyData";
 import api from "../../../api/BackendApi";
-import {DeleteToken, GetToken} from "../../../auth/Authentication";
+import {GetToken} from "../../../auth/Authentication";
 
 
 function MovieModal({props, isTv, setLoading}) {
