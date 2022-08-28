@@ -90,6 +90,14 @@
   padding: 0.5rem 2rem;
 }
 
+.remove-button {
+  background: rgb(204 60 116 / 50%);
+}
+
+.update-button {
+  background: rgb(170 194 33 / 50%);
+}
+
 .modal-banner-buttons {
   padding: 20px;
 }

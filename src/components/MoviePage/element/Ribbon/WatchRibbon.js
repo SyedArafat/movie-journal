@@ -1,9 +1,9 @@
 import React from "react";
 import "./RibonStyle.css";
 
-function WatchRibbon() {
+function WatchRibbon({dynamic_class, title}) {
     return (
-        <div  className="stack-top left">Watched</div>
+        <div  className={`stack-top left ${dynamic_class}`}>{title}</div>
     );
 }
 

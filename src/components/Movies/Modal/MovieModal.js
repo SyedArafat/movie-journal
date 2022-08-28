@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import '../../banner/Banner.css';
-import {faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
+import {faMinus, faMinusCircle, faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-regular-svg-icons";
 import {Link, useNavigate} from "react-router-dom";
@@ -23,6 +23,7 @@ function MovieModal({props, isTv, setLoading}) {
     const [movie, setMovie] = useState([]);
     const [rating, setRating] = useState(0);
     const [watched, setWatched] = useState(false);
+    const [inWishlist, setInWishlist] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState("");
 
@@ -36,8 +37,9 @@ function MovieModal({props, isTv, setLoading}) {
                     "Authorization": `Bearer ${GetToken()}`
                 }
             }).then(response => {
-               setWatched(response.data.status);
+               setWatched(response.data.watch_status);
                setRating(response.data.rating);
+               setInWishlist(response.data.in_wishlist);
             }).catch(err => {
                 // console.log(GetToken());
             });
@@ -55,7 +57,7 @@ function MovieModal({props, isTv, setLoading}) {
         window.location.reload();
     }
 
-    let watchClickEvent = async (watch) => {
+    let watchClickEvent = async () => {
         if(!rating) {
             alert("Rating is missing");
             return false;
@@ -65,11 +67,27 @@ function MovieModal({props, isTv, setLoading}) {
         let data = {
             "content": JSON.stringify(movie),
             "type": isTv ? "TV" : "MOVIE",
-            "status": watch ? "WATCHED" : "WISHLIST",
+            "store_type": "watched",
             "rating": rating,
-            "store_type": "watched"
         }
+        await storeChoice(data);
+        setLoading(false);
+        setWatched(true);
+    }
 
+    let wishlistClickEvent = async () => {
+        setLoading(true);
+
+        let data = {
+            "content": JSON.stringify(movie),
+            "type": isTv ? "TV" : "MOVIE",
+            "store_type": "wishlist",
+        }
+        await storeChoice(data);
+        setLoading(false);
+    }
+
+    const storeChoice = async (data) => {
         try {
             let response = await api.post(`${BACKEND_MEDIA_CONTENT_API}`, data, {
                 "headers": {
@@ -89,8 +107,6 @@ function MovieModal({props, isTv, setLoading}) {
                 setError("Something Went Wrong! Try again Latter");
             }
         }
-        setLoading(false);
-        setWatched(true);
     }
 
     return (
@@ -105,7 +121,8 @@ function MovieModal({props, isTv, setLoading}) {
 
             <div className="model-banner-contents">
 
-                {watched && <WatchRibbon />}
+                {watched && <WatchRibbon title={"Watched"} />}
+                {!watched && inWishlist && <WatchRibbon dynamic_class={"wishlist"} title={"In Wishlist"}/>}
                 <div className="banner-title">
                     { contentTitle(movie)}
                 </div>
@@ -121,12 +138,18 @@ function MovieModal({props, isTv, setLoading}) {
                     {!watched && <button onClick={watchClickEvent} className="banner-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
                         Watched
                     </button>}
+                    {watched && <button onClick={watchClickEvent} className="banner-button update-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
+                        Update
+                    </button>}
                     <Link onClick={() => {detailsClickEvent(isTv ? "/tv/" + movie.id : "/movie/" + movie.id)}} to={isTv ? "/tv/" + movie.id : "/movie/" + movie.id + "?from=internal"}>
                         <button  className="banner-button"><FontAwesomeIcon icon={faEye}/> {"\u00a0\u00a0"}
                             Details
                         </button>
                     </Link>
-                    {!watched && <button className="banner-button"><FontAwesomeIcon icon={faPlus}/> Watch List</button>}
+                    {(watched || inWishlist) && <button  className="banner-button remove-button"><FontAwesomeIcon icon={faMinusCircle}/> {"\u00a0\u00a0"}
+                        Remove
+                    </button>}
+                    {!watched && !inWishlist && <button onClick={wishlistClickEvent} className="banner-button"><FontAwesomeIcon icon={faPlus}/> Watch List</button>}
                 </div>
 
 
