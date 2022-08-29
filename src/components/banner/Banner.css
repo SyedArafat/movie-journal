@@ -90,6 +90,10 @@
   padding: 0.4rem 1.5rem;
 }
 
+.positive-button {
+  background: rgb(44 89 81 / 67%);
+}
+
 .remove-button {
   background: rgb(204 60 116 / 50%);
 }
@@ -100,6 +104,10 @@
 
 .modal-banner-buttons {
   padding: 20px;
+}
+
+.padding-left-0 {
+  padding-left: 0px;
 }
 
 .banner-button:hover {

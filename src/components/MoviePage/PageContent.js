@@ -102,7 +102,7 @@ function PageContent({movie, directors, type, personalChoice, setLoading}) {
                 />
             </div>
             <div className="rmdb-movieinfo-text">
-                <h2 style={{fontSize: "2.1em"}}> {contentTitle(movie)} </h2>
+                <h2 style={{fontSize: "2em", marginBottom:".6em"}}> {contentTitle(movie)} </h2>
                 <MovieKeyData movie={movie}/>
                 <p>{movie.overview}</p>
                 <h3>TMDB RATING</h3>
@@ -111,18 +111,24 @@ function PageContent({movie, directors, type, personalChoice, setLoading}) {
                     <p className="rmdb-score">{parseFloat(movie.vote_average).toFixed(2)}</p>
                 </div>
                 {type === "movie" && <Director directors={directors}/>}
-                <div>
-                    <h3>Personal Rating</h3>
-                    <MovieRating storedRating={rating} setRating={setRating} dynamicClass="watch-button-in-page"/>
-                    { !watched && <button onClick={watchClickEvent} className="banner-button watch-button"><FontAwesomeIcon
-                        icon={faPlayCircle}/> {"\u00a0\u00a0"}
-                        Watched
-                    </button> }
+                <div style={{display: "flex"}}>
+                    <h3 style={{marginRight: "1em"}}>Personal Rating:</h3>
+                    <MovieRating dynamicClass={"padding-11"} storedRating={rating} isWatched={watched} setRating={setRating}/>
+
                 </div>
-                { !watched && !inWishlist && <button onClick={wishlistClickEvent} className="banner-button-movie-page"><FontAwesomeIcon icon={faPlus}/> Watch List</button> }
-                {(watched || inWishlist) && <button onClick={removeClickEvent} className="banner-button watch-button remove-button"><FontAwesomeIcon icon={faMinusCircle}/> {"\u00a0\u00a0"}
-                    Remove
-                </button>}
+
+                <div className="modal-banner-buttons padding-left-0">
+                    {!watched && <button onClick={watchClickEvent} className="banner-button positive-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
+                        Watched
+                    </button>}
+                    {watched && <button onClick={watchClickEvent} className="banner-button update-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
+                        Update
+                    </button>}
+                    {(watched || inWishlist) && <button onClick={removeClickEvent} className="banner-button remove-button"><FontAwesomeIcon icon={faMinusCircle}/> {"\u00a0\u00a0"}
+                        Remove
+                    </button>}
+                    {!watched && !inWishlist && <button onClick={wishlistClickEvent} className="banner-button positive-button"><FontAwesomeIcon icon={faPlus}/> Watch List</button>}
+                </div>
 
             </div>
             <FontAwesomeIcon icon={faFilm} name="film" size="5x"/>

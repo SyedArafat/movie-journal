@@ -33,7 +33,7 @@ function Seasons({id, name, numberOfSeasons}) {
         seasonsDropDown.push(<option key={i} value={i}>Season {i}</option>);
     }
 
-    // console.log(episodes);
+
     return (
         <div>
             {episodes ?
