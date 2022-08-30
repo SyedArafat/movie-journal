@@ -1,5 +1,11 @@
 import MovieThumb from "./MovieThumb.component";
-import {BACKEND_MEDIA_CONTENT_API, BACKEND_MEDIA_REMOVE_API, IMAGE_BASE_URL, POSTER_SIZE} from "../../config/config";
+import {
+    BACKEND_IS_WATCHED_URI,
+    BACKEND_MEDIA_CONTENT_API,
+    BACKEND_MEDIA_REMOVE_API,
+    IMAGE_BASE_URL,
+    POSTER_SIZE
+} from "../../config/config";
 import Director from "./Director";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilm, faMinusCircle, faPlayCircle, faPlus} from "@fortawesome/free-solid-svg-icons";
@@ -11,7 +17,7 @@ import {contentTitle} from "../../helpers";
 import api from "../../api/BackendApi";
 import {GetToken} from "../../auth/Authentication";
 
-function PageContent({movie, directors, type, personalChoice, setLoading}) {
+function PageContent({movie, directors, type, personalChoice, setLoading, setSeasonDetails}) {
     const [rating, setRating] = useState(personalChoice.rating);
     const [error, setError] = useState("");
     const [watched, setWatched] = useState(personalChoice?.watch_status);
@@ -31,9 +37,21 @@ function PageContent({movie, directors, type, personalChoice, setLoading}) {
             "rating": rating,
         }
         await storeChoice(data);
-        setLoading(false);
         setWatched(true);
         setRating(rating);
+        if(type === "tv") {
+            await api.get(`${BACKEND_IS_WATCHED_URI}/${type}/${movie.id}`, {
+                "headers": {
+                    "Authorization": `Bearer ${GetToken()}`
+                }
+            }).then(response => {
+                setSeasonDetails(response.data?.seasons);
+            }).catch(err => {
+                // console.log(GetToken());
+            });
+        }
+        setLoading(false);
+
         // window.location.reload();
     }
     let removeClickEvent = async () => {
@@ -49,6 +67,17 @@ function PageContent({movie, directors, type, personalChoice, setLoading}) {
             setWatched(false);
             setRating(0);
             setError("");
+            if(type === "tv") {
+                await api.get(`${BACKEND_IS_WATCHED_URI}/${type}/${movie.id}`, {
+                    "headers": {
+                        "Authorization": `Bearer ${GetToken()}`
+                    }
+                }).then(response => {
+                    setSeasonDetails(response.data?.seasons);
+                }).catch(err => {
+                    // console.log(GetToken());
+                });
+            }
         } catch (err) {
             if(!err?.response) {
                 setError("No Server Response");

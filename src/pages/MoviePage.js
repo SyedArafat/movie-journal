@@ -16,6 +16,7 @@ import {GetToken} from "../auth/Authentication";
 
 function MoviePage() {
     const [movie, setMovie] = useState(false);
+    const [seasonDetails, setSeasonDetails] = useState(false);
     const [loading, setLoading] = useState(false);
     const [credits, setCredits] = useState([]);
     const {movieId} = useParams();
@@ -44,6 +45,7 @@ function MoviePage() {
 
     useEffect(() => {
         async function fetchData() {
+            console.log("MOVIE PAGE API CALL");
             setLoading(true);
             await api.get(`${BACKEND_IS_WATCHED_URI}/${type}/${movieId}`, {
                 "headers": {
@@ -51,6 +53,7 @@ function MoviePage() {
                 }
             }).then(response => {
                 setPersonalChoice(response.data);
+                setSeasonDetails(personalChoice?.seasons);
             }).catch(err => {
                 // console.log(GetToken());
             });
@@ -63,7 +66,7 @@ function MoviePage() {
             setLoading(false);
         }
 
-        fetchData();
+        fetchData().then(r => {});
     }, [movieId, type]);
 
     let directors = [];
@@ -85,7 +88,7 @@ function MoviePage() {
                 showSearch === false ? (
                 movie ?
                 <div>
-                    <MovieInfo setLoading={setLoading} movie={movie} type={type} directors={directors} personalChoice={personalChoice}/>
+                    <MovieInfo setSeasonDetails={setSeasonDetails} setLoading={setLoading} movie={movie} type={type} directors={directors} personalChoice={personalChoice}/>
 
                     <MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue}/>
 
@@ -104,7 +107,7 @@ function MoviePage() {
                 </div>
                 : null }
             {type === "tv" && showSearch === false ?
-                <Seasons seasonDetails={personalChoice?.seasons} id={movieId} name = {movie?.title || movie?.name || movie?.original_name}  numberOfSeasons={movie.number_of_seasons}/>
+                <Seasons seasonDetails={seasonDetails ?? personalChoice?.seasons} id={movieId} name = {movie?.title || movie?.name || movie?.original_name}  numberOfSeasons={movie.number_of_seasons}/>
                 : null
             }
 

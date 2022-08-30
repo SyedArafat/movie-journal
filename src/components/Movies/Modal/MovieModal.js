@@ -117,14 +117,13 @@ function MovieModal({props, isTv, setLoading}) {
 
     const storeChoice = async (data) => {
         try {
-            let response = await api.post(`${BACKEND_MEDIA_CONTENT_API}`, data, {
+            await api.post(`${BACKEND_MEDIA_CONTENT_API}`, data, {
                 "headers": {
                     "Authorization": `Bearer ${GetToken()}`
                 }
             });
             setSuccess(true);
             setError("");
-            console.log(response);
         } catch (err) {
             setSuccess(false);
             if(!err?.response) {
