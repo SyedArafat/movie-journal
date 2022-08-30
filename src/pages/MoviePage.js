@@ -51,9 +51,6 @@ function MoviePage() {
                 }
             }).then(response => {
                 setPersonalChoice(response.data);
-                // setWatched(response.data.watch_status);
-                // setRating(response.data.rating);
-                // setInWishlist(response.data.in_wishlist);
             }).catch(err => {
                 // console.log(GetToken());
             });
@@ -107,7 +104,7 @@ function MoviePage() {
                 </div>
                 : null }
             {type === "tv" && showSearch === false ?
-                <Seasons id={movieId} name = {movie?.title || movie?.name || movie?.original_name}  numberOfSeasons={movie.number_of_seasons}/>
+                <Seasons seasonDetails={personalChoice?.seasons} id={movieId} name = {movie?.title || movie?.name || movie?.original_name}  numberOfSeasons={movie.number_of_seasons}/>
                 : null
             }
 

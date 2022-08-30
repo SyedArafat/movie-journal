@@ -26,7 +26,6 @@ function PageContent({movie, directors, type, personalChoice, setLoading}) {
 
         let data = {
             "content": JSON.stringify(movie),
-            // "type": isTv ? "TV" : "MOVIE",
             "type": type,
             "store_type": "watched",
             "rating": rating,
@@ -35,6 +34,7 @@ function PageContent({movie, directors, type, personalChoice, setLoading}) {
         setLoading(false);
         setWatched(true);
         setRating(rating);
+        // window.location.reload();
     }
     let removeClickEvent = async () => {
         setLoading(true);
