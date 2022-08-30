@@ -12,7 +12,7 @@ import Loader from "../Loader";
 import api from "../../api/BackendApi";
 import {GetToken} from "../../auth/Authentication";
 
-function Seasons({id, name, numberOfSeasons, seasonDetails, allWatch}) {
+function Seasons({id, name, numberOfSeasons, seasonDetails}) {
     const [rating, setRating] = useState(0);
     const [seasonWatched, setSeasonWatched] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -137,11 +137,14 @@ function Seasons({id, name, numberOfSeasons, seasonDetails, allWatch}) {
                             <MovieRating setRating={setRating} storedRating={rating}
                                          dynamicClass="watch-button-in-page"/>
                             {/*<span><img style={{paddingTop: "7px", marginLeft: "14px"}} width={"45px"} src={"/images/icons/tick2.png"} /></span>*/}
-                            <button onClick={handleSeasonWatched} className="banner-button watch-button">
+                            {!seasonWatched && <button onClick={handleSeasonWatched} className="banner-button watch-button">
                                 <FontAwesomeIcon
                                     icon={faPlayCircle}/> {"\u00a0\u00a0"}
                                 Watched
-                            </button>
+                            </button>}
+                            {seasonWatched && <button onClick={handleSeasonWatched} className="banner-button watch-button update-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
+                                Update
+                            </button>}
                         </div>
                     </div>
                     <Loader loading={loading}/>

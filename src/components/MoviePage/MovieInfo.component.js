@@ -10,7 +10,14 @@ const MovieInfo = ({movie, directors, type, personalChoice, setLoading, setSeaso
              background: movie.backdrop_path ? `url('${IMAGE_BASE_URL}${BACKDROP_SIZE}${movie.backdrop_path}')` : '#000'
          }}
     >
-        <PageContent setSeasonDetails={setSeasonDetails} setLoading={setLoading} movie={movie} type={type} directors={directors} personalChoice={personalChoice}/>
+        <PageContent
+            setSeasonDetails={setSeasonDetails}
+            setLoading={setLoading}
+            movie={movie}
+            type={type}
+            directors={directors}
+            personalChoice={personalChoice}
+        />
     </div>
 )
 

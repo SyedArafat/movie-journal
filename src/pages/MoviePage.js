@@ -89,7 +89,13 @@ function MoviePage() {
                 showSearch === false ? (
                 movie ?
                 <div>
-                    <MovieInfo setSeasonDetails={setSeasonDetails} setLoading={setLoading} movie={movie} type={type} directors={directors} personalChoice={personalChoice}/>
+                    <MovieInfo
+                        setSeasonDetails={setSeasonDetails}
+                        setLoading={setLoading}
+                        movie={movie}
+                        type={type}
+                        directors={directors}
+                        personalChoice={personalChoice}/>
 
                     <MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue}/>
 

@@ -47,6 +47,7 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                 }
             }).then(response => {
                 setSeasonDetails(response.data?.seasons);
+                setWatchedSeasons(response.data?.watched_seasons);
 
             }).catch(err => {
                 // console.log(GetToken());
@@ -80,7 +81,8 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                 }).catch(err => {
                     // console.log(GetToken());
                 });
-                setWatchedSeasons(false)
+                setWatchedSeasons(false);
+                setSeasonDetails(false);
 
             }
         } catch (err) {
