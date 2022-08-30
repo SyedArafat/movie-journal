@@ -41,7 +41,7 @@ function SigninPage() {
             let response = await api.post(`${BACKEND_LOGIN_URI}`, data);
             const accessToken = response?.data?.access_token;
             const name =  response?.data?.name;
-            const expiresAt =  response?.data?.expires_at;
+            const expiresAt = response?.data?.expires_at;
             setPassword("");
             setEmailAddress("");
             setError("");
