@@ -19,6 +19,7 @@ import {GetToken} from "../../auth/Authentication";
 
 function PageContent({movie, directors, type, personalChoice, setLoading, setSeasonDetails}) {
     const [rating, setRating] = useState(personalChoice.rating);
+    const [watchedSeasons, setWatchedSeasons] = useState(personalChoice.watched_seasons);
     const [error, setError] = useState("");
     const [watched, setWatched] = useState(personalChoice?.watch_status);
     const [inWishlist, setInWishlist] = useState(personalChoice?.in_wishlist);
@@ -46,6 +47,7 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                 }
             }).then(response => {
                 setSeasonDetails(response.data?.seasons);
+
             }).catch(err => {
                 // console.log(GetToken());
             });
@@ -74,9 +76,12 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                     }
                 }).then(response => {
                     setSeasonDetails(response.data?.seasons);
+                    setWatchedSeasons(response.data?.watched_seasons);
                 }).catch(err => {
                     // console.log(GetToken());
                 });
+                setWatchedSeasons(false)
+
             }
         } catch (err) {
             if(!err?.response) {
@@ -140,10 +145,13 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                     <p className="rmdb-score">{parseFloat(movie.vote_average).toFixed(2)}</p>
                 </div>
                 {type === "movie" && <Director directors={directors}/>}
+
                 <div style={{display: "flex"}}>
                     <h3 style={{marginRight: "1em"}}>Personal Rating:</h3>
                     <MovieRating dynamicClass={"padding-11"} storedRating={rating} isWatched={watched} setRating={setRating}/>
-
+                    {type === "tv" && watchedSeasons && (
+                        <div className={"watched-seasons"}>Watched Seasons: <span>{watchedSeasons}</span> </div>
+                    )}
                 </div>
 
                 <div className="modal-banner-buttons padding-left-0">

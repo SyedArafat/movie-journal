@@ -21,6 +21,7 @@ function MoviePage() {
     const [credits, setCredits] = useState([]);
     const {movieId} = useParams();
     const {type} = useParams();
+    // const {watchedSeasons, setWatchedSeasons} = useState(false);
 
     const [movies, setMovies] = useState(false);
     const [personalChoice, setPersonalChoice] = useState(false);

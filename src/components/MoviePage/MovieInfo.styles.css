@@ -71,6 +71,11 @@
   position: relative;
 }
 
+.watched-seasons {
+  margin-top: 20px;
+  position: relative;
+}
+
 .rmdb-score {
   position: absolute;
   margin: 0;
