@@ -8,7 +8,7 @@ import Episode from "./Episode";
 import MovieRating from "../Movies/MovieRating";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlayCircle} from "@fortawesome/free-solid-svg-icons";
-import BadgeWatch from "../Movies/BadgeWatch";
+import {Badge} from "@mui/material";
 
 function Seasons({id, name, numberOfSeasons}) {
     const [episodes, setEpisodes] = useState(false);
@@ -38,7 +38,9 @@ function Seasons({id, name, numberOfSeasons}) {
         <div>
             {episodes ?
                 <div style={{margin: "0px 20px"}} className="rmdb-movie-grid">
-                    <h2>Episodes | <span className={"section-subheader-text"}>{name}</span></h2>
+                    <h2>Episodes | <span className={"section-subheader-text"}>{name}</span>
+                        <span className="watch-badge">Watched</span>
+                    </h2>
                     <div className={"season-option-section"}>
                         <div style={{
                             float: "left"
@@ -50,6 +52,7 @@ function Seasons({id, name, numberOfSeasons}) {
                                     seasonsDropDown
                                 }
                             </Form.Select>
+
 
                         </div>
                         <div style={{
