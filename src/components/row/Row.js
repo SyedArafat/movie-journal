@@ -6,6 +6,7 @@ import React from 'react';
 import {IMAGE_BASE_URL} from "../../config/config";
 import BadgeWatch from "../Movies/BadgeWatch";
 import ConditionalMovieModalWrapper from "../Movies/Modal/ConditionalMovieModalWrapper";
+import api from "../../api/BackendApi";
 
 const base_url = `${IMAGE_BASE_URL}w500`;
 
@@ -20,10 +21,9 @@ function Row({title, fetchUrl, isLargeRow}) {
 
     useEffect(() => {
         async function fetchData() {
-            const request = await axios.get(fetchUrl);
-            setMovies(request.data.results);
-
-            return request;
+            await api.get(fetchUrl).then((response) => {
+                setMovies(response.data);
+            });
         }
 
         fetchData();

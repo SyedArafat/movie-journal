@@ -6,6 +6,7 @@ import {faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import MovieKeyData from "../Movies/MovieKeyData";
 import {BACKDROP_SIZE, IMAGE_BASE_URL} from "../../config/config";
+import api from "../../api/BackendApi";
 
 
 function Banner(props = null) {
@@ -13,14 +14,9 @@ function Banner(props = null) {
 
     useEffect(() => {
         async function fetchData() {
-            if (Object.keys(props).length === 0) {
-                const request = await axios.get(requests.fetchTrending);
-                setMovie(request.data.results[
-                    Math.floor(Math.random() * request.data.results.length - 1)
-                    ]);
-            } else {
-                setMovie(props.props)
-            }
+            const request = await api.get(requests.fetchTrending);
+            let contentNo = Math.floor(Math.random() * request.data.length - 1);
+            setMovie(request.data[contentNo]);
         }
 
         fetchData();
