@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 // import { FirebaseContext } from "../context/FirbaseContext";
 import HeaderWrapper from "../components/Header/HeaderWrapper";
 import NavBar from "../components/Header/NavBar";
@@ -70,7 +70,7 @@ function SignupPage() {
                            }}
             >
                 <NavBar className="navbar-signin">
-                    <Logo/>
+                    <Link to={"/"}><Logo/></Link>
                 </NavBar>
                 <Loader loading={loading} />
                 <SignFormWrapper>

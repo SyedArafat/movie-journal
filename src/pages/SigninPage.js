@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation, Link} from "react-router-dom";
 import HeaderWrapper from "../components/Header/HeaderWrapper";
 import NavBar from "../components/Header/NavBar";
 import FooterCompound from "../compounds/FooterCompound";
@@ -73,7 +73,7 @@ function SigninPage() {
             >
                 <Loader loading={loading} />
                 <NavBar className="navbar-signin">
-                    <Logo />
+                    <Link to={"/"}><Logo/></Link>
                 </NavBar>
                 <SignFormWrapper>
                     <SignFormBase onSubmit={handleSubmit} method="POST">

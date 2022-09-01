@@ -11,7 +11,7 @@ function Banner() {
     const [movie, setMovie] = useState(false);
 
     useEffect(() => {
-        let uri = BACKEND_HOME_API_AUTH+"?component=banner";
+        let uri ="?component=banner";
         if(!movie) {
             ApiGetWithAuth(uri).then((response) => {
                 setMovie(response.data);
