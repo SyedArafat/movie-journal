@@ -7,6 +7,7 @@ import {IMAGE_BASE_URL} from "../../config/config";
 import BadgeWatch from "../Movies/BadgeWatch";
 import ConditionalMovieModalWrapper from "../Movies/Modal/ConditionalMovieModalWrapper";
 import api from "../../api/BackendApi";
+import {ApiGetWithAuth} from "../../api/MediaContentClient";
 
 const base_url = `${IMAGE_BASE_URL}w500`;
 
@@ -20,13 +21,11 @@ function Row({title, fetchUrl, isLargeRow}) {
 
 
     useEffect(() => {
-        async function fetchData() {
-            await api.get(fetchUrl).then((response) => {
-                setMovies(response.data);
-            });
-        }
+        ApiGetWithAuth(fetchUrl).then((response) => {
+            setMovies(response.data);
+        }).catch((error) => {
 
-        fetchData();
+        })
     }, [fetchUrl]);
 
     const handleClick = (movie) => {

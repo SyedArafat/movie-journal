@@ -1,26 +1,25 @@
 import React, {useState, useEffect} from 'react';
-import axios from '../../axios';
-import requests from '../../config/requests';
 import './Banner.css';
 import {faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import MovieKeyData from "../Movies/MovieKeyData";
-import {BACKDROP_SIZE, IMAGE_BASE_URL} from "../../config/config";
-import api from "../../api/BackendApi";
+import {BACKDROP_SIZE, BACKEND_HOME_API_AUTH, IMAGE_BASE_URL} from "../../config/config";
+import {ApiGetWithAuth} from "../../api/MediaContentClient";
 
 
-function Banner(props = null) {
-    const [movie, setMovie] = useState([]);
+function Banner() {
+    const [movie, setMovie] = useState(false);
 
     useEffect(() => {
-        async function fetchData() {
-            const request = await api.get(requests.fetchTrending);
-            let contentNo = Math.floor(Math.random() * request.data.length - 1);
-            setMovie(request.data[contentNo]);
-        }
+        let uri = BACKEND_HOME_API_AUTH+"?component=banner";
+        if(!movie) {
+            ApiGetWithAuth(uri).then((response) => {
+                setMovie(response.data);
+            }).catch((error) => {
 
-        fetchData();
-    }, [props]);
+            })
+        }
+    }, [movie]);
 
     return (
         <header className="banner"
