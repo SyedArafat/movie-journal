@@ -7,14 +7,17 @@ import {BACKDROP_SIZE, BACKEND_HOME_API_AUTH, IMAGE_BASE_URL} from "../../config
 import {ApiGetWithAuth} from "../../api/MediaContentClient";
 
 
-function Banner() {
+function Banner({setLoading}) {
     const [movie, setMovie] = useState(false);
 
     useEffect(() => {
         let uri ="?component=banner";
         if(!movie) {
+            setLoading(true);
             ApiGetWithAuth(uri).then((response) => {
                 setMovie(response.data);
+                setLoading(false);
+
             }).catch((error) => {
 
             })

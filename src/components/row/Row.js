@@ -1,17 +1,14 @@
 import {useState, useEffect} from 'react';
-import axios from '../../axios';
 import "./Row.css";
 import AllCardsWrapper from "../Movies/AllCardsWrapper";
 import React from 'react';
 import {IMAGE_BASE_URL} from "../../config/config";
-import BadgeWatch from "../Movies/BadgeWatch";
 import ConditionalMovieModalWrapper from "../Movies/Modal/ConditionalMovieModalWrapper";
-import api from "../../api/BackendApi";
 import {ApiGetWithAuth} from "../../api/MediaContentClient";
 
 const base_url = `${IMAGE_BASE_URL}w500`;
 
-function Row({title, fetchUrl, isLargeRow}) {
+function Row({title, fetchUrl, isLargeRow, setLoading}) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const [movies, setMovies] = useState([]);
@@ -21,8 +18,11 @@ function Row({title, fetchUrl, isLargeRow}) {
 
 
     useEffect(() => {
+        setLoading(true);
         ApiGetWithAuth(fetchUrl).then((response) => {
             setMovies(response.data);
+            setLoading(false);
+
         }).catch((error) => {
 
         })
@@ -52,7 +52,6 @@ function Row({title, fetchUrl, isLargeRow}) {
                                 src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
                                 alt={movie.name}
                             />
-                            <BadgeWatch/>
                         </div>
                     ))}
 

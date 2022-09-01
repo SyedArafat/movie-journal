@@ -8,6 +8,7 @@ import React, {useState} from "react";
 import axios from "../axios";
 import SearchResults from "../components/Search/SearchResults";
 import Loader from "../components/Loader";
+import {Authed} from "../auth/Authentication";
 
 function HomePage() {
     const [showSearch, setShowSearch] = useState(false);
@@ -31,16 +32,34 @@ function HomePage() {
     }
     return (
         <div className="App">
-            <Nav callback={searchItems} setLoading={setLoading} />
-            <Loader loading={loading} />
+            <Nav callback={searchItems} setLoading={setLoading}/>
+            <Loader loading={loading}/>
             {showSearch === false ?
                 <div>
-                    <Banner />
-                    <Row isLargeRow={true} title="Trending Now" fetchUrl={requests.fetchTrending}/>
-                    <Row isLargeRow={true} title="NETFLIX ORIGINALS" fetchUrl={requests.fetchNetflixOriginals}/>
-                    <Row isLargeRow={true} title="Top Rated" fetchUrl={requests.fetchTopRated}/>
+                    <Banner setLoading={setLoading}/>
+                    {
+                        (!Authed()) ?
+                            <>
+                                <Row setLoading={setLoading} isLargeRow={true} title="Trending Now"
+                                     fetchUrl={requests.fetchTrending}/>
+                                <Row setLoading={setLoading} isLargeRow={true} title="NETFLIX ORIGINALS"
+                                     fetchUrl={requests.fetchNetflixOriginals}/>
+                                <Row setLoading={setLoading} isLargeRow={true} title="Top Rated"
+                                     fetchUrl={requests.fetchTopRated}/>
+                            </> :
+                            <>
+                                <Row setLoading={setLoading} isLargeRow={true} title="Recent Watched"
+                                     fetchUrl={requests.recentWatched}/>
+                                <Row setLoading={setLoading} isLargeRow={true} title="Trending Now"
+                                     fetchUrl={requests.fetchTrending}/>
+                                <Row setLoading={setLoading} isLargeRow={true} title="Recent Movies"
+                                     fetchUrl={requests.recentWatchedMovies}/>
+                                <Row setLoading={setLoading} isLargeRow={true} title="Recent TV"
+                                     fetchUrl={requests.recentWatchedTV}/>
+                            </>
+                    }
                 </div>
-             : <SearchResults movies = {movies} />
+                : <SearchResults movies={movies}/>
             }
             <Footer/>
             {/* <Row title = "Action Movies" fetchUrl = {requests.fetchActionMovies} /> */}

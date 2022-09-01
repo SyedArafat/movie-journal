@@ -1,6 +1,5 @@
-import React, {useState, useContext, useEffect} from "react";
-import {Link, useNavigate} from "react-router-dom";
-// import { FirebaseContext } from "../context/FirbaseContext";
+import React, {useState} from "react";
+import {Link} from "react-router-dom";
 import HeaderWrapper from "../components/Header/HeaderWrapper";
 import NavBar from "../components/Header/NavBar";
 import Logo from "../components/navbar/Logo";
