@@ -25,7 +25,7 @@ export const contentTitle = (content) => {
     let movieName = movieTitle(content);
     let to;
     let isActor = content.media_type === "person";
-    let isTV = !!content.first_air_date;
+    let isTV = content.media_type === "tv";
     if (isActor) return movieName + " (" + content.known_for_department + ")";
     if (isTV) {
         if (content.status === "Returning Series" || content.status === "In Production" || content.status === "Planned") {

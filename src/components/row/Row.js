@@ -31,7 +31,7 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
     const handleClick = (movie) => {
         setShowCardFeature(true);
         setActiveItem(movie);
-        if (movie.first_air_date !== undefined) {
+        if (movie.media_type === "tv") {
             setIsTV(true);
         }
 
@@ -62,18 +62,6 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
                     <ConditionalMovieModalWrapper modalOpen={open} onClose={() => setOpen(false)} activeItem={activeItem} isTV={isTV}/>
                     : null
             }
-            {/*{showCardFeature ?*/}
-            {/*    <Modal*/}
-            {/*        open={open}*/}
-            {/*        onClose={handleClose}*/}
-            {/*        aria-labelledby="modal-modal-title"*/}
-            {/*        aria-describedby="modal-modal-description"*/}
-            {/*    >*/}
-            {/*        <Box id="modal-modal-description" sx={style}>*/}
-            {/*            <MovieModal props={activeItem} isTv={isTV}/>*/}
-            {/*            <CardFeatureClose onClick={() => setShowCardFeature(false)}/>*/}
-            {/*        </Box>*/}
-            {/*    </Modal> : null}*/}
 
         </div>
     )

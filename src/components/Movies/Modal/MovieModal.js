@@ -14,7 +14,7 @@ import WatchRibbon from "../../MoviePage/element/Ribbon/WatchRibbon";
 import {contentTitle} from "../../../helpers";
 import MovieKeyData from "../MovieKeyData";
 import api from "../../../api/BackendApi";
-import {GetToken} from "../../../auth/Authentication";
+import {Authed, GetToken} from "../../../auth/Authentication";
 
 
 function MovieModal({props, isTv, setLoading}) {
@@ -28,20 +28,22 @@ function MovieModal({props, isTv, setLoading}) {
     useEffect(() => {
         async function fetchData() {
             setMovie(props)
-            setLoading(true);
-            let type = isTv ? "tv" : "movie";
-            await api.get(`${BACKEND_IS_WATCHED_URI}/${type}/${props.id}`, {
-                "headers": {
-                    "Authorization": `Bearer ${GetToken()}`
-                }
-            }).then(response => {
-               setWatched(response.data.watch_status);
-               setRating(response.data.rating);
-               setInWishlist(response.data.in_wishlist);
-            }).catch(err => {
-                // console.log(GetToken());
-            });
-            setLoading(false);
+            if(Authed()) {
+                setLoading(true);
+                let type = isTv ? "tv" : "movie";
+                await api.get(`${BACKEND_IS_WATCHED_URI}/${type}/${props.id}`, {
+                    "headers": {
+                        "Authorization": `Bearer ${GetToken()}`
+                    }
+                }).then(response => {
+                    setWatched(response.data.watch_status);
+                    setRating(response.data.rating);
+                    setInWishlist(response.data.in_wishlist);
+                }).catch(err => {
+                    // console.log(GetToken());
+                });
+                setLoading(false);
+            }
         }
 
         fetchData();
