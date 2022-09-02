@@ -4,7 +4,8 @@ import AllCardsWrapper from "../Movies/AllCardsWrapper";
 import React from 'react';
 import {IMAGE_BASE_URL} from "../../config/config";
 import ConditionalMovieModalWrapper from "../Movies/Modal/ConditionalMovieModalWrapper";
-import {ApiGetWithAuth} from "../../api/MediaContentClient";
+import {ApiGet} from "../../api/MediaContentClient";
+import {DeleteToken} from "../../auth/Authentication";
 
 const base_url = `${IMAGE_BASE_URL}w500`;
 
@@ -19,12 +20,15 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
 
     useEffect(() => {
         setLoading(true);
-        ApiGetWithAuth(fetchUrl).then((response) => {
+        ApiGet(fetchUrl).then((response) => {
             setMovies(response.data);
             setLoading(false);
 
         }).catch((error) => {
-
+            if (error.response.status === 401) {
+                DeleteToken();
+                window.location.reload();
+            }
         })
     }, [fetchUrl]);
 
@@ -40,26 +44,32 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
 
     return (
         <div className="row">
-            <h2>{title}</h2>
-            <AllCardsWrapper>
-                <div className="row-posters">
-                    {movies.map(movie => (
-                        <div key={movie.id} className={`row-poster ${isLargeRow && "row-posterLarge"}`}>
-                            <img
-                                onClick={() => handleClick(movie)}
-                                className={`row-poster ${isLargeRow && "row-posterLarge"}`}
-                                key={movie.id}
-                                src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
-                                alt={movie.name}
-                            />
-                        </div>
-                    ))}
+            {
+                movies.length !== 0 ?
+                <>
+                    <h2>{title}</h2>
+                    <AllCardsWrapper>
+                        <div className="row-posters">
+                            {movies.map(movie => (
+                                <div key={movie.id} className={`row-poster ${isLargeRow && "row-posterLarge"}`}>
+                                    <img
+                                        onClick={() => handleClick(movie)}
+                                        className={`row-poster ${isLargeRow && "row-posterLarge"}`}
+                                        key={movie.id}
+                                        src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
+                                        alt={movie.name}
+                                    />
+                                </div>
+                            ))}
 
-                </div>
-            </AllCardsWrapper>
+                        </div>
+                    </AllCardsWrapper>
+                </> : null
+            }
             {
                 showCardFeature ?
-                    <ConditionalMovieModalWrapper modalOpen={open} onClose={() => setOpen(false)} activeItem={activeItem} isTV={isTV}/>
+                    <ConditionalMovieModalWrapper modalOpen={open} onClose={() => setOpen(false)}
+                                                  activeItem={activeItem} isTV={isTV}/>
                     : null
             }
 

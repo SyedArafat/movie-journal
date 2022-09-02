@@ -111,7 +111,7 @@ function MovieModal({props, isTv, setLoading}) {
             } else if(err.response?.status === 400) {
                 setError("Invalid Input Data");
             } else {
-                setError("Something Went Wrong! Try again Latter");
+                setError("Something Went Wrong! Try again Later");
             }
         }
         setLoading(false);
@@ -133,7 +133,7 @@ function MovieModal({props, isTv, setLoading}) {
             } else if(err.response?.status === 400) {
                 setError("Invalid Input Data");
             } else {
-                setError("Something Went Wrong! Try again Latter");
+                setError("Something Went Wrong! Try again Later");
             }
         }
     }

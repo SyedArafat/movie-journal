@@ -11,9 +11,9 @@ import Loader from "../components/Loader";
 import {Authed} from "../auth/Authentication";
 
 function HomePage() {
+    const [loading, setLoading] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
     const [movies, setMovies] = useState(false);
-    const [loading, setLoading] = useState(false);
 
 
     const searchItems = async (searchTerm) => {

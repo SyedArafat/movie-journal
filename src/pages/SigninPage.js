@@ -56,7 +56,7 @@ function SigninPage() {
             } else if(err.response?.status === 401) {
                 setError("Invalid Email or Password");
             } else {
-                setError("Something Went Wrong! Try again Latter");
+                setError("Something Went Wrong! Try again Later");
             }
 
         }

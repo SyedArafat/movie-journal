@@ -96,7 +96,7 @@ function Seasons({id, name, numberOfSeasons, seasonDetails}) {
             } else if(err.response?.status === 400) {
                 setError("Invalid Input Data");
             } else {
-                setError("Something Went Wrong! Try again Latter");
+                setError("Something Went Wrong! Try again Later");
             }
         }
 

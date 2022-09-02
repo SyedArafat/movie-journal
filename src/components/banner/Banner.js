@@ -3,8 +3,9 @@ import './Banner.css';
 import {faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import MovieKeyData from "../Movies/MovieKeyData";
-import {BACKDROP_SIZE, BACKEND_HOME_API_AUTH, IMAGE_BASE_URL} from "../../config/config";
-import {ApiGetWithAuth} from "../../api/MediaContentClient";
+import {BACKDROP_SIZE, IMAGE_BASE_URL} from "../../config/config";
+import {ApiGet} from "../../api/MediaContentClient";
+import {DeleteToken} from "../../auth/Authentication";
 
 
 function Banner({setLoading}) {
@@ -14,12 +15,15 @@ function Banner({setLoading}) {
         let uri ="?component=banner";
         if(!movie) {
             setLoading(true);
-            ApiGetWithAuth(uri).then((response) => {
+            ApiGet(uri).then((response) => {
                 setMovie(response.data);
                 setLoading(false);
 
             }).catch((error) => {
-
+                if(error.response.status === 401) {
+                    DeleteToken();
+                    window.location.reload();
+                }
             })
         }
     }, [movie]);
