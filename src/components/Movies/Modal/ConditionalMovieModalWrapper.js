@@ -5,7 +5,7 @@ import CardFeatureClose from "../CardFeatureClose";
 import React, {useState} from "react";
 import Loader from "../../Loader";
 
-function ConditionalMovieModalWrapper({modalOpen, onClose, activeItem, isTV}) {
+function ConditionalMovieModalWrapper({modalOpen, onClose, activeItem, isTV, setIsUpdated}) {
     const [loading, setLoading] = useState(false);
     const handleClose = () => {
         onClose(false);
@@ -30,7 +30,7 @@ function ConditionalMovieModalWrapper({modalOpen, onClose, activeItem, isTV}) {
             >
                 <Box id="modal-modal-description" sx={style}>
                     <Loader loading={loading} />
-                    <MovieModal props={activeItem} isTv={isTV} setLoading={setLoading}/>
+                    <MovieModal setIsUpdated={setIsUpdated} props={activeItem} isTv={isTV} setLoading={setLoading}/>
                     <CardFeatureClose onClick={handleClose}/>
                 </Box>
             </Modal>

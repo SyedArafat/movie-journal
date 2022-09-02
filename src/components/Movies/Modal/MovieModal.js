@@ -17,7 +17,7 @@ import api from "../../../api/BackendApi";
 import {Authed, GetToken} from "../../../auth/Authentication";
 
 
-function MovieModal({props, isTv, setLoading}) {
+function MovieModal({props, isTv, setLoading, setIsUpdated}) {
     const [movie, setMovie] = useState([]);
     const [rating, setRating] = useState(0);
     const [watched, setWatched] = useState(false);
@@ -73,6 +73,7 @@ function MovieModal({props, isTv, setLoading}) {
         await storeChoice(data);
         setLoading(false);
         setWatched(true);
+        window.location.reload();
     }
 
     let wishlistClickEvent = async () => {
@@ -86,6 +87,7 @@ function MovieModal({props, isTv, setLoading}) {
         await storeChoice(data);
         setInWishlist(true);
         setLoading(false);
+
     }
 
     let removeClickEvent = async () => {
@@ -103,7 +105,7 @@ function MovieModal({props, isTv, setLoading}) {
             setWatched(false);
             setRating(0);
             setError("");
-            console.log(response);
+            setIsUpdated(true);
         } catch (err) {
             setSuccess(false);
             if(!err?.response) {

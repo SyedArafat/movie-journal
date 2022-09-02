@@ -16,6 +16,7 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
     const [isTV, setIsTV] = useState(false);
     const [showCardFeature, setShowCardFeature] = useState(false);
     const [activeItem, setActiveItem] = useState(false);
+    const [reload, setReload] = useState(false);
 
 
     useEffect(() => {
@@ -23,6 +24,7 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
         ApiGet(fetchUrl).then((response) => {
             setMovies(response.data);
             setLoading(false);
+            console.log("row");
 
         }).catch((error) => {
             if (error.response.status === 401) {
@@ -30,7 +32,7 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
                 window.location.reload();
             }
         })
-    }, [fetchUrl]);
+    }, [fetchUrl, reload]);
 
     const handleClick = (movie) => {
         setShowCardFeature(true);
@@ -68,7 +70,7 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
             }
             {
                 showCardFeature ?
-                    <ConditionalMovieModalWrapper modalOpen={open} onClose={() => setOpen(false)}
+                    <ConditionalMovieModalWrapper setIsUpdated={setReload} modalOpen={open} onClose={() => setOpen(false)}
                                                   activeItem={activeItem} isTV={isTV}/>
                     : null
             }

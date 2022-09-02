@@ -45,21 +45,25 @@
 }
 
 .sign-form-success {
-  text-align: center;
-  background: #25a220;
+  background: #359d63;
   border-radius: 4px;
+  font-size: 14px;
   margin: 0 0 16px;
   color: white;
   padding: 15px 20px;
+  text-align: center;
+  /*margin: 0 0 16px;*/
+  /*padding: 15px 20px;*/
   font-weight: 500;
-  font-size: 16px;
+  /*font-size: 16px;*/
 }
 
 .sign-form-success a {
-  text-decoration: underline;
+  /*text-decoration: underline;*/
   font-weight: bold;
   /*color: white;*/
   font-size: 18px;
+  color: aqua;
 }
 
 .sign-form-base {
