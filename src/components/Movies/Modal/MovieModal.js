@@ -11,7 +11,7 @@ import {
     IMAGE_BASE_URL
 } from "../../../config/config";
 import WatchRibbon from "../../MoviePage/element/Ribbon/WatchRibbon";
-import {contentTitle} from "../../../helpers";
+import {contentTitle, trimmedOverview} from "../../../helpers";
 import MovieKeyData from "../MovieKeyData";
 import api from "../../../api/BackendApi";
 import {Authed, GetToken} from "../../../auth/Authentication";
@@ -160,7 +160,7 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
                 <MovieKeyData movie={movie} />
 
                 <div className="banner-description">
-                    {movie?.overview}
+                    {trimmedOverview(movie?.overview)}
                 </div>
 
                 <MovieRating storedRating={rating} isWatched={watched} setRating={setRating}/>

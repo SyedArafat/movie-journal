@@ -98,12 +98,11 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
     }
     const storeChoice = async (data) => {
         try {
-            let response = await api.post(`${BACKEND_MEDIA_CONTENT_API}`, data, {
+            await api.post(`${BACKEND_MEDIA_CONTENT_API}`, data, {
                 "headers": {
                     "Authorization": `Bearer ${GetToken()}`
                 }
             });
-            console.log(response);
         } catch (err) {
             if(!err?.response) {
                 setError("No Server Response");

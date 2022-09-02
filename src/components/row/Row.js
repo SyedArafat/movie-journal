@@ -4,7 +4,7 @@ import AllCardsWrapper from "../Movies/AllCardsWrapper";
 import React from 'react';
 import {IMAGE_BASE_URL} from "../../config/config";
 import ConditionalMovieModalWrapper from "../Movies/Modal/ConditionalMovieModalWrapper";
-import {ApiGet} from "../../api/MediaContentClient";
+import {HomeApiGet} from "../../api/MediaContentClient";
 import {DeleteToken} from "../../auth/Authentication";
 
 const base_url = `${IMAGE_BASE_URL}w500`;
@@ -21,10 +21,9 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
 
     useEffect(() => {
         setLoading(true);
-        ApiGet(fetchUrl).then((response) => {
+        HomeApiGet(fetchUrl).then((response) => {
             setMovies(response.data);
             setLoading(false);
-            console.log("row");
 
         }).catch((error) => {
             if (error.response.status === 401) {

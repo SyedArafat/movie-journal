@@ -4,7 +4,7 @@ import {faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import MovieKeyData from "../Movies/MovieKeyData";
 import {BACKDROP_SIZE, IMAGE_BASE_URL} from "../../config/config";
-import {ApiGet} from "../../api/MediaContentClient";
+import {HomeApiGet} from "../../api/MediaContentClient";
 import {DeleteToken} from "../../auth/Authentication";
 
 
@@ -15,7 +15,7 @@ function Banner({setLoading}) {
         let uri ="?component=banner";
         if(!movie) {
             setLoading(true);
-            ApiGet(uri).then((response) => {
+            HomeApiGet(uri).then((response) => {
                 setMovie(response.data);
                 setLoading(false);
 

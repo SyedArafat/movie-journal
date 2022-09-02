@@ -16,6 +16,7 @@ const POSTER_SIZE = 'w500';
 const BACKEND_API_BASE_URL = "http://localhost:8888";
 
 const BACKEND_REGISTER_URI = "/api/auth/register";
+const BACKEND_EXTERNAL_SEARCH = "/api/media/content/search/external";
 const BACKEND_HOME_API_AUTH = "/api/users/home";
 const BACKEND_HOME_API_NON_AUTH = "/api/public/home";
 const BACKEND_MEDIA_CONTENT_API = "/api/media/content";
@@ -45,5 +46,6 @@ export {
     BACKEND_IS_WATCHED_URI,
     BACKEND_MEDIA_REMOVE_API,
     BACKEND_HOME_API_AUTH,
-    BACKEND_HOME_API_NON_AUTH
+    BACKEND_HOME_API_NON_AUTH,
+    BACKEND_EXTERNAL_SEARCH
 }

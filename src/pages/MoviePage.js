@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {API_KEY, API_URL, BACKEND_IS_WATCHED_URI, SEARCH_TYPE} from "../config/config";
+import {API_KEY, API_URL, BACKEND_EXTERNAL_SEARCH, BACKEND_IS_WATCHED_URI, SEARCH_TYPE} from "../config/config";
 import axios from "../axios";
 import MovieInfo from "../components/MoviePage/MovieInfo.component";
 import MovieInfoBar from "../components/MoviePage/MovieInfoBar.component";
@@ -13,6 +13,7 @@ import SearchResults from "../components/Search/SearchResults";
 import Loader from "../components/Loader";
 import api from "../api/BackendApi";
 import {GetToken} from "../auth/Authentication";
+import {GetApi} from "../api/MediaContentClient";
 
 function MoviePage() {
     const [movie, setMovie] = useState(false);
@@ -25,16 +26,13 @@ function MoviePage() {
 
     const [movies, setMovies] = useState(false);
     const [personalChoice, setPersonalChoice] = useState(false);
-    // const [watched, setWatched] = useState(false);
-    // const [inWishlist, setInWishlist] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
     const searchItems = async (searchTerm) => {
         setLoading(true);
-        let endpoint = '';
 
         if (searchTerm !== "" && searchTerm.length > 2) {
-            endpoint = `${API_URL}search/${SEARCH_TYPE}?api_key=${API_KEY}&language=en-US&query=${searchTerm}`;
-            let request = await axios.get(endpoint);
+            let uri = `${BACKEND_EXTERNAL_SEARCH}?query=${searchTerm}`;
+            let request = await GetApi(uri);
             setMovies(request.data.results);
             setShowSearch(true);
         } else {
