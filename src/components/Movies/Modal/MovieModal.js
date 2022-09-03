@@ -73,7 +73,7 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
         await storeChoice(data);
         setLoading(false);
         setWatched(true);
-        window.location.reload();
+        // window.location.reload();
     }
 
     let wishlistClickEvent = async () => {

@@ -17,13 +17,19 @@ function HomePage() {
 
 
     const searchItems = async (searchTerm) => {
+        searchTerm = searchTerm.trim();
         setLoading(true);
-
+        let exception = false;
         if (searchTerm !== "" && searchTerm.length > 2) {
             let uri = `${BACKEND_EXTERNAL_SEARCH}?query=${searchTerm}`;
-            let request = await GetApi(uri);
-            setMovies(request.data.results);
-            setShowSearch(true);
+            let request = await GetApi(uri).catch((error) => {
+                setLoading(false);
+                exception = true;
+            });
+            if(!exception) {
+                setMovies(request.data.results);
+                setShowSearch(true);
+            }
         } else {
             setShowSearch(false);
         }
