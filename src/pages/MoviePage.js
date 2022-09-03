@@ -1,6 +1,12 @@
 import {useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {API_KEY, API_URL, BACKEND_EXTERNAL_SEARCH, BACKEND_IS_WATCHED_URI, SEARCH_TYPE} from "../config/config";
+import {
+    API_KEY,
+    API_URL,
+    BACKEND_EXTERNAL_SEARCH,
+    BACKEND_IS_WATCHED_URI,
+    BACKEND_MEDIA_CONTENT_API
+} from "../config/config";
 import axios from "../axios";
 import MovieInfo from "../components/MoviePage/MovieInfo.component";
 import MovieInfoBar from "../components/MoviePage/MovieInfoBar.component";
@@ -13,7 +19,7 @@ import SearchResults from "../components/Search/SearchResults";
 import Loader from "../components/Loader";
 import api from "../api/BackendApi";
 import {GetToken} from "../auth/Authentication";
-import {GetApi} from "../api/MediaContentClient";
+import {GetApi, HomeApiGet} from "../api/MediaContentClient";
 
 function MoviePage() {
     const [movie, setMovie] = useState(false);
@@ -52,22 +58,12 @@ function MoviePage() {
         async function fetchData() {
             console.log("MOVIE PAGE API CALL");
             setLoading(true);
-            await api.get(`${BACKEND_IS_WATCHED_URI}/${type}/${movieId}`, {
-                "headers": {
-                    "Authorization": `Bearer ${GetToken()}`
-                }
-            }).then(response => {
-                setPersonalChoice(response.data);
-                setSeasonDetails(personalChoice?.seasons);
-            }).catch(err => {
-                // console.log(GetToken());
-            });
-            let endpoint = `${API_URL}${type}/${movieId}?api_key=${API_KEY}&language=en-US`;
-            const request = await axios.get(endpoint);
-            setMovie(request.data);
-            let creditEndpoint = `${API_URL}${type}/${movieId}/credits?api_key=${API_KEY}`;
-            const creditRequest = await axios.get(creditEndpoint);
-            setCredits(creditRequest.data);
+            let endpoint = `${BACKEND_MEDIA_CONTENT_API}/${type}/${movieId}`;
+            const response = await GetApi(endpoint);
+            setMovie(response.data.content_details);
+            setPersonalChoice(response.data.user_feedback);
+            setSeasonDetails(personalChoice?.seasons);
+            setCredits(response.data.credit_details);
             setLoading(false);
         }
 
