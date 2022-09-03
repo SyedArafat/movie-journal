@@ -2,8 +2,7 @@ import FourColGrid from "../MoviePage/element/FourColGrid/FourColGrid.component"
 import React, {useEffect, useState} from "react";
 import {Form} from "react-bootstrap";
 import "./EpisodeStyle.css";
-import {API_KEY, API_URL, BACKEND_MEDIA_CONTENT_API} from "../../config/config";
-import axios from "../../axios";
+import {BACKEND_MEDIA_CONTENT_API, BACKEND_SEASON_DETAILS_API} from "../../config/config";
 import Episode from "./Episode";
 import MovieRating from "../Movies/MovieRating";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -11,6 +10,7 @@ import {faPlayCircle} from "@fortawesome/free-solid-svg-icons";
 import Loader from "../Loader";
 import api from "../../api/BackendApi";
 import {GetToken} from "../../auth/Authentication";
+import {GetApi} from "../../api/MediaContentClient";
 
 function Seasons({id, name, numberOfSeasons, seasonDetails}) {
     const [rating, setRating] = useState(0);
@@ -22,15 +22,14 @@ function Seasons({id, name, numberOfSeasons, seasonDetails}) {
     const [seasonNumber, setSeasonNumber] = useState(1);
     useEffect(() => {
         async function fetchData() {
-            console.log("SEASON PAGE API CALL fetchData");
-            let endpoint = `${API_URL}tv/${id}/season/1?api_key=${API_KEY}&language=en-US`;
-            const request = await axios.get(endpoint);
+            let endpoint = `${BACKEND_SEASON_DETAILS_API}/${id}/1`;
+            const request = await GetApi(endpoint).catch((error) => {
+                setLoading(false);
+            });
             setEpisodes(request.data.episodes);
         }
 
         async function getSeasonsStatus() {
-            // console.log("SEASON PAGE API CALL getSeasonStatus");
-
             if (seasonDetails !== undefined && seasonDetails) {
                 seasonDetails.forEach((season) => {
                     if (season.season_number === 1 && season.status === "watched") {
@@ -52,8 +51,10 @@ function Seasons({id, name, numberOfSeasons, seasonDetails}) {
         setSeasonWatched(false);
         setLoading(true);
         let seasonNo = (selectOption.target.value);
-        let endpoint = `${API_URL}tv/${id}/season/${seasonNo}?api_key=${API_KEY}&language=en-US`;
-        const request = await axios.get(endpoint);
+        let endpoint = `${BACKEND_SEASON_DETAILS_API}/${id}/${seasonNo}`;
+        const request = await GetApi(endpoint).catch((error) => {
+            setLoading(false);
+        });
         setEpisodes(request.data.episodes);
         seasonNo = parseInt(seasonNo);
         setSeasonNumber(seasonNo);

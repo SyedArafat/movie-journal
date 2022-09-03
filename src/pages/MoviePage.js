@@ -1,13 +1,9 @@
 import {useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {
-    API_KEY,
-    API_URL,
     BACKEND_EXTERNAL_SEARCH,
-    BACKEND_IS_WATCHED_URI,
     BACKEND_MEDIA_CONTENT_API
 } from "../config/config";
-import axios from "../axios";
 import MovieInfo from "../components/MoviePage/MovieInfo.component";
 import MovieInfoBar from "../components/MoviePage/MovieInfoBar.component";
 import Nav from "../components/navbar/Nav";
@@ -17,9 +13,7 @@ import Footer from "../compounds/FooterCompound";
 import Seasons from "../components/TV/Seasons";
 import SearchResults from "../components/Search/SearchResults";
 import Loader from "../components/Loader";
-import api from "../api/BackendApi";
-import {GetToken} from "../auth/Authentication";
-import {GetApi, HomeApiGet} from "../api/MediaContentClient";
+import {GetApi} from "../api/MediaContentClient";
 
 function MoviePage() {
     const [movie, setMovie] = useState(false);
@@ -114,7 +108,11 @@ function MoviePage() {
                 </div>
                 : null }
             {type === "tv" && showSearch === false ?
-                <Seasons seasonDetails={seasonDetails ?? personalChoice?.seasons} id={movieId} name = {movie?.title || movie?.name || movie?.original_name}  numberOfSeasons={movie.number_of_seasons}/>
+                <Seasons
+                    seasonDetails={seasonDetails ?? personalChoice?.seasons}
+                    id={movieId}
+                    name = {movie?.title || movie?.name || movie?.original_name}
+                    numberOfSeasons={movie.number_of_seasons}/>
                 : null
             }
 

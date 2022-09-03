@@ -1,11 +1,6 @@
 // Configuration for TMDB from https://api.themoviedb.org/3/configuration?api_key=687f4af88c405c0b881295bba3d4adfc
 
-const API_URL = 'https://api.themoviedb.org/3/';
-const API_KEY = '687f4af88c405c0b881295bba3d4adfc';
-
 const IMAGE_BASE_URL ='https://image.tmdb.org/t/p/';
-
-const SEARCH_TYPE ="multi";
 
 //Sizes: w300, w780, w1280, original
 const BACKDROP_SIZE = 'w1280';
@@ -21,6 +16,7 @@ const BACKEND_HOME_API_AUTH = "/api/users/home";
 const BACKEND_HOME_API_NON_AUTH = "/api/public/home";
 const BACKEND_MEDIA_CONTENT_API = "/api/media/content";
 const BACKEND_MEDIA_REMOVE_API = "/api/media/content/remove";
+const BACKEND_SEASON_DETAILS_API = "/api/media/tv/season"
 const BACKEND_LOGIN_URI = "/api/auth/login";
 const BACKEND_LOGOUT_URI = "/api/auth/logout";
 const BACKEND_IS_WATCHED_URI = "/api/media/status";
@@ -29,12 +25,9 @@ const NAME_TAG = "movie_journal_name";
 const EXPIRES_AT_TAG = "movie_journal_expire_tag";
 
 export {
-    API_URL,
-    API_KEY,
     IMAGE_BASE_URL,
     BACKDROP_SIZE,
     POSTER_SIZE,
-    SEARCH_TYPE,
     BACKEND_API_BASE_URL,
     BACKEND_REGISTER_URI,
     BACKEND_LOGIN_URI,
@@ -47,5 +40,6 @@ export {
     BACKEND_MEDIA_REMOVE_API,
     BACKEND_HOME_API_AUTH,
     BACKEND_HOME_API_NON_AUTH,
-    BACKEND_EXTERNAL_SEARCH
+    BACKEND_EXTERNAL_SEARCH,
+    BACKEND_SEASON_DETAILS_API
 }

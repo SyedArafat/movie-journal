@@ -57,9 +57,9 @@ function HomePage() {
                                      fetchUrl={requests.recentWatched}/>
                                 <Row setLoading={setLoading} isLargeRow={true} title="Trending Now"
                                      fetchUrl={requests.fetchTrending}/>
-                                <Row setLoading={setLoading} isLargeRow={true} title="Recent Movies"
+                                <Row setLoading={setLoading} isLargeRow={true} title="Watched Movies"
                                      fetchUrl={requests.recentWatchedMovies}/>
-                                <Row setLoading={setLoading} isLargeRow={true} title="Recent TV"
+                                <Row setLoading={setLoading} isLargeRow={true} title="Watched TV"
                                      fetchUrl={requests.recentWatchedTV}/>
                             </>
                     }
