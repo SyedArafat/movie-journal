@@ -166,21 +166,21 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
                 <MovieRating storedRating={rating} isWatched={watched} setRating={setRating}/>
 
                 <div className="modal-banner-buttons">
-                    {!watched && <button onClick={watchClickEvent} className="banner-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
+                    {!watched && Authed() && <button onClick={watchClickEvent} className="banner-button positive-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
                         Watched
                     </button>}
                     {watched && <button onClick={watchClickEvent} className="banner-button update-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
                         Update
                     </button>}
                     <Link onClick={() => {detailsClickEvent(isTv ? "/tv/" + movie.id : "/movie/" + movie.id)}} to={isTv ? "/tv/" + movie.id : "/movie/" + movie.id + "?from=internal"}>
-                        <button  className="banner-button"><FontAwesomeIcon icon={faEye}/> {"\u00a0\u00a0"}
+                        <button  className="banner-button positive-button"><FontAwesomeIcon icon={faEye}/> {"\u00a0\u00a0"}
                             Details
                         </button>
                     </Link>
                     {(watched || inWishlist) && <button onClick={removeClickEvent} className="banner-button remove-button"><FontAwesomeIcon icon={faMinusCircle}/> {"\u00a0\u00a0"}
                         Remove
                     </button>}
-                    {!watched && !inWishlist && <button onClick={wishlistClickEvent} className="banner-button"><FontAwesomeIcon icon={faPlus}/> Watch List</button>}
+                    {!watched && Authed() && !inWishlist && <button onClick={wishlistClickEvent} className="banner-button positive-button"><FontAwesomeIcon icon={faPlus}/> Watch List</button>}
                 </div>
 
 
