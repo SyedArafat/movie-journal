@@ -163,7 +163,13 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
                     {trimmedOverview(movie?.overview)}
                 </div>
 
-                <MovieRating storedRating={rating} isWatched={watched} setRating={setRating}/>
+                <h3>TMDB RATING</h3>
+                <div className="rmdb-rating">
+                    <meter min="0" max="100" optimum="100" low="40" high="70" value={movie.vote_average * 10}></meter>
+                    <p className="rmdb-score">{parseFloat(movie.vote_average).toFixed(2)}</p>
+                </div>
+
+                {Authed() && <MovieRating storedRating={rating} isWatched={watched} setRating={setRating}/>}
 
                 <div className="modal-banner-buttons">
                     {!watched && Authed() && <button onClick={watchClickEvent} className="banner-button positive-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
@@ -184,12 +190,12 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
                 </div>
 
 
-                <div className="title-info-talent">
-                    <div className="title-data-info-item item-starring"><span
-                        className="title-data-info-item-label">Starring:</span><span
-                        className="title-data-info-item-list" data-uia="info-starring">Gulshan Devaiah, Kunaal Roy Kapur, Sagarika Ghatge</span>
-                    </div>
-                </div>
+                {/*<div className="title-info-talent">*/}
+                {/*    <div className="title-data-info-item item-starring"><span*/}
+                {/*        className="title-data-info-item-label">Starring:</span><span*/}
+                {/*        className="title-data-info-item-list" data-uia="info-starring">Gulshan Devaiah, Kunaal Roy Kapur, Sagarika Ghatge</span>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </div>
 
             <div className="banner-fadeBottom"></div>
