@@ -21,8 +21,30 @@ export const movieTitle = (movie) => {
     return (movie?.title || movie?.name || movie?.original_name);
 }
 
+export const releaseYear = (movie) => {
+    console.log(movie);
+    if(typeof movie.release_date !== "undefined") return format(new Date(Date.parse(movie.release_date)), 'YYY');
+    else if(typeof movie.first_air_date !== "undefined") {
+        return format(new Date(Date.parse(movie.first_air_date)), 'YYY');
+    }
+}
+
+export const releaseDate = (movie) => {
+    if(typeof movie.release_date !== "undefined") return format(new Date(Date.parse(movie.release_date)), 'dd MMM yyyy');
+    else if(typeof movie.first_air_date !== "undefined") {
+        return format(new Date(Date.parse(movie.first_air_date)), 'dd MMM yyyy');
+    }
+}
+
+export const language = (sign) => {
+    if(sign === "en") {
+        return "English Language";
+    }
+
+    return sign;
+}
+
 export const contentTitle = (content) => {
-    console.log(content);
     let title = movieTitle(content);
     let to;
     let isActor = content.media_type === "person";

@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import './Banner.css';
-import {faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import MovieKeyData from "../Movies/MovieKeyData";
 import {BACKDROP_SIZE, IMAGE_BASE_URL} from "../../config/config";
 import {HomeApiGet} from "../../api/MediaContentClient";
 import {DeleteToken} from "../../auth/Authentication";
+import {movieTitle, releaseYear} from "../../helpers";
+import {Link, useNavigate} from "react-router-dom";
+import {faEye} from "@fortawesome/free-regular-svg-icons";
 
 
 function Banner({setLoading}) {
@@ -28,8 +30,16 @@ function Banner({setLoading}) {
         }
     }, [movie]);
 
+    let navigate = useNavigate();
+
+
+    let detailsClickEvent = (parma) => {
+        navigate(parma, { replace: true });
+        window.location.reload();
+    }
+
     return (
-        <header className="banner"
+        (movie) ? <header className="banner"
                 style={{
                     backgroundSize: "cover",
                     backgroundImage: `url("${IMAGE_BASE_URL}${BACKDROP_SIZE}${movie?.backdrop_path}")`,
@@ -38,31 +48,36 @@ function Banner({setLoading}) {
         >
             <div className="banner-contents">
                 <h1 className="banner-title">
-                    {movie?.title || movie?.name || movie?.original_name}
+                    {movieTitle(movie) + " (" + releaseYear(movie)})
                 </h1>
-                <div className="banner-buttons">
-                    <button className="banner-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
-                        Play
-                    </button>
-                    <button className="banner-button"><FontAwesomeIcon icon={faPlus}/> Wish List</button>
+                <MovieKeyData  movie={movie}/>
+                <div style={{ marginTop: "19px" }} className="banner-buttons">
+                    <Link onClick={() => {detailsClickEvent(movie.media_type === "tv" ? "/tv/" + movie.id : "/movie/" + movie.id)}} to={movie.media_type === "tv" ? "/tv/" + movie.id : "/movie/" + movie.id + "?from=internal"}>
+                        <button  className="banner-button positive-button"><FontAwesomeIcon icon={faEye}/> {"\u00a0\u00a0"}
+                            Details
+                        </button>
+                    </Link>
                 </div>
-                <MovieKeyData movie={movie}/>
 
                 <h1 className="banner-description">
                     {movie?.overview}
                 </h1>
-
-
-                <div className="title-info-talent">
-                    <div className="title-data-info-item item-starring"><span
-                        className="title-data-info-item-label">Starring:</span><span
-                        className="title-data-info-item-list" data-uia="info-starring">Gulshan Devaiah, Kunaal Roy Kapur, Sagarika Ghatge</span>
-                    </div>
+                <h3>RATING</h3>
+                <div className="rmdb-rating">
+                    <meter min="0" max="100" optimum="100" low="40" high="70" value={movie.vote_average * 10}></meter>
+                    <p className="rmdb-score">{parseFloat(movie.vote_average).toFixed(2)}</p>
                 </div>
+
+                {/*<div className="title-info-talent">*/}
+                {/*    <div className="title-data-info-item item-starring"><span*/}
+                {/*        className="title-data-info-item-label">Starring:</span><span*/}
+                {/*        className="title-data-info-item-list" data-uia="info-starring">Gulshan Devaiah, Kunaal Roy Kapur, Sagarika Ghatge</span>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </div>
 
             <div className="banner-fadeBottom"></div>
-        </header>
+        </header> : null
     )
 }
 
