@@ -111,7 +111,8 @@ function MoviePage() {
                     seasonDetails={seasonDetails ?? personalChoice?.seasons}
                     id={movieId}
                     name = {movie?.title || movie?.name || movie?.original_name}
-                    numberOfSeasons={movie.number_of_seasons}/>
+                    numberOfSeasons={movie.number_of_seasons}
+                />
                 : null
             }
 

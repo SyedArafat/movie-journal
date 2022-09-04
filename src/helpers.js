@@ -39,6 +39,8 @@ export const releaseDate = (movie) => {
 export const language = (sign) => {
     if(sign === "en") {
         return "English Language";
+    } else if(sign === "hi") {
+        return "Hindi Language";
     }
 
     return sign;
@@ -48,7 +50,8 @@ export const contentTitle = (content) => {
     let title = movieTitle(content);
     let to;
     let isActor = content.media_type === "person";
-    let isTV = content.media_type === "tv" || typeof content.first_air_date !== "undefined";
+    let isTV = content.media_type === "tv" ||
+        (typeof content.first_air_date !== "undefined" && typeof content.release_date === "undefined");
     if (typeof content.media_type === "undefined" && typeof content.number_of_seasons !== "undefined") {
         isTV = true;
     }

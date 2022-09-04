@@ -1,5 +1,5 @@
 import React from 'react';
-import { IMAGE_BASE_URL } from '../../config/config';
+import {IMAGE_BASE_URL, THUMB_SIZE} from '../../config/config';
 import PropTypes from 'prop-types';
 import './EpisodeStyle.css';
 import {format} from "date-fns";
@@ -12,8 +12,11 @@ const Episode = ({ episode }) => {
         <div className="episode-box">
             <img
                 src={episode.still_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}${episode.still_path}` : './images/no_image.jpg'}
-                alt="actorthumb"
+                alt="Episode Thumb"
             />
+            {/*<object data={episode.still_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}${episode.still_path}` : './images/no_image.jpg'} type="image/png">*/}
+            {/*    <img src={'./images/no_image.jpg'} alt="Episode Thumb" />*/}
+            {/*</object>*/}
             <div className={"episode-metadata"}>
             <span className="episode-title">{episode.episode_number + "." + episode.name}</span>
             {/*<span className="episode-title">{episode.episode_number + "." + episode.name}</span>*/}
