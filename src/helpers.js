@@ -22,7 +22,6 @@ export const movieTitle = (movie) => {
 }
 
 export const releaseYear = (movie) => {
-    console.log(movie);
     if(typeof movie.release_date !== "undefined") return format(new Date(Date.parse(movie.release_date)), 'YYY');
     else if(typeof movie.first_air_date !== "undefined") {
         return format(new Date(Date.parse(movie.first_air_date)), 'YYY');
