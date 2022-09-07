@@ -1,5 +1,5 @@
 import React from "react";
-import {language, releaseDate} from "../../helpers";
+import {getMediaType, language, releaseDate} from "../../helpers";
 
 function MovieKeyData({movie}) {
     return (
@@ -10,7 +10,7 @@ function MovieKeyData({movie}) {
             className="maturity-rating"><span className="maturity-number">All </span></span></span><span
             role="presentation" className="info-spacer"> | </span><span
             className="title-info-metadata-item item-runtime" data-uia="item-runtime"><span
-            className="duration">{movie.media_type ? movie.media_type.toUpperCase() : ""}</span></span><span role="presentation"
+            className="duration">{getMediaType(movie).toUpperCase()}</span></span><span role="presentation"
                                                            className="info-spacer"> | </span><a
             className="title-info-metadata-item item-genre" href="https://www.netflix.com/bd/browse/genre/58806"
             data-uia="item-genre">{language(movie["original_language"])}</a>

@@ -37,23 +37,41 @@ export const releaseDate = (movie) => {
 
 export const language = (sign) => {
     if(sign === "en") {
-        return "English Language";
+        return "English Film";
     } else if(sign === "hi") {
-        return "Hindi Language";
+        return "Hindi Film";
+    } else if(sign === "te") {
+        return "Telugu Film";
+    } else if(sign === "cn") {
+        return "Chinese Film";
+    } else if(sign === "kn") {
+        return "Kannada Film";
     }
 
-    return sign;
+    return sign?.toUpperCase();
+}
+
+const isTv = (content) => {
+    let isTV = content.media_type === "tv" ||
+        (typeof content.first_air_date !== "undefined" && typeof content.release_date === "undefined");
+    if (typeof content.media_type === "undefined" && typeof content.number_of_seasons !== "undefined") {
+        isTV = true;
+    }
+
+    return isTV;
+}
+
+export const getMediaType = (content) => {
+    if(isTv(content) === true) return "tv";
+    else return "movie";
+
 }
 
 export const contentTitle = (content) => {
     let title = movieTitle(content);
     let to;
     let isActor = content.media_type === "person";
-    let isTV = content.media_type === "tv" ||
-        (typeof content.first_air_date !== "undefined" && typeof content.release_date === "undefined");
-    if (typeof content.media_type === "undefined" && typeof content.number_of_seasons !== "undefined") {
-        isTV = true;
-    }
+    let isTV = isTv(content);
     if (isActor) return title + " (" + content.known_for_department + ")";
     if (isTV) {
         if (content.status === "Returning Series" || content.status === "In Production" || content.status === "Planned") {

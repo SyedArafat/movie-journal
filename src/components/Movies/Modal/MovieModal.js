@@ -95,7 +95,7 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
         let type = isTv ? "tv" : "movie";
         let media_id = movie.id;
         try {
-            let response = await api.post(`${BACKEND_MEDIA_REMOVE_API}/${type}/${media_id}`, {
+            await api.post(`${BACKEND_MEDIA_REMOVE_API}/${type}/${media_id}`, {
                 "headers": {
                     "Authorization": `Bearer ${GetToken()}`
                 }
@@ -144,7 +144,7 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
         <header className="modal-banner"
                 style={{
                     backgroundSize: "cover",
-                    backgroundImage: `url("${IMAGE_BASE_URL}${BACKDROP_SIZE}${movie?.backdrop_path}")`,
+                    backgroundImage: movie.backdrop_path ? `url("${IMAGE_BASE_URL}${BACKDROP_SIZE}${movie?.backdrop_path}")` : "#000",
                     backgroundPosition: "center center",
                     outline: "none"
                 }}
@@ -166,7 +166,7 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
                 <h3>RATING</h3>
                 <div className="rmdb-rating">
                     <meter min="0" max="100" optimum="100" low="40" high="70" value={movie.vote_average * 10}></meter>
-                    <p className="rmdb-score">{parseFloat(movie.vote_average).toFixed(2)}</p>
+                    <p className="rmdb-score">{parseFloat(movie?.vote_average).toFixed(2)}</p>
                 </div>
 
                 {Authed() && <MovieRating storedRating={rating} isWatched={watched} setRating={setRating}/>}
