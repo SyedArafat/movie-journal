@@ -42,7 +42,7 @@ function Banner({setLoading}) {
         (movie) ? <header className="banner"
                 style={{
                     backgroundSize: "cover",
-                    backgroundImage: `url("${IMAGE_BASE_URL}${BACKDROP_SIZE}${movie?.backdrop_path}")`,
+                    backgroundImage: movie.backdrop_path ? `url("${IMAGE_BASE_URL}${BACKDROP_SIZE}${movie?.backdrop_path}")` : "#000",
                     backgroundPosition: "center center"
                 }}
         >
