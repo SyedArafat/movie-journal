@@ -94,7 +94,7 @@ function SigninPage() {
                         />
                         <SignFormButton disabled={IsInvalid}>Sign In</SignFormButton>
                         <SignFormText>
-                            New to Netflix?
+                            New to Movie Journal?
                             <SignFormLink href="/signup">Sign up now.</SignFormLink>
                         </SignFormText>
                         <SignFormCaptcha>
