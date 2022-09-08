@@ -12,7 +12,7 @@ function MovieKeyData({movie}) {
             className="title-info-metadata-item item-runtime" data-uia="item-runtime"><span
             className="duration">{getMediaType(movie).toUpperCase()}</span></span><span role="presentation"
                                                            className="info-spacer"> | </span><a
-            className="title-info-metadata-item item-genre" href="https://www.netflix.com/bd/browse/genre/58806"
+            className="title-info-metadata-item item-genre"
             data-uia="item-genre">{language(movie["original_language"])}</a>
         </div>
     );

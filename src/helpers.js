@@ -46,6 +46,8 @@ export const language = (sign) => {
         return "Chinese Film";
     } else if(sign === "kn") {
         return "Kannada Film";
+    } else if(sign === "it") {
+        return "Italian Film";
     }
 
     return sign?.toUpperCase();
