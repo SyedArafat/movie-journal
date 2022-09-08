@@ -5,6 +5,7 @@ import ConditionalMovieModalWrapper from "../Movies/Modal/ConditionalMovieModalW
 import {contentTitle} from "../../helpers";
 
 function SearchedMovies({movie}) {
+
     const POSTER_SIZE = "w342";
 
     const [open, setOpen] = useState(false);
@@ -29,7 +30,7 @@ function SearchedMovies({movie}) {
             <img
                 onClick={() => handleClick(movie)}
                 src={movie.poster_path || movie.profile_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}${movie?.poster_path || movie?.profile_path }` : `${process.env.PUBLIC_URL}/images/no_image.jpg`}
-                alt="actorthumb"
+                alt="Poster Thumb"
             />
             {/*<BadgeWatch />*/}
 
