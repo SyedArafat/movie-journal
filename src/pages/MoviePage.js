@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {
     BACKEND_EXTERNAL_SEARCH,
@@ -14,6 +14,7 @@ import Seasons from "../components/TV/Seasons";
 import SearchResults from "../components/Search/SearchResults";
 import Loader from "../components/Loader";
 import {GetApi} from "../api/MediaContentClient";
+import {DeleteToken} from "../auth/Authentication";
 
 function MoviePage() {
     const [movie, setMovie] = useState(false);
@@ -22,6 +23,7 @@ function MoviePage() {
     const [credits, setCredits] = useState([]);
     const {movieId} = useParams();
     const {type} = useParams();
+    const navigte = useNavigate();
 
     const [movies, setMovies] = useState(false);
     const [personalChoice, setPersonalChoice] = useState(false);
@@ -52,7 +54,12 @@ function MoviePage() {
             // console.log("MOVIE PAGE API CALL");
             setLoading(true);
             let endpoint = `${BACKEND_MEDIA_CONTENT_API}/${type}/${movieId}`;
-            const response = await GetApi(endpoint);
+            const response = await GetApi(endpoint).catch((error) => {
+                if(error.response.status === 401) {
+                    DeleteToken();
+                    navigte("/signin");
+                }
+            });
             setMovie(response.data.content_details);
             setPersonalChoice(response.data.user_feedback);
             setSeasonDetails(personalChoice?.seasons);
@@ -97,7 +104,7 @@ function MoviePage() {
                 : null) :
                     <SearchResults movies={movies} />
             }
-            {actors && showSearch === false ?
+            {actors && actors.length !== 0 && showSearch === false ?
                 <div style={{ margin: "0px 20px" }} className="rmdb-movie-grid">
                     <FourColGrid header={'Actors'}>
                         {actors.map( (element, i) => (

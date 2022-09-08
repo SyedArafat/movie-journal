@@ -18,7 +18,7 @@ import {Authed, GetToken} from "../../../auth/Authentication";
 
 
 function MovieModal({props, isTv, setLoading, setIsUpdated}) {
-    const [movie, setMovie] = useState([]);
+    const [movie, setMovie] = useState("");
     const [rating, setRating] = useState(0);
     const [watched, setWatched] = useState(false);
     const [inWishlist, setInWishlist] = useState(false);
@@ -164,10 +164,13 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
                 </div>
 
                 <h3>RATING</h3>
-                <div className="rmdb-rating">
-                    <meter min="0" max="100" optimum="100" low="40" high="70" value={movie?.vote_average * 10}></meter>
-                    <p className="rmdb-score">{parseFloat(movie?.vote_average).toFixed(2)}</p>
-                </div>
+                { movie &&
+                    <div className="rmdb-rating">
+                        <meter min="0" max="100" optimum="100" low="40" high="70"
+                               value={movie?.vote_average * 10}></meter>
+                        <p className="rmdb-score">{parseFloat(movie?.vote_average).toFixed(2)}</p>
+                    </div>
+                }
 
                 {Authed() && <MovieRating storedRating={rating} isWatched={watched} setRating={setRating}/>}
 

@@ -41,7 +41,6 @@ function Nav({dynamicClass, callback, setLoading}) {
         }).catch(err => {
             DeleteToken();
             navigate("/signin");
-            // console.log(GetToken());
         });
         setLoading(false);
 
