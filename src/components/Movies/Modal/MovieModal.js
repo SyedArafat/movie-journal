@@ -165,7 +165,7 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
 
                 <h3>RATING</h3>
                 <div className="rmdb-rating">
-                    <meter min="0" max="100" optimum="100" low="40" high="70" value={movie.vote_average * 10}></meter>
+                    <meter min="0" max="100" optimum="100" low="40" high="70" value={movie?.vote_average * 10}></meter>
                     <p className="rmdb-score">{parseFloat(movie?.vote_average).toFixed(2)}</p>
                 </div>
 

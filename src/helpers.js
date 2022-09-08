@@ -29,9 +29,13 @@ export const releaseYear = (movie) => {
 }
 
 export const releaseDate = (movie) => {
-    if(typeof movie.release_date !== "undefined") return format(new Date(Date.parse(movie.release_date)), 'dd MMM yyyy');
-    else if(typeof movie.first_air_date !== "undefined") {
-        return format(new Date(Date.parse(movie.first_air_date)), 'dd MMM yyyy');
+    try {
+        if (typeof movie.release_date !== "undefined" && movie.release_date !== "") return format(new Date(Date.parse(movie.release_date)), 'dd MMM yyyy');
+        else if (typeof movie.first_air_date !== "undefined") {
+            return format(new Date(Date.parse(movie.first_air_date)), 'dd MMM yyyy');
+        }
+    } catch (error) {
+        return "Undefined";
     }
 }
 
@@ -89,7 +93,7 @@ export const contentTitle = (content) => {
             return title + " TV (unknown)";
         }
     }
-    let releaseYear = content.release_date ? format(new Date(Date.parse(content.release_date)), 'YYY') : null;
+    let releaseYear = content.release_date ? format(new Date(Date.parse(content.release_date)), 'YYY') : "Undefined";
     return title + " (" + releaseYear + ")";
 }
 
