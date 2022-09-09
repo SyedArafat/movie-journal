@@ -44,11 +44,15 @@
 /*}*/
 
 
- .Mui-error {
+.Mui-error {
   /*border: 1px solid black !important;*/
   color: white !important;
 }
 .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
+  color: white !important;
+}
+
+.css-u9osun {
   color: white !important;
 }
 
