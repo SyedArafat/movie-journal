@@ -16,6 +16,7 @@ import WatchRibbon from "./element/Ribbon/WatchRibbon";
 import {contentTitle} from "../../helpers";
 import api from "../../api/BackendApi";
 import {GetToken} from "../../auth/Authentication";
+import RatingAndDate from "./RatingAndDate";
 
 function PageContent({movie, directors, type, personalChoice, setLoading, setSeasonDetails}) {
     const [rating, setRating] = useState(personalChoice.rating);
@@ -23,6 +24,8 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
     const [error, setError] = useState("");
     const [watched, setWatched] = useState(personalChoice?.watch_status);
     const [inWishlist, setInWishlist] = useState(personalChoice?.in_wishlist);
+    const [date, setDate] = useState(new Date(personalChoice?.watched_time));
+
 
     let watchClickEvent = async () => {
         if(!rating) {
@@ -36,10 +39,12 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
             "type": type,
             "store_type": "watched",
             "rating": rating,
+            "watched_date": date
         }
         await storeChoice(data);
         setWatched(true);
         setRating(rating);
+        // setDate(date);
         if(type === "tv") {
             await api.get(`${BACKEND_IS_WATCHED_URI}/${type}/${movie.id}`, {
                 "headers": {
@@ -70,6 +75,7 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
             setWatched(false);
             setRating(0);
             setError("");
+            setDate(null);
             if(type === "tv") {
                 await api.get(`${BACKEND_IS_WATCHED_URI}/${type}/${movie.id}`, {
                     "headers": {
@@ -141,10 +147,7 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                 <MovieKeyData movie={movie}/>
                 <p>{movie.overview}</p>
                 <h3>TMDB RATING</h3>
-                <div className="rmdb-rating">
-                    <meter min="0" max="100" optimum="100" low="40" high="70" value={movie.vote_average * 10}></meter>
-                    <p className="rmdb-score">{parseFloat(movie.vote_average).toFixed(2)}</p>
-                </div>
+                <RatingAndDate watched_date={date} movie={movie} setDate={setDate}/>
                 {type === "movie" && <Director directors={directors}/>}
 
                 <div style={{display: "flex"}}>

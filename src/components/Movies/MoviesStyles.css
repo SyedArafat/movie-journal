@@ -1,4 +1,52 @@
 /* ############### Movies Section ############### */
+.rating-date-wrapper {
+  display: flex;
+}
+
+.watch-date {
+  margin-left: 45px;
+  width: 12.5em;
+  color: white;
+}
+
+/*.MuiCheckbox-indeterminate {*/
+/*  color: aliceblue !important;*/
+/*}*/
+
+.css-2ppg0f-MuiButtonBase-root-MuiCheckbox-root.Mui-checked {
+  color: aliceblue !important;
+}
+/*.Mui-disabled {*/
+/*  !*color: rgba(0, 0, 0, 0.38) !important;*!*/
+/*  !*color: white !important;*!*/
+/*  !*-webkit-text-fill-color: white !important;*!*/
+/*}*/
+
+/*.MuiInputBase-inputAdornedEnd {*/
+/*  -webkit-text-fill-color: white !important;*/
+/*}*/
+
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+  color: white !important;
+}
+
+.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root {
+  /*background: #9191918c !important;*/
+  color: white !important;
+}
+
+/*.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input.Mui-disabled {*/
+/*  -webkit-text-fill-color: white !important;*/
+/*}*/
+
+
+ .Mui-error {
+  /*border: 1px solid black !important;*/
+  color: white !important;
+}
+.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
+  color: white !important;
+}
 
 .all-slides-wrapper {
   padding: 30px 50px;

@@ -15,6 +15,7 @@ import {contentTitle, trimmedOverview} from "../../../helpers";
 import MovieKeyData from "../MovieKeyData";
 import api from "../../../api/BackendApi";
 import {Authed, GetToken} from "../../../auth/Authentication";
+import RatingAndDate from "../../MoviePage/RatingAndDate";
 
 
 function MovieModal({props, isTv, setLoading, setIsUpdated}) {
@@ -24,11 +25,13 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
     const [inWishlist, setInWishlist] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState("");
+    const [date, setDate] = useState(null);
+    // const [isForgot, setIsForgot] = useState(false);
 
     useEffect(() => {
         async function fetchData() {
             setMovie(props)
-            if(Authed()) {
+            if (Authed()) {
                 setLoading(true);
                 let type = isTv ? "tv" : "movie";
                 await api.get(`${BACKEND_IS_WATCHED_URI}/${type}/${props.id}`, {
@@ -39,6 +42,7 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
                     setWatched(response.data.watch_status);
                     setRating(response.data.rating);
                     setInWishlist(response.data.in_wishlist);
+                    setDate(new Date(response.data.watched_time));
                 }).catch(err => {
                     // console.log(GetToken());
                 });
@@ -53,12 +57,12 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
 
 
     let detailsClickEvent = (parma) => {
-        navigate(parma, { replace: true });
+        navigate(parma, {replace: true});
         window.location.reload();
     }
 
     let watchClickEvent = async () => {
-        if(!rating) {
+        if (!rating) {
             alert("Rating is missing");
             return false;
         }
@@ -69,6 +73,7 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
             "type": isTv ? "TV" : "MOVIE",
             "store_type": "watched",
             "rating": rating,
+            "watched_date": date
         }
         await storeChoice(data);
         setLoading(false);
@@ -104,13 +109,14 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
             setInWishlist(false);
             setWatched(false);
             setRating(0);
+            setDate(null);
             setError("");
             setIsUpdated(true);
         } catch (err) {
             setSuccess(false);
-            if(!err?.response) {
+            if (!err?.response) {
                 setError("No Server Response");
-            } else if(err.response?.status === 400) {
+            } else if (err.response?.status === 400) {
                 setError("Invalid Input Data");
             } else {
                 setError("Something Went Wrong! Try again Later");
@@ -130,9 +136,9 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
             setError("");
         } catch (err) {
             setSuccess(false);
-            if(!err?.response) {
+            if (!err?.response) {
                 setError("No Server Response");
-            } else if(err.response?.status === 400) {
+            } else if (err.response?.status === 400) {
                 setError("Invalid Input Data");
             } else {
                 setError("Something Went Wrong! Try again Later");
@@ -152,44 +158,49 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
 
             <div className="model-banner-contents">
 
-                {watched && <WatchRibbon title={"Watched"} />}
+                {watched && <WatchRibbon title={"Watched"}/>}
                 {!watched && inWishlist && <WatchRibbon dynamic_class={"wishlist"} title={"In Wishlist"}/>}
                 <div className="banner-title">
-                    { contentTitle(movie)}
+                    {contentTitle(movie)}
                 </div>
-                <MovieKeyData movie={movie} />
+                <MovieKeyData movie={movie}/>
 
                 <div className="banner-description">
                     {trimmedOverview(movie?.overview)}
                 </div>
 
-                <h3>RATING</h3>
-                { movie &&
-                    <div className="rmdb-rating">
-                        <meter min="0" max="100" optimum="100" low="40" high="70"
-                               value={movie?.vote_average * 10}></meter>
-                        <p className="rmdb-score">{parseFloat(movie?.vote_average).toFixed(2)}</p>
-                    </div>
-                }
+                <h3 className={"margin-bottom-0"}>RATING</h3>
+                {movie && <RatingAndDate watched_date={date} setDate={setDate} movie={movie} />}
 
                 {Authed() && <MovieRating storedRating={rating} isWatched={watched} setRating={setRating}/>}
 
                 <div className="modal-banner-buttons">
-                    {!watched && Authed() && <button onClick={watchClickEvent} className="banner-button positive-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
-                        Watched
-                    </button>}
-                    {watched && <button onClick={watchClickEvent} className="banner-button update-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
-                        Update
-                    </button>}
-                    <Link onClick={() => {detailsClickEvent(isTv ? "/tv/" + movie.id : "/movie/" + movie.id)}} to={isTv ? "/tv/" + movie.id : "/movie/" + movie.id + "?from=internal"}>
-                        <button  className="banner-button positive-button"><FontAwesomeIcon icon={faEye}/> {"\u00a0\u00a0"}
+                    {!watched && Authed() &&
+                        <button onClick={watchClickEvent} className="banner-button positive-button"><FontAwesomeIcon
+                            icon={faPlayCircle}/> {"\u00a0\u00a0"}
+                            Watched
+                        </button>}
+                    {watched &&
+                        <button onClick={watchClickEvent} className="banner-button update-button"><FontAwesomeIcon
+                            icon={faPlayCircle}/> {"\u00a0\u00a0"}
+                            Update
+                        </button>}
+                    <Link onClick={() => {
+                        detailsClickEvent(isTv ? "/tv/" + movie.id : "/movie/" + movie.id)
+                    }} to={isTv ? "/tv/" + movie.id : "/movie/" + movie.id}>
+                        <button className="banner-button positive-button"><FontAwesomeIcon
+                            icon={faEye}/> {"\u00a0\u00a0"}
                             Details
                         </button>
                     </Link>
-                    {(watched || inWishlist) && <button onClick={removeClickEvent} className="banner-button remove-button"><FontAwesomeIcon icon={faMinusCircle}/> {"\u00a0\u00a0"}
-                        Remove
-                    </button>}
-                    {!watched && Authed() && !inWishlist && <button onClick={wishlistClickEvent} className="banner-button positive-button"><FontAwesomeIcon icon={faPlus}/> Watch List</button>}
+                    {(watched || inWishlist) &&
+                        <button onClick={removeClickEvent} className="banner-button remove-button"><FontAwesomeIcon
+                            icon={faMinusCircle}/> {"\u00a0\u00a0"}
+                            Remove
+                        </button>}
+                    {!watched && Authed() && !inWishlist &&
+                        <button onClick={wishlistClickEvent} className="banner-button positive-button"><FontAwesomeIcon
+                            icon={faPlus}/> Watch List</button>}
                 </div>
 
 
