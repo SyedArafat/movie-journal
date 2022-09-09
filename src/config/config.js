@@ -9,8 +9,8 @@ const THUMB_SIZE = 'w300';
 // w92, w154, w185, w342, w500, w780, original
 const POSTER_SIZE = 'w500';
 
-// const BACKEND_API_BASE_URL = "https://api.wwt.llc";
-const BACKEND_API_BASE_URL = "http://localhost:8888";
+const BACKEND_API_BASE_URL = "https://api.wwt.llc";
+// const BACKEND_API_BASE_URL = "http://localhost:8888";
 
 const BACKEND_REGISTER_URI = "/api/auth/register";
 const BACKEND_EXTERNAL_SEARCH = "/api/media/content/search/external";
