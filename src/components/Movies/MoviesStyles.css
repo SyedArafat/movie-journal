@@ -9,9 +9,9 @@
   color: white;
 }
 
-/*.MuiCheckbox-indeterminate {*/
-/*  color: aliceblue !important;*/
-/*}*/
+.MuiCheckbox-indeterminate {
+  color: aliceblue !important;
+}
 
 .css-2ppg0f-MuiButtonBase-root-MuiCheckbox-root.Mui-checked {
   color: aliceblue !important;
@@ -22,12 +22,15 @@
 /*  !*-webkit-text-fill-color: white !important;*!*/
 /*}*/
 
-/*.MuiInputBase-inputAdornedEnd {*/
-/*  -webkit-text-fill-color: white !important;*/
-/*}*/
+.MuiInputBase-inputAdornedEnd {
+  -webkit-text-fill-color: white !important;
+}
 
-.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
-  color: white !important;
+/*.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {*/
+/*  color: white !important;*/
+/*}*/
+.MuiFormLabel-root {
+  color: #f5f1f1 !important;
 }
 
 .css-slyssw {
