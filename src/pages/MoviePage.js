@@ -51,7 +51,6 @@ function MoviePage() {
 
     useEffect(() => {
         async function fetchData() {
-            // console.log("MOVIE PAGE API CALL");
             setLoading(true);
             let endpoint = `${BACKEND_MEDIA_CONTENT_API}/${type}/${movieId}`;
             const response = await GetApi(endpoint).catch((error) => {
@@ -119,6 +118,7 @@ function MoviePage() {
                     id={movieId}
                     name = {movie?.title || movie?.name || movie?.original_name}
                     numberOfSeasons={movie.number_of_seasons}
+
                 />
                 : null
             }
