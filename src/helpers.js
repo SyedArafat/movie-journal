@@ -39,7 +39,7 @@ export const releaseDate = (movie) => {
     }
 }
 
-export const language = (sign) => {
+export const filmType = (sign) => {
     if(sign === "en") {
         return "English Film";
     } else if(sign === "hi") {
@@ -52,6 +52,10 @@ export const language = (sign) => {
         return "Kannada Film";
     } else if(sign === "it") {
         return "Italian Film";
+    } else if(sign === "ta") {
+        return "Tamil Film";
+    } else if(sign === "ja") {
+        return "Japanese Film";
     }
 
     return sign?.toUpperCase();

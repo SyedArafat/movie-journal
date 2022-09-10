@@ -38,6 +38,8 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
         setActiveItem(movie);
         if (movie.media_type === "tv") {
             setIsTV(true);
+        } else {
+            setIsTV(false);
         }
 
         handleOpen();

@@ -1,5 +1,5 @@
 import React from "react";
-import {getMediaType, language, releaseDate} from "../../helpers";
+import {getMediaType, filmType, releaseDate} from "../../helpers";
 
 function MovieKeyData({movie}) {
     return (
@@ -13,7 +13,7 @@ function MovieKeyData({movie}) {
             className="duration">{getMediaType(movie).toUpperCase()}</span></span><span role="presentation"
                                                            className="info-spacer"> | </span><a
             className="title-info-metadata-item item-genre"
-            data-uia="item-genre">{language(movie["original_language"])}</a>
+            data-uia="item-genre">{filmType(movie["original_language"])}</a>
         </div>
     );
 }
