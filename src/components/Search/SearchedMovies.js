@@ -24,7 +24,6 @@ function SearchedMovies({movie}) {
         handleOpen();
     }
 
-
     return (
         <div className="rmdb-actor search-movie">
             <img
@@ -37,7 +36,7 @@ function SearchedMovies({movie}) {
             <span className="rmdb-actor-name"> {contentTitle(movie)} </span>
             {
                 showCardFeature ?
-                    <ConditionalMovieModalWrapper modalOpen={open} onClose={() => setOpen(false)} activeItem={activeItem} isTV={isTV}/>
+                    <ConditionalMovieModalWrapper from={"search"} modalOpen={open} onClose={() => setOpen(false)} activeItem={activeItem} isTV={isTV}/>
                     : null
             }
 

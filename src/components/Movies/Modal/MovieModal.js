@@ -18,7 +18,7 @@ import {Authed, GetToken} from "../../../auth/Authentication";
 import RatingAndDate from "../../MoviePage/RatingAndDate";
 
 
-function MovieModal({props, isTv, setLoading, setIsUpdated}) {
+function MovieModal({props, isTv, setLoading, setIsUpdated, from}) {
     const [movie, setMovie] = useState("");
     const [rating, setRating] = useState(0);
     const [watched, setWatched] = useState(false);
@@ -43,6 +43,10 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
                     setRating(response.data.rating);
                     setInWishlist(response.data.in_wishlist);
                     setDate(new Date(response.data.watched_time));
+
+                    if(response.data.watched_time === null) {
+                        setDate(new Date());
+                    }
                 }).catch(err => {
                     // console.log(GetToken());
                 });
@@ -55,10 +59,11 @@ function MovieModal({props, isTv, setLoading, setIsUpdated}) {
 
     let navigate = useNavigate();
 
-
-    let detailsClickEvent = (parma) => {
-        navigate(parma, {replace: true});
-        window.location.reload();
+    let detailsClickEvent = (url) => {
+        navigate(url, {replace: true});
+        if(from === "search") {
+            window.location.reload();
+        }
     }
 
     let watchClickEvent = async () => {

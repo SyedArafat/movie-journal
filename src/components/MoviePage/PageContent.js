@@ -24,7 +24,11 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
     const [error, setError] = useState("");
     const [watched, setWatched] = useState(personalChoice?.watch_status);
     const [inWishlist, setInWishlist] = useState(personalChoice?.in_wishlist);
-    const [date, setDate] = useState(new Date(personalChoice?.watched_time));
+    const [date, setDate] = useState(personalChoice?.watched_time === null ? new Date() :
+        new Date(personalChoice?.watched_time));
+    // if(personalChoice.watched_time === null) {
+    //     setDate(new Date());
+    // }
 
 
     let watchClickEvent = async () => {
