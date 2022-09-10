@@ -61,10 +61,9 @@ function MovieModal({props, isTv, setLoading, setIsUpdated, from}) {
 
     let detailsClickEvent = (url) => {
         navigate(url, {replace: true});
-        // if(from === "search") {
-            // console.log("reload");
+        if(from === "search") {
             window.location.reload();
-        // }
+        }
     }
 
     let watchClickEvent = async () => {
