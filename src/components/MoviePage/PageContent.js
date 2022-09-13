@@ -8,7 +8,7 @@ import {
 } from "../../config/config";
 import Director from "./Director";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFilm, faMinusCircle, faPlayCircle, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faFilm, faMinusCircle, faPen, faPlayCircle, faPlus} from "@fortawesome/free-solid-svg-icons";
 import React, {useState} from "react";
 import MovieKeyData from "../Movies/MovieKeyData";
 import MovieRating from "../Movies/MovieRating";
@@ -18,6 +18,15 @@ import api from "../../api/BackendApi";
 import {GetToken} from "../../auth/Authentication";
 import RatingAndDate from "./RatingAndDate";
 
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Loader from "../Loader";
+import MovieModal from "../Movies/Modal/MovieModal";
+import CardFeatureClose from "../Movies/CardFeatureClose";
+import ReviewModal from "../Modal/ReviewModal";
+
 function PageContent({movie, directors, type, personalChoice, setLoading, setSeasonDetails}) {
     const [rating, setRating] = useState(personalChoice.rating);
     const [watchedSeasons, setWatchedSeasons] = useState(personalChoice.watched_seasons);
@@ -26,9 +35,18 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
     const [inWishlist, setInWishlist] = useState(personalChoice?.in_wishlist);
     const [date, setDate] = useState(personalChoice?.watched_time === null ? new Date() :
         new Date(personalChoice?.watched_time));
-    // if(personalChoice.watched_time === null) {
-    //     setDate(new Date());
-    // }
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: "60%",
+        bgcolor: 'black',
+    };
 
 
     let watchClickEvent = async () => {
@@ -135,8 +153,27 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
         setInWishlist(true);
         setLoading(false);
     }
+    let reviewClickEvent = async () => {
+        setOpen(true);
+    }
+
     return (
         <div className="rmdb-movieinfo-content">
+
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box id="modal-modal-description" sx={style}>
+                    {/*<Loader loading={loading} />*/}
+                    <ReviewModal storedRating={rating} storedDate={date} movie={movie} isTv={false} setLoading={setLoading}/>
+                    <CardFeatureClose onClick={handleClose}/>
+                </Box>
+            </Modal>
+
+
             {watched && <WatchRibbon title={"Watched"} />}
             {!watched && inWishlist && <WatchRibbon position={"right"} dynamic_class={"wishlist"} title={"In Wishlist"}/>}
 
@@ -173,6 +210,9 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                         Remove
                     </button>}
                     {!watched && !inWishlist && <button onClick={wishlistClickEvent} className="banner-button positive-button"><FontAwesomeIcon icon={faPlus}/> Watch List</button>}
+                    <button onClick={reviewClickEvent} className="banner-button positive-button"><FontAwesomeIcon icon={faPen}/> {"\u00a0\u00a0"}
+                        Review
+                    </button>
                 </div>
 
             </div>
