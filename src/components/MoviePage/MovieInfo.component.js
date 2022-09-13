@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './MovieInfo.styles.css';
 import PageContent from "./PageContent";
 
-const MovieInfo = ({movie, directors, type, personalChoice, setLoading, setSeasonDetails}) => (
+const MovieInfo = ({movie, directors, type, personalChoice, setLoading, setSeasonDetails, setComment}) => (
     <div className="rmdb-movieinfo"
          style={{
              background: movie.backdrop_path ? `url('${IMAGE_BASE_URL}${BACKDROP_SIZE}${movie.backdrop_path}')` : '#000'
@@ -12,6 +12,7 @@ const MovieInfo = ({movie, directors, type, personalChoice, setLoading, setSeaso
     >
         <PageContent
             setSeasonDetails={setSeasonDetails}
+            setComment={setComment}
             setLoading={setLoading}
             movie={movie}
             type={type}

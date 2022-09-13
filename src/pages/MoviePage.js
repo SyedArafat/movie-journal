@@ -15,6 +15,8 @@ import SearchResults from "../components/Search/SearchResults";
 import Loader from "../components/Loader";
 import {GetApi} from "../api/MediaContentClient";
 import {DeleteToken} from "../auth/Authentication";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faClock, faDollyBox, faRankingStar, faReceipt} from "@fortawesome/free-solid-svg-icons";
 
 function MoviePage() {
     const [movie, setMovie] = useState(false);
@@ -24,6 +26,7 @@ function MoviePage() {
     const {movieId} = useParams();
     const {type} = useParams();
     const navigte = useNavigate();
+    const [comment, setComment] = useState("");
 
     const [movies, setMovies] = useState(false);
     const [personalChoice, setPersonalChoice] = useState(false);
@@ -38,7 +41,7 @@ function MoviePage() {
                 setLoading(false);
                 exception = true;
             });
-            if(!exception) {
+            if (!exception) {
                 setMovies(request.data.results);
                 setShowSearch(true);
             }
@@ -54,7 +57,7 @@ function MoviePage() {
             setLoading(true);
             let endpoint = `${BACKEND_MEDIA_CONTENT_API}/${type}/${movieId}`;
             const response = await GetApi(endpoint).catch((error) => {
-                if(error.response.status === 401) {
+                if (error.response.status === 401) {
                     DeleteToken();
                     navigte("/signin");
                 }
@@ -63,10 +66,13 @@ function MoviePage() {
             setPersonalChoice(response.data.user_feedback);
             setSeasonDetails(personalChoice?.seasons);
             setCredits(response.data.credit_details);
+            console.log(personalChoice);
+            setComment(personalChoice?.review);
             setLoading(false);
         }
 
-        fetchData().then(r => {});
+        fetchData().then(r => {
+        });
     }, [movieId, type]);
 
     let directors = [];
@@ -77,53 +83,69 @@ function MoviePage() {
     }
 
     if (credits.crew !== undefined) {
-        actors = credits.cast.slice(0,4);
+        actors = credits.cast.slice(0, 4);
     }
 
     return (
         <div className="rmdb-movie">
             <Nav callback={searchItems} setLoading={setLoading} dynamicClass={"single-page-nav"}/>
-            <Loader loading={loading} />
+            <Loader loading={loading}/>
             {
                 showSearch === false ? (
-                movie ?
-                <div>
-                    <MovieInfo
-                        setSeasonDetails={setSeasonDetails}
-                        setLoading={setLoading}
-                        movie={movie}
-                        type={type}
-                        directors={directors}
-                        personalChoice={personalChoice}/>
+                        movie ?
+                            <div>
+                                <MovieInfo
+                                    setComment={setComment}
+                                    setSeasonDetails={setSeasonDetails}
+                                    setLoading={setLoading}
+                                    movie={movie}
+                                    type={type}
+                                    directors={directors}
+                                    personalChoice={personalChoice}/>
 
-                    <MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue}/>
+                                <MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue}/>
 
 
-                </div>
-                : null) :
-                    <SearchResults movies={movies} />
+                            </div>
+                            : null) :
+                    <SearchResults movies={movies}/>
             }
             {actors && actors.length !== 0 && showSearch === false ?
-                <div style={{ margin: "0px 20px" }} className="rmdb-movie-grid">
+                <div style={{margin: "0px 20px"}} className="rmdb-movie-grid">
                     <FourColGrid header={'Actors'}>
-                        {actors.map( (element, i) => (
-                            <Actor key={i} actor={element} />
+                        {actors.map((element, i) => (
+                            <Actor key={i} actor={element}/>
                         ))}
                     </FourColGrid>
                 </div>
-                : null }
+                : null}
+
+            <div style={{marginTop: "30px"}}>
+                <div className="rmdb-movieinfobar">
+                    <div className="rmdb-movieinfobar-content">
+                        <div className="review-movieinfobar-content-col">
+                            <FontAwesomeIcon className={"fa-time"} icon={faRankingStar} size={"2x"}/>
+                            <span className="rmdb-movieinfobar-info">Review</span>
+
+                        </div>
+                        <div style={{fontFamily: "cursive"}}>{comment ?? personalChoice?.review}</div>
+                    </div>
+                </div>
+            </div>
+
+
             {type === "tv" && showSearch === false ?
                 <Seasons
                     seasonDetails={seasonDetails ?? personalChoice?.seasons}
                     id={movieId}
-                    name = {movie?.title || movie?.name || movie?.original_name}
+                    name={movie?.title || movie?.name || movie?.original_name}
                     numberOfSeasons={movie.number_of_seasons}
 
                 />
                 : null
             }
 
-            <Footer />
+            <Footer/>
         </div>
 
     );

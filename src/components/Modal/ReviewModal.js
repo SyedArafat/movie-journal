@@ -1,21 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import '../banner/Banner.css';
 import './Review.css';
-import {faMinusCircle, faPlayCircle, faPlus} from '@fortawesome/free-solid-svg-icons';
+import {faPlayCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye} from "@fortawesome/free-regular-svg-icons";
 import {Link, useNavigate} from "react-router-dom";
 import MovieRating from "../Movies/MovieRating";
 import {
-    BACKDROP_SIZE, BACKEND_IS_WATCHED_URI,
-    BACKEND_MEDIA_CONTENT_API, BACKEND_MEDIA_REMOVE_API,
+    BACKDROP_SIZE,
+    BACKEND_MEDIA_CONTENT_API,
     IMAGE_BASE_URL
 } from "../../config/config";
-import {contentTitle, getMediaType, trimmedOverview} from "../../helpers";
+import {contentTitle, getMediaType} from "../../helpers";
 import MovieKeyData from "../Movies/MovieKeyData";
 import api from "../../api/BackendApi";
 import {Authed, GetToken} from "../../auth/Authentication";
-import RatingAndDate from "../MoviePage/RatingAndDate";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
 import {DesktopDatePicker} from "@mui/x-date-pickers/DesktopDatePicker";
@@ -24,8 +22,9 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import {Checkbox} from "@mui/material";
 
 
-function ReviewModal({movie, storedRating, storedDate, setLoading, setIsUpdated, from}) {
-    const [rating, setRating] = useState(0);
+function ReviewModal({movie, storedRating, storedDate, setLoading, setIsUpdated, storedReview, setReview, setUserComment, handleClose}) {
+    const [rating, setRating] = useState(storedRating);
+    const [comment, setComment] = useState(storedReview);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState("");
     const [date, setDate] = useState(null);
@@ -40,7 +39,7 @@ function ReviewModal({movie, storedRating, storedDate, setLoading, setIsUpdated,
 
     let navigate = useNavigate();
 
-    let watchClickEvent = async () => {
+    let reviewClickEvent = async () => {
         if (!rating) {
             alert("Rating is missing");
             return false;
@@ -52,16 +51,28 @@ function ReviewModal({movie, storedRating, storedDate, setLoading, setIsUpdated,
             "type": getMediaType(movie),
             "store_type": "watched",
             "rating": rating,
-            "watched_date": date
+            "watched_date": date,
+            "comment": comment
         }
         await storeChoice(data);
         setLoading(false);
+        setComment(comment);
+        setReview(comment);
+        handleClose();
+        setUserComment(comment);
+        alert("Comment Successful");
         // setWatched(true);
         // window.location.reload();
     }
 
+    const _handleText = (event) => {
+        setComment(event.target.value);
+        // console.log(event.target.value);
+    }
+
     const storeChoice = async (data) => {
         try {
+            console.log(data);
             await api.post(`${BACKEND_MEDIA_CONTENT_API}`, data, {
                 "headers": {
                     "Authorization": `Bearer ${GetToken()}`
@@ -128,7 +139,6 @@ function ReviewModal({movie, storedRating, storedDate, setLoading, setIsUpdated,
                                 disableFuture={true}
                                 // disabled={true}
                                 // hintStyle={{color: 'white'}}
-
                                 renderInput={(params) => <TextField sx={{
                                     '.MuiInputBase-input': {color: "#fff"},
                                     '.Mui-disabled': {color: "#989292"},
@@ -147,17 +157,19 @@ function ReviewModal({movie, storedRating, storedDate, setLoading, setIsUpdated,
                     fullWidth={true}
                     id="filled-multiline-static"
                     label="Write a Review"
+                    defaultValue={comment}
                     multiline
                     rows={4}
                     placeholder="Write a review"
                     bgcolor={"white"}
                     variant="filled"
+                    onChange={_handleText}
                     sx={{color: "white"}}
                 />
 
                 <div className="modal-banner-buttons">
                     {Authed() &&
-                        <button onClick={watchClickEvent} className="banner-button positive-button"><FontAwesomeIcon
+                        <button onClick={reviewClickEvent} className="banner-button positive-button"><FontAwesomeIcon
                             icon={faPlayCircle}/> {"\u00a0\u00a0"}
                             Submit
                         </button>}

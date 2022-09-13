@@ -41,21 +41,21 @@ export const releaseDate = (movie) => {
 
 export const filmType = (sign) => {
     if(sign === "en") {
-        return "English Film";
+        return "English Language";
     } else if(sign === "hi") {
-        return "Hindi Film";
+        return "Hindi Language";
     } else if(sign === "te") {
-        return "Telugu Film";
+        return "Telugu Language";
     } else if(sign === "cn") {
-        return "Chinese Film";
+        return "Chinese Language";
     } else if(sign === "kn") {
-        return "Kannada Film";
+        return "Kannada Language";
     } else if(sign === "it") {
-        return "Italian Film";
+        return "Italian Language";
     } else if(sign === "ta") {
-        return "Tamil Film";
+        return "Tamil Language";
     } else if(sign === "ja") {
-        return "Japanese Film";
+        return "Japanese Language";
     }
 
     return sign?.toUpperCase();
