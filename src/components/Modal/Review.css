@@ -1,0 +1,26 @@
+.model-banner-contents {
+    background: linear-gradient(90deg, #161414f5 40%, transparent);
+    width: 90%;
+    padding-top: 3rem;
+    padding-left: 5rem;
+    height: 100%;
+    /*padding-right: 5rem;*/
+    /*outline: none;*/
+}
+
+
+
+.review-modal-banner {
+    color: white;
+    object-fit: cover;
+}
+
+.model-banner-contents textarea {
+    padding: 8px;
+    color: white;
+    background: #0d0c0c9e;
+}
+
+.review-banner-contents {
+    width: 100%;
+}

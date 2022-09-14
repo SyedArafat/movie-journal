@@ -59,7 +59,8 @@
 }
 
 .rmdb-movieinfo-text p {
-  font-family: 'Abel', sans-serif;
+  /*font-family: 'Abel', sans-serif;*/
+  font-family: none;
   font-size: 18px;
   line-height: 26px;
 }

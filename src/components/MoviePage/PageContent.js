@@ -8,7 +8,7 @@ import {
 } from "../../config/config";
 import Director from "./Director";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFilm, faMinusCircle, faPlayCircle, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faFilm, faMinusCircle, faPen, faPlayCircle, faPlus} from "@fortawesome/free-solid-svg-icons";
 import React, {useState} from "react";
 import MovieKeyData from "../Movies/MovieKeyData";
 import MovieRating from "../Movies/MovieRating";
@@ -18,21 +18,38 @@ import api from "../../api/BackendApi";
 import {GetToken} from "../../auth/Authentication";
 import RatingAndDate from "./RatingAndDate";
 
-function PageContent({movie, directors, type, personalChoice, setLoading, setSeasonDetails}) {
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Loader from "../Loader";
+import CardFeatureClose from "../Movies/CardFeatureClose";
+import ReviewModal from "../Modal/ReviewModal";
+
+function PageContent({movie, directors, type, personalChoice, setLoading, setSeasonDetails, handleAlertOpen, setComment}) {
     const [rating, setRating] = useState(personalChoice.rating);
+    const [review, setReview] = useState(personalChoice.review);
     const [watchedSeasons, setWatchedSeasons] = useState(personalChoice.watched_seasons);
     const [error, setError] = useState("");
     const [watched, setWatched] = useState(personalChoice?.watch_status);
     const [inWishlist, setInWishlist] = useState(personalChoice?.in_wishlist);
     const [date, setDate] = useState(personalChoice?.watched_time === null ? new Date() :
         new Date(personalChoice?.watched_time));
-    // if(personalChoice.watched_time === null) {
-    //     setDate(new Date());
-    // }
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const [modalLoader, setModalLoader] = useState(false);
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: "60%",
+        bgcolor: 'black',
+    };
 
 
     let watchClickEvent = async () => {
-        if(!rating) {
+        if (!rating) {
             alert("Rating is missing");
             return false;
         }
@@ -48,8 +65,7 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
         await storeChoice(data);
         setWatched(true);
         setRating(rating);
-        // setDate(date);
-        if(type === "tv") {
+        if (type === "tv") {
             await api.get(`${BACKEND_IS_WATCHED_URI}/${type}/${movie.id}`, {
                 "headers": {
                     "Authorization": `Bearer ${GetToken()}`
@@ -62,9 +78,8 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                 // console.log(GetToken());
             });
         }
+        handleAlertOpen("Feedback Recorded Successfully");
         setLoading(false);
-
-        // window.location.reload();
     }
     let removeClickEvent = async () => {
         setLoading(true);
@@ -80,7 +95,7 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
             setRating(0);
             setError("");
             setDate(null);
-            if(type === "tv") {
+            if (type === "tv") {
                 await api.get(`${BACKEND_IS_WATCHED_URI}/${type}/${movie.id}`, {
                     "headers": {
                         "Authorization": `Bearer ${GetToken()}`
@@ -96,9 +111,9 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
 
             }
         } catch (err) {
-            if(!err?.response) {
+            if (!err?.response) {
                 setError("No Server Response");
-            } else if(err.response?.status === 400) {
+            } else if (err.response?.status === 400) {
                 setError("Invalid Input Data");
             } else {
                 setError("Something Went Wrong! Try again Later");
@@ -114,9 +129,9 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                 }
             });
         } catch (err) {
-            if(!err?.response) {
+            if (!err?.response) {
                 setError("No Server Response");
-            } else if(err.response?.status === 400) {
+            } else if (err.response?.status === 400) {
                 setError("Invalid Input Data");
             } else {
                 setError("Something Went Wrong! Try again Later");
@@ -135,10 +150,41 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
         setInWishlist(true);
         setLoading(false);
     }
+    let reviewClickEvent = async () => {
+        setOpen(true);
+    }
+
     return (
         <div className="rmdb-movieinfo-content">
-            {watched && <WatchRibbon title={"Watched"} />}
-            {!watched && inWishlist && <WatchRibbon position={"right"} dynamic_class={"wishlist"} title={"In Wishlist"}/>}
+
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box id="modal-modal-description" sx={style}>
+                    <Loader loading={modalLoader} />
+                    <ReviewModal
+                        setUserComment={setComment}
+                        storedReview={review}
+                        setReview={setReview}
+                        storedRating={rating}
+                        storedDate={date}
+                        movie={movie}
+                        isTv={false}
+                        setLoading={setModalLoader}
+                        handleClose={handleClose}
+                        handleAlertOpen={handleAlertOpen}
+                    />
+                    <CardFeatureClose onClick={handleClose}/>
+                </Box>
+            </Modal>
+
+
+            {watched && <WatchRibbon title={"Watched"}/>}
+            {!watched && inWishlist &&
+                <WatchRibbon position={"right"} dynamic_class={"wishlist"} title={"In Wishlist"}/>}
 
             <div className="rmdb-movieinfo-thumb">
                 <MovieThumb
@@ -147,7 +193,7 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                 />
             </div>
             <div className="rmdb-movieinfo-text">
-                <h2 style={{fontSize: "2em", marginBottom:".6em"}}> {contentTitle(movie)} </h2>
+                <h2 style={{fontSize: "2em", marginBottom: ".6em"}}> {contentTitle(movie)} </h2>
                 <MovieKeyData movie={movie}/>
                 <p>{movie.overview}</p>
                 <h3>TMDB RATING</h3>
@@ -156,27 +202,41 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
 
                 <div style={{display: "flex"}}>
                     <h3 style={{marginRight: "1em"}}>Personal Rating:</h3>
-                    <MovieRating dynamicClass={"padding-11"} storedRating={rating} isWatched={watched} setRating={setRating}/>
+                    <MovieRating dynamicClass={"padding-11"} storedRating={rating} isWatched={watched}
+                                 setRating={setRating}/>
                     {type === "tv" && watchedSeasons && (
-                        <div className={"watched-seasons"}>Watched Seasons: <span>{watchedSeasons}</span> </div>
+                        <div className={"watched-seasons"}>Watched Seasons: <span>{watchedSeasons}</span></div>
                     )}
                 </div>
 
                 <div className="modal-banner-buttons padding-left-0">
-                    {!watched && <button onClick={watchClickEvent} className="banner-button positive-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
-                        Watched
+                    {!watched &&
+                        <button onClick={watchClickEvent} className="banner-button positive-button"><FontAwesomeIcon
+                            icon={faPlayCircle}/> {"\u00a0\u00a0"}
+                            Watched
+                        </button>}
+                    {watched &&
+                        <button onClick={watchClickEvent} className="banner-button update-button"><FontAwesomeIcon
+                            icon={faPlayCircle}/> {"\u00a0\u00a0"}
+                            Update
+                        </button>}
+                    {(watched || inWishlist) &&
+                        <button onClick={removeClickEvent} className="banner-button remove-button"><FontAwesomeIcon
+                            icon={faMinusCircle}/> {"\u00a0\u00a0"}
+                            Remove
+                        </button>}
+                    {!watched && !inWishlist &&
+                        <button onClick={wishlistClickEvent} className="banner-button positive-button"><FontAwesomeIcon
+                            icon={faPlus}/> Watch List</button>}
+                    {watched && <button onClick={reviewClickEvent} className="banner-button positive-button"><FontAwesomeIcon
+                        icon={faPen}/> {"\u00a0\u00a0"}
+                        Comment
                     </button>}
-                    {watched && <button onClick={watchClickEvent} className="banner-button update-button"><FontAwesomeIcon icon={faPlayCircle}/> {"\u00a0\u00a0"}
-                        Update
-                    </button>}
-                    {(watched || inWishlist) && <button onClick={removeClickEvent} className="banner-button remove-button"><FontAwesomeIcon icon={faMinusCircle}/> {"\u00a0\u00a0"}
-                        Remove
-                    </button>}
-                    {!watched && !inWishlist && <button onClick={wishlistClickEvent} className="banner-button positive-button"><FontAwesomeIcon icon={faPlus}/> Watch List</button>}
                 </div>
 
             </div>
             <FontAwesomeIcon icon={faFilm} name="film" size="5x"/>
+
         </div>
     );
 }

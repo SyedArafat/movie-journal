@@ -25,6 +25,13 @@
   padding: 10px 20px 0 0;
 }
 
+.review-movieinfobar-content-col {
+  float: left;
+  width: 19%;
+  box-sizing: border-box;
+  padding: 10px 20px 0 0;
+}
+
 .rmdb-movieinfobar-info {
   padding: 5px 0 0 10px;
   float: left;
