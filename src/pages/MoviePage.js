@@ -16,7 +16,13 @@ import Loader from "../components/Loader";
 import {GetApi} from "../api/MediaContentClient";
 import {DeleteToken} from "../auth/Authentication";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faClock, faDollyBox, faRankingStar, faReceipt} from "@fortawesome/free-solid-svg-icons";
+import {faComment} from "@fortawesome/free-solid-svg-icons";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function MoviePage() {
     const [movie, setMovie] = useState(false);
@@ -27,6 +33,9 @@ function MoviePage() {
     const {type} = useParams();
     const navigte = useNavigate();
     const [comment, setComment] = useState("");
+    const [alertOpen, setAlertOpen] = useState(false);
+    const [toastMessage, setToastMessage] = useState("");
+
 
     const [movies, setMovies] = useState(false);
     const [personalChoice, setPersonalChoice] = useState(false);
@@ -86,8 +95,32 @@ function MoviePage() {
         actors = credits.cast.slice(0, 4);
     }
 
+    const handleAlertClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setAlertOpen(false);
+    };
+
+    const handleAlertOpen = (message) => {
+        setToastMessage(message);
+        setAlertOpen(true);
+
+    }
+
     return (
         <div className="rmdb-movie">
+            <Snackbar open={alertOpen}
+                      anchorOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right'
+                      }}
+                      autoHideDuration={5000} onClose={handleAlertClose}>
+                <Alert onClose={handleAlertClose} severity="success" sx={{ width: '100%' }}>
+                    { toastMessage }
+                </Alert>
+            </Snackbar>
             <Nav callback={searchItems} setLoading={setLoading} dynamicClass={"single-page-nav"}/>
             <Loader loading={loading}/>
             {
@@ -101,7 +134,9 @@ function MoviePage() {
                                     movie={movie}
                                     type={type}
                                     directors={directors}
-                                    personalChoice={personalChoice}/>
+                                    personalChoice={personalChoice}
+                                    handleAlertOpen={handleAlertOpen}
+                                />
 
                                 <MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue}/>
 
@@ -124,8 +159,9 @@ function MoviePage() {
                 <div className="rmdb-movieinfobar">
                     <div className="rmdb-movieinfobar-content">
                         <div className="review-movieinfobar-content-col">
-                            <FontAwesomeIcon className={"fa-time"} icon={faRankingStar} size={"2x"}/>
-                            <span className="rmdb-movieinfobar-info">Review</span>
+                            <span style={{marginRight: "10px"}} className="rmdb-movieinfobar-info">Comment</span>
+                            <FontAwesomeIcon className={"fa-time"} icon={faComment} size={"2x"}/>
+
 
                         </div>
                         <div style={{fontFamily: "cursive"}}>{comment ?? personalChoice?.review}</div>

@@ -21,11 +21,10 @@ import RatingAndDate from "./RatingAndDate";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Loader from "../Loader";
-import MovieModal from "../Movies/Modal/MovieModal";
 import CardFeatureClose from "../Movies/CardFeatureClose";
 import ReviewModal from "../Modal/ReviewModal";
 
-function PageContent({movie, directors, type, personalChoice, setLoading, setSeasonDetails, setComment}) {
+function PageContent({movie, directors, type, personalChoice, setLoading, setSeasonDetails, handleAlertOpen, setComment}) {
     const [rating, setRating] = useState(personalChoice.rating);
     const [review, setReview] = useState(personalChoice.review);
     const [watchedSeasons, setWatchedSeasons] = useState(personalChoice.watched_seasons);
@@ -37,6 +36,7 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [modalLoader, setModalLoader] = useState(false);
 
     const style = {
         position: 'absolute',
@@ -65,7 +65,6 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
         await storeChoice(data);
         setWatched(true);
         setRating(rating);
-        // setDate(date);
         if (type === "tv") {
             await api.get(`${BACKEND_IS_WATCHED_URI}/${type}/${movie.id}`, {
                 "headers": {
@@ -79,9 +78,8 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                 // console.log(GetToken());
             });
         }
+        handleAlertOpen("Feedback Recorded Successfully");
         setLoading(false);
-
-        // window.location.reload();
     }
     let removeClickEvent = async () => {
         setLoading(true);
@@ -166,7 +164,7 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                 aria-describedby="modal-modal-description"
             >
                 <Box id="modal-modal-description" sx={style}>
-                    {/*<Loader loading={loading} />*/}
+                    <Loader loading={modalLoader} />
                     <ReviewModal
                         setUserComment={setComment}
                         storedReview={review}
@@ -175,8 +173,9 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                         storedDate={date}
                         movie={movie}
                         isTv={false}
-                        setLoading={setLoading}
+                        setLoading={setModalLoader}
                         handleClose={handleClose}
+                        handleAlertOpen={handleAlertOpen}
                     />
                     <CardFeatureClose onClick={handleClose}/>
                 </Box>
@@ -229,10 +228,10 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                     {!watched && !inWishlist &&
                         <button onClick={wishlistClickEvent} className="banner-button positive-button"><FontAwesomeIcon
                             icon={faPlus}/> Watch List</button>}
-                    <button onClick={reviewClickEvent} className="banner-button positive-button"><FontAwesomeIcon
+                    {watched && <button onClick={reviewClickEvent} className="banner-button positive-button"><FontAwesomeIcon
                         icon={faPen}/> {"\u00a0\u00a0"}
-                        Review
-                    </button>
+                        Comment
+                    </button>}
                 </div>
 
             </div>
