@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import "./Row.css";
 import AllCardsWrapper from "../Movies/AllCardsWrapper";
 import React from 'react';
@@ -17,6 +17,13 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
     const [showCardFeature, setShowCardFeature] = useState(false);
     const [activeItem, setActiveItem] = useState(false);
     const [reload, setReload] = useState(false);
+
+    const ref = useRef();
+
+    const scroll = (scrollOffset) => {
+        console.log("asdasdasd");
+        ref.current.scrollLeft += scrollOffset;
+    };
 
 
     useEffect(() => {
@@ -49,29 +56,39 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
         <div className="row">
             {
                 movies.length !== 0 ?
-                <>
-                    <h2>{title}</h2>
-                    <AllCardsWrapper>
-                        <div className="row-posters">
-                            {movies.map(movie => (
-                                <div key={movie.id} className={`row-poster ${isLargeRow && "row-posterLarge"}`}>
-                                    <img
-                                        onClick={() => handleClick(movie)}
-                                        className={`row-poster ${isLargeRow && "row-posterLarge"}`}
-                                        key={movie.id}
-                                        src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
-                                        alt={movie.name}
-                                    />
-                                </div>
-                            ))}
-
+                    <>
+                        <div className="header">
+                            <h2>{title}</h2>
+                            <div className="progress-bar"></div>
                         </div>
-                    </AllCardsWrapper>
-                </> : null
+                        <AllCardsWrapper>
+                            <button className="handle left-handle">
+                                <div className="text">&#8249;</div>
+                            </button>
+                            <div className="row-posters">
+                                {movies.map(movie => (
+                                    <div key={movie.id} className={`row-poster ${isLargeRow && "row-posterLarge"}`}>
+                                        <img
+                                            onClick={() => handleClick(movie)}
+                                            className={`row-poster ${isLargeRow && "row-posterLarge"}`}
+                                            key={movie.id}
+                                            src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
+                                            alt={movie.name}
+                                        />
+                                    </div>
+                                ))}
+
+                            </div>
+                            <button className="handle right-handle">
+                                <div onClick={() => scroll(20)} className="text">&#8250;</div>
+                            </button>
+                        </AllCardsWrapper>
+                    </> : null
             }
             {
                 showCardFeature ?
-                    <ConditionalMovieModalWrapper setIsUpdated={setReload} modalOpen={open} onClose={() => setOpen(false)}
+                    <ConditionalMovieModalWrapper setIsUpdated={setReload} modalOpen={open}
+                                                  onClose={() => setOpen(false)}
                                                   activeItem={activeItem} isTV={isTV}/>
                     : null
             }
