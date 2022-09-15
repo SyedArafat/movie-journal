@@ -105,7 +105,7 @@ function MovieModal({props, isTv, setLoading, setIsUpdated, from}) {
         let type = isTv ? "tv" : "movie";
         let media_id = movie.id;
         try {
-            await api.post(`${BACKEND_MEDIA_REMOVE_API}/${type}/${media_id}`, {
+            await api.post(`${BACKEND_MEDIA_REMOVE_API}/${type}/${media_id}`,null, {
                 "headers": {
                     "Authorization": `Bearer ${GetToken()}`
                 }
