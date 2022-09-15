@@ -153,20 +153,21 @@ function MoviePage() {
                     </FourColGrid>
                 </div>
                 : null}
+            { !showSearch &&
+                <div style={{marginTop: "30px"}}>
+                    <div className="rmdb-movieinfobar">
+                        <div className="rmdb-movieinfobar-content">
+                            <div className="review-movieinfobar-content-col">
+                                <span style={{marginRight: "10px"}} className="rmdb-movieinfobar-info">Comment</span>
+                                <FontAwesomeIcon className={"fa-time"} icon={faComment} size={"2x"}/>
 
-            <div style={{marginTop: "30px"}}>
-                <div className="rmdb-movieinfobar">
-                    <div className="rmdb-movieinfobar-content">
-                        <div className="review-movieinfobar-content-col">
-                            <span style={{marginRight: "10px"}} className="rmdb-movieinfobar-info">Comment</span>
-                            <FontAwesomeIcon className={"fa-time"} icon={faComment} size={"2x"}/>
 
-
+                            </div>
+                            <div style={{fontFamily: "cursive"}}>{comment ?? personalChoice?.review}</div>
                         </div>
-                        <div style={{fontFamily: "cursive"}}>{comment ?? personalChoice?.review}</div>
                     </div>
                 </div>
-            </div>
+            }
 
 
             {type === "tv" && showSearch === false ?

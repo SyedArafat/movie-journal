@@ -1,4 +1,4 @@
-import {Navigate, useLocation, useNavigate} from "react-router-dom";
+import {Navigate, useLocation} from "react-router-dom";
 import {EXPIRES_AT_TAG, NAME_TAG, TOKEN_TAG} from "../config/config";
 
 const GetToken = () => {return localStorage.getItem(TOKEN_TAG);}
