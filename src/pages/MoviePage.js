@@ -75,7 +75,6 @@ function MoviePage() {
             setPersonalChoice(response.data.user_feedback);
             setSeasonDetails(personalChoice?.seasons);
             setCredits(response.data.credit_details);
-            console.log(personalChoice);
             setComment(personalChoice?.review);
             setLoading(false);
         }

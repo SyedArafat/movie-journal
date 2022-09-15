@@ -85,7 +85,7 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
         setLoading(true);
         let media_id = movie.id;
         try {
-            await api.post(`${BACKEND_MEDIA_REMOVE_API}/${type}/${media_id}`, {
+            await api.post(`${BACKEND_MEDIA_REMOVE_API}/${type}/${media_id}`, null, {
                 "headers": {
                     "Authorization": `Bearer ${GetToken()}`
                 }
@@ -110,6 +110,8 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                 setSeasonDetails(false);
 
             }
+            handleAlertOpen("Feedback Remove Successful");
+
         } catch (err) {
             if (!err?.response) {
                 setError("No Server Response");

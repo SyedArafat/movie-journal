@@ -85,25 +85,13 @@ function Nav({dynamicClass, callback, setLoading}) {
                                 <div className="dropdown notification">
                                     <img src="/images/icons/notification.svg" alt="notificatio icon"/>
                                     <div className="dropdown-content">
-                                        <a href="#" className="profile-item d-flex flex-middle">
-                                            <img src="/images/icons/user2.png" alt="user profile icon"
-                                                 className="user-icon"/>
-                                            <span>You have new notification from <span>User 123</span></span>
-                                        </a>
-                                        <a href="#" className="profile-item d-flex flex-middle">
-                                            <img src="/images/icons/user1.png" alt="user profile icon"
-                                                 className="user-icon"/>
-                                            <span>You have new notification from <span>User 123</span></span>
-                                        </a>
-                                        <a href="#" className="profile-item d-flex flex-middle">
-                                            <img src="/images/icons/user4.png" alt="user profile icon"
-                                                 className="user-icon"/>
-                                            <span>You have new notification from <span>User 123</span></span>
-                                        </a>
-                                        <a href="#" className="profile-item d-flex flex-middle">
-                                            <img src="/images/icons/user3.png" alt="user profile icon"
-                                                 className="user-icon"/>
-                                            <span>You have new notification from <span>User 123</span></span>
+                                        {/*<a href="#" className="profile-item d-flex flex-middle">*/}
+                                        {/*    <img src="/images/icons/user2.png" alt="user profile icon"*/}
+                                        {/*         className="user-icon"/>*/}
+                                        {/*    <span>You have new notification from <span>User 123</span></span>*/}
+                                        {/*</a>                                        */}
+                                        <a className="profile-item d-flex flex-middle">
+                                           <span>No new notifications.</span>
                                         </a>
                                     </div>
                                 </div>
