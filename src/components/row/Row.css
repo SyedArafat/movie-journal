@@ -71,13 +71,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #9b9b9b;
   line-height: 0;
   transition: background-color 150ms ease-in-out;
 }
 
 .handle:hover{
-    /*background-color: rgba(255, 255, 255, .1);*/
+    color: rgba(255, 255, 255, 0.97);
     transform: scale(1.14);
     transition: transform 450ms;
 }
@@ -86,89 +86,6 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-
-/*.row {*/
-/*  margin-left: 20px;*/
-/*  color: white;*/
-/*}*/
-
-/*.row-posters {*/
-/*  display: flex;*/
-/*  overflow-y: hidden;*/
-/*  overflow-x: scroll;*/
-/*  padding: 10px;*/
-/*  cursor: pointer;*/
-/*  margin-right: 10px;*/
-/*  !*overscroll-behavior-y: contain;*!*/
-/*}*/
-
-/*.row-posters::-webkit-scrollbar {*/
-/*  display: none;*/
-/*}*/
-
-/*.row-poster {*/
-/*  object-fit: contain;*/
-/*  !*width: 100%;*!*/
-/*  max-height: 100px;*/
-/*  margin-right: 10px;*/
-/*  transition: transform 450ms;*/
-/*}*/
-
-/*.row-poster div:hover {*/
-/*  transform: scale(1.08);*/
-/*}*/
-
-
-/*.row-posterLarge {*/
-/*  max-height: 250px;*/
-/*}*/
-
-/*.row-posterLarge:hover {*/
-/*  transform: scale(1.09);*/
-/*  opacity: 1;*/
-/*}*/
-
-/*.movie-content {*/
-/*  background: linear-gradient(90deg, #000 50%, transparent);*/
-/*  width: 70%;*/
-/*  padding-top: 3rem;*/
-/*  height: 100%;*/
-/*  padding-left: 5rem;*/
-/*}*/
-
-/*.modal-rating {*/
-/*  padding-top: 10px;*/
-/*}*/
-
-/*:root {*/
-/*  --handle-size: 3rem;*/
-/*  --img-gap: .25rem;*/
-/*}*/
-
-/*.handle {*/
-/*  border: none;*/
-/*  border-radius: 1rem;*/
-/*  flex-grow: 0;*/
-/*  flex-shrink: 0;*/
-/*  background-color: rgba(255, 255, 255, 0);*/
-/*  !*z-index: 1;*!*/
-/*  margin: var(--img-gap) 0;*/
-/*  width: var(--handle-size);*/
-/*  cursor: pointer;*/
-/*  font-size: 7rem;*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*  justify-content: center;*/
-/*  color: white;*/
-/*  line-height: 0;*/
-/*  !*transition: background-color 150ms ease-in-out;*!*/
-/*}*/
-
-/*.handle:hover{*/
-/*  !*background-color: rgba(255, 255, 255, .1);*!*/
-/*  transform: scale(1.12);*/
-/*  transition: transform 450ms;*/
-/*}*/
 
 .right-handle {
   border-top-right-radius: 0;
