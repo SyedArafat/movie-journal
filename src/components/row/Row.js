@@ -12,8 +12,6 @@ const base_url = `${IMAGE_BASE_URL}w500`;
 const sideScroll = (element, speed, distance, step) => {
     let scrollAmount = 0;
     const slideTimer = setInterval(() => {
-        // console.log(element.scrollWidth);
-        // console.log(element.clientWidth);
         element.scrollLeft += step;
         scrollAmount += Math.abs(step);
         if (scrollAmount >= distance) {
