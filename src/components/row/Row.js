@@ -21,6 +21,7 @@ const sideScroll = (element, speed, distance, step) => {
 };
 
 const showScroll = (element) => {
+    console.log(element?.scrollWidth, element?.clientWidth);
     return (element?.scrollWidth > element?.clientWidth);
 }
 
@@ -88,13 +89,13 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
                         </div>))}
 
                 </div>
-                <button className="handle right-handle">
-                    {showScroll(contentWrapper.current) && <div
+                {showScroll(contentWrapper.current) && <button className="handle right-handle">
+                    <div
                         onClick={() => {
                             sideScroll(contentWrapper.current, 10, 300, 20);
                         }}
-                        className="text">&#8250;</div>}
-                </button>
+                        className="text">&#8250;</div>
+                </button>}
             </AllCardsWrapper>
         </> : null}
         {showCardFeature ? <ConditionalMovieModalWrapper setIsUpdated={setReload} modalOpen={open}
