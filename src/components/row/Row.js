@@ -9,22 +9,6 @@ import {DeleteToken} from "../../auth/Authentication";
 
 const base_url = `${IMAGE_BASE_URL}w500`;
 
-const sideScroll = (element, speed, distance, step) => {
-    let scrollAmount = 0;
-    const slideTimer = setInterval(() => {
-        element.scrollLeft += step;
-        scrollAmount += Math.abs(step);
-        if (scrollAmount >= distance) {
-            clearInterval(slideTimer);
-        }
-    }, 18);
-};
-
-const showScroll = (element) => {
-    console.log(element?.scrollWidth, element?.clientWidth);
-    return (element?.scrollWidth > element?.clientWidth);
-}
-
 
 function Row({title, fetchUrl, isLargeRow, setLoading}) {
     const [open, setOpen] = useState(false);
@@ -34,6 +18,7 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
     const [showCardFeature, setShowCardFeature] = useState(false);
     const [activeItem, setActiveItem] = useState(false);
     const [reload, setReload] = useState(false);
+    const [showScrolls, setShowScrolls] = useState(false);
 
 
     useEffect(() => {
@@ -63,13 +48,39 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
     }
     const contentWrapper = React.useRef(null);
 
-    return (<div className="row">
+    const sideScroll = (element, speed, distance, step) => {
+        let scrollAmount = 0;
+        const slideTimer = setInterval(() => {
+            element.scrollLeft += step;
+            scrollAmount += Math.abs(step);
+            if (scrollAmount >= distance) {
+                clearInterval(slideTimer);
+            }
+        }, 18);
+    };
+
+    const showScroll = (element) => {
+        if (element?.scrollWidth > element?.clientWidth) {
+            setShowScrolls(true);
+        }
+    }
+
+    return (<div className="row" onMouseEnter={() => {showScroll(contentWrapper.current)}} onMouseLeave={() => {setShowScrolls(false)}}>
         {movies.length !== 0 ? <>
             <div>
                 <h2>{title}</h2>
             </div>
             <AllCardsWrapper>
-                {showScroll(contentWrapper.current) && <button className="handle left-handle">
+                {!showScrolls && <button style={{ visibility: "hidden"}} className="handle left-handle">
+                    <div
+                        onClick={() => {
+                            sideScroll(contentWrapper.current, 10, 300, -20);
+                        }}
+                        className="text">&#8249;</div>
+                </button>
+
+                }
+                {showScrolls && <button className="handle left-handle">
                     <div
                         onClick={() => {
                             sideScroll(contentWrapper.current, 10, 300, -20);
@@ -89,7 +100,14 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
                         </div>))}
 
                 </div>
-                {showScroll(contentWrapper.current) && <button className="handle right-handle">
+                {!showScrolls && <button style={{visibility: "hidden"}} className="handle right-handle">
+                    <div
+                        onClick={() => {
+                            sideScroll(contentWrapper.current, 10, 300, 20);
+                        }}
+                        className="text">&#8250;</div>
+                </button>}
+                {showScrolls && <button className="handle right-handle">
                     <div
                         onClick={() => {
                             sideScroll(contentWrapper.current, 10, 300, 20);
