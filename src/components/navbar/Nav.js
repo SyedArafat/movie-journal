@@ -1,13 +1,17 @@
 import React, {useEffect, useState} from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import "./Nav.css";
-import {Link, Navigate, useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import SigninButton from "../Header/SigninButton";
 import Logo from "./Logo";
 import {Authed, DeleteToken, GetName, GetToken} from "../../auth/Authentication";
 import api from "../../api/BackendApi";
 import {BACKEND_LOGOUT_URI} from "../../config/config";
 import {AccountBox, Logout} from "@mui/icons-material";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faMenorah} from "@fortawesome/free-solid-svg-icons";
+
+
 
 function Nav({dynamicClass, callback, setLoading}) {
     const navigate = useNavigate();
@@ -47,6 +51,18 @@ function Nav({dynamicClass, callback, setLoading}) {
 
     }
 
+    const menuButtonClick = () => {
+        console.log("asdasd");
+        var x = document.getElementById("myLinks");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+        }
+    }
+
+
+
     useEffect(() => {
         window.addEventListener("scroll", () => {
             if (window.scrollY > 100) {
@@ -59,7 +75,8 @@ function Nav({dynamicClass, callback, setLoading}) {
         };
     }, [])
     return (
-        <div className={`navbar d-flex space-between flex-center flex-middle`}>
+        <>
+        <div className={`navbar d-flex space-between flex-center flex-middle nav-for-desktop-view`}>
             <div className={`container nav  ${dynamicClass} ${show && "nav-black"}`}>
                 {/*<div className=>*/}
                 <div className="left">
@@ -75,7 +92,6 @@ function Nav({dynamicClass, callback, setLoading}) {
                     {login ?
                         <div>
                             <div className="righticons d-flex flex-end flex-middle">
-                                {/*<form action="/search" method="get">*/}
                                 <input onChange={doSearch} className="search expandright" id="searchright" type="search"
                                        name="q" placeholder="Search"/>
                                 <label className="" htmlFor="searchright">
@@ -131,6 +147,30 @@ function Nav({dynamicClass, callback, setLoading}) {
                 {/*</div>*/}
             </div>
         </div>
+            <div className={'nav-for-mobile-view'}>
+                <div className="topnav">
+                    <Link onClick={emptySearch} className={'active'} to={"/"}><Logo/></Link>
+                    <div id="myLinks">
+                        <Link to="/"><span>Movies</span></Link>
+                        {login ?
+
+                            <a href="#" style={{backgroundColor: "#e50914"}} onClick={handleLogout}
+                               className="profile-item d-flex flex-middle">
+                                {/*<Logout />*/}
+                                <span>Logout</span>
+                            </a> :
+                            <SigninButton>Sign In</SigninButton>
+                        }
+
+
+
+                    </div>
+                    <a className="icon" onClick={menuButtonClick}>
+                        <FontAwesomeIcon icon={faMenorah}/>
+                    </a>
+                </div>
+            </div>
+        </>
     );
 }
 
