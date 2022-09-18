@@ -12,7 +12,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faList} from "@fortawesome/free-solid-svg-icons";
 
 
-function Nav({dynamicClass, callback, setLoading}) {
+function Nav({dynamicClass, callback, setLoading, showSearchIcon = true}) {
     const navigate = useNavigate();
     const [show, handleShow] = useState(false);
     const [login] = useState(Authed);
@@ -92,13 +92,15 @@ function Nav({dynamicClass, callback, setLoading}) {
                         {login ?
                             <div>
                                 <div className="righticons d-flex flex-end flex-middle">
-                                    <input onChange={doSearch} className="search expandright" id="searchright"
-                                           type="search"
-                                           name="q" placeholder="Search"/>
-                                    <label className="" htmlFor="searchright">
-                                        <SearchIcon onClick={clickSearch} fontSize={"large"}
-                                                    className={"icon button searchbutton"}/>
-                                    </label>
+                                    {showSearchIcon && <>
+                                        <input onChange={doSearch} className="search expandright" id="searchright"
+                                               type="search"
+                                               name="q" placeholder="Search"/>
+                                        <label className="" htmlFor="searchright">
+                                            <SearchIcon onClick={clickSearch} fontSize={"large"}
+                                                        className={"icon button searchbutton"}/>
+                                        </label>
+                                    </>}
                                     <div className="dropdown notification">
                                         <img src="/images/icons/notification.svg" alt="notificatio icon"/>
                                         <div className="dropdown-content">
@@ -141,7 +143,7 @@ function Nav({dynamicClass, callback, setLoading}) {
                             </div>
                             :
                             <>
-                                <div className="righticons d-flex flex-end flex-middle">
+                                {showSearchIcon && <div className="righticons d-flex flex-end flex-middle">
                                     <input onChange={doSearch} className="search expandright" id="searchright"
                                            type="search"
                                            name="q" placeholder="Search"/>
@@ -149,7 +151,7 @@ function Nav({dynamicClass, callback, setLoading}) {
                                         <SearchIcon onClick={clickSearch} fontSize={"large"}
                                                     className={"icon button searchbutton"}/>
                                     </label>
-                                </div>
+                                </div>}
                                 <SigninButton>Sign In</SigninButton>
 
                             </>

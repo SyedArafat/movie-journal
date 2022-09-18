@@ -142,7 +142,7 @@ function MoviePage() {
 
                             </div>
                             : null) :
-                    <SearchResults movies={movies}/>
+                    <SearchResults dynamicClass={"rmdb-moviethumb"} movies={movies}/>
             }
             {actors && actors.length !== 0 && showSearch === false ?
                 <div style={{margin: "0px 20px"}} className="rmdb-movie-grid">

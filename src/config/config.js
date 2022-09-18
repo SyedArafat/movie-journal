@@ -14,6 +14,7 @@ const BACKEND_API_BASE_URL = "http://localhost:8888";
 
 const BACKEND_REGISTER_URI = "/api/auth/register";
 const BACKEND_EXTERNAL_SEARCH = "/api/search/media/content";
+const BACKEND_ADVANCE_SEARCH = "/api/advance-search/media/content";
 const BACKEND_HOME_API_AUTH = "/api/users/home";
 const BACKEND_HOME_API_NON_AUTH = "/api/public/home";
 const BACKEND_MEDIA_CONTENT_API = "/api/media/content";
@@ -44,5 +45,6 @@ export {
     BACKEND_HOME_API_NON_AUTH,
     BACKEND_EXTERNAL_SEARCH,
     BACKEND_SEASON_DETAILS_API,
-    THUMB_SIZE
+    THUMB_SIZE,
+    BACKEND_ADVANCE_SEARCH
 }

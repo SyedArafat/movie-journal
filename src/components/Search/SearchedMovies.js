@@ -4,7 +4,7 @@ import BadgeWatch from "../Movies/BadgeWatch";
 import ConditionalMovieModalWrapper from "../Movies/Modal/ConditionalMovieModalWrapper";
 import {contentTitle} from "../../helpers";
 
-function SearchedMovies({movie}) {
+function SearchedMovies({movie, dynamicClass}) {
 
     const POSTER_SIZE = "w342";
 
@@ -25,8 +25,9 @@ function SearchedMovies({movie}) {
     }
 
     return (
-        <div className="rmdb-actor search-movie">
+        <div className={`rmdb-actor search-movie ${dynamicClass}`}>
             <img
+                className={"clickable"}
                 onClick={() => handleClick(movie)}
                 src={movie.poster_path || movie.profile_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}${movie?.poster_path || movie?.profile_path }` : `${process.env.PUBLIC_URL}/images/no_image.jpg`}
                 alt="Poster Thumb"
