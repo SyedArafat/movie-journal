@@ -167,12 +167,14 @@ function Nav({dynamicClass, callback, setLoading, showSearchIcon = true}) {
                     <div id="myLinks">
                         <Link to="/"><span>Movies</span></Link>
                         {login ?
-
-                            <a href="#" style={{backgroundColor: "#e50914"}} onClick={handleLogout}
-                               className="profile-item d-flex flex-middle">
-                                {/*<Logout />*/}
-                                <span>Logout</span>
-                            </a> :
+                            <>
+                                <Link to="/advance-search"><span>Search</span></Link>
+                                <a href="#" style={{backgroundColor: "#e50914"}} onClick={handleLogout}
+                                   className="profile-item d-flex flex-middle">
+                                    {/*<Logout />*/}
+                                    <span>Logout</span>
+                                </a>
+                            </> :
                             <SigninButton>Sign In</SigninButton>
                         }
 

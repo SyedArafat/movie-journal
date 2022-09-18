@@ -7,12 +7,18 @@ function SearchBar({callback}) {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchType, setSearchType] = useState("multi");
 
-    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    const [timer, setTimer] = useState(null)
 
-    const setText = async (event) => {
-        setSearchQuery(event.target.value);
-        callback(event.target.value, searchType);
+    const inputChanged = e => {
+        setSearchQuery(e.target.value)
 
+        clearTimeout(timer)
+
+        const newTimer = setTimeout(() => {
+            callback(e.target.value, searchType);
+        }, 900)
+
+        setTimer(newTimer)
     }
 
     const setType = (event) => {
@@ -29,7 +35,7 @@ function SearchBar({callback}) {
                         type="text"
                         className="rmdb-searchbar-input"
                         placeholder="Search"
-                        onChange={setText}
+                        onChange={inputChanged}
                         // value={value}
                     />
                     <select onChange={setType} className={"search-select"}>
