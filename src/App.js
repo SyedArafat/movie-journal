@@ -6,6 +6,7 @@ import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
 import MoviePage from "./pages/MoviePage";
 import {ForcedNoRequireAuth, RequireAuth} from "./auth/Authentication";
+import AdvanceSearchPage from "./pages/AdvanceSearchPage";
 
 function App() {
     return (
@@ -17,6 +18,12 @@ function App() {
                        element={
                            <RequireAuth>
                                <MoviePage />
+                           </RequireAuth>
+                       }/>/>
+                <Route exact path="/advance-search"
+                       element={
+                           <RequireAuth>
+                               <AdvanceSearchPage />
                            </RequireAuth>
                        }/>/>
                 <Route exact path="/signin"

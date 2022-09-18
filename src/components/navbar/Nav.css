@@ -113,31 +113,32 @@ a {
   flex-wrap: wrap;
 }
 
-.container {
+.custom-container {
+  font-weight: bold;
   padding: 0px 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 70px;
   width: 100%;
+  font-family: ui-serif;
 }
 .header-logo {
   height: 30px;
 }
 
-.container .left {
+.custom-container .left {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 500;
   font-size: 17px;
 }
 
-.container .left a {
+.custom-container .left a {
   color:white;
 }
 
-.container .right {
+.custom-container .right {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -152,17 +153,17 @@ a {
   cursor: pointer;
 }
 
-.container .left span {
+.custom-container .left span {
   margin-right: 20px;
   cursor: pointer;
 }
 
-.container .left img {
+.custom-container .left img {
   margin-right: 30px;
   margin-top: 0.3em;
 }
 
-.container .right .icon {
+.custom-container .right .icon {
   margin: 0px 15px;
   cursor: pointer;
 }
@@ -410,7 +411,6 @@ a {
 .topnav a.icon {
   background: black;
   display: block;
-  /*float: right;*/
   position: absolute;
   right: 0;
   top: 0;
@@ -434,7 +434,7 @@ a {
 
 @media (min-width: 801px) {
   .nav-for-mobile-view {
-    display: none !important;
+    display: none;
   }
 }
 
