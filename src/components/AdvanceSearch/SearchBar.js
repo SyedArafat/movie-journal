@@ -36,10 +36,9 @@ function SearchBar({callback}) {
                         className="rmdb-searchbar-input"
                         placeholder="Search"
                         onChange={inputChanged}
-                        // value={value}
                     />
-                    <select onChange={setType} className={"search-select"}>
-                        <option selected value="multi">All</option>
+                    <select defaultValue={"multi"} onChange={setType} className={"search-select"}>
+                        <option value="multi">All</option>
                         <option value="movie">Movies</option>
                         <option value="tv">Tv Shows</option>
                     </select>
