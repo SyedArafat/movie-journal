@@ -84,6 +84,15 @@
     padding-left: 25px;
 }
 
+.filter-select {
+    position: relative;
+    left: 4em;
+}
+
+.second-filter-content {
+    left: 14em;
+}
+
 .search-tag-line {
     text-align: center;
     font-size: xx-large;
@@ -93,6 +102,14 @@
     padding-bottom: 3em;
     /*margin-bottom: 4em;*/
     /*background: #1c1c1c;*/
+}
+
+.outside-search {
+    height: 6em;
+}
+
+.second-filter {
+    padding-top: 1.3em;
 }
 
 @media screen and (max-width: 720px) {
@@ -105,11 +122,32 @@
         height: 16em;
     }
     .search-select {
-        margin-top: 2em;
+        margin-top: 1.5em;
+        width: 100%;
+        left: 0;
         /*background: none;*/
     }
     .search-tag-line {
         margin-top: 2em;
+    }
+    .second-filter-content {
+        left: 0;
+        width: 100%;
+    }
+    .outside-search {
+        margin-top: 0;
+        height: 14em;
+        /*display: none;*/
+    }
+    .first-filter {
+        height: 10em;
+    }
+    .second-filter {
+        padding-top: 0;
+    }
+
+    .rmdb-heroimage {
+        height: 23em;
     }
 }
 

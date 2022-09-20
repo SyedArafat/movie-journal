@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 
-function SearchBar({callback}) {
+function SearchBar({callback, dynamicClass, showSearchHeader = true}) {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchType, setSearchType] = useState("multi");
 
@@ -28,7 +28,7 @@ function SearchBar({callback}) {
 
     return (
         <>
-            <div id={"rmdbSearchbar"} className="rmdb-searchbar">
+            <div id={"rmdbSearchbar"} className={`rmdb-searchbar ${dynamicClass}`}>
                 <div className="rmdb-searchbar-content">
                     <FontAwesomeIcon className={"rmdb-fa-search"} icon={faSearch} size={"2x"} />
                     <input
@@ -38,16 +38,18 @@ function SearchBar({callback}) {
                         onChange={inputChanged}
                     />
                     <select defaultValue={"multi"} onChange={setType} className={"search-select"}>
-                        <option value="multi">All</option>
+                        <option value="multi">Select Content Type</option>
+                        {/*<option value="multi">All</option>*/}
                         <option value="movie">Movies</option>
                         <option value="tv">Tv Shows</option>
                     </select>
                 </div>
+                { showSearchHeader &&
                 <div>
                     <h2 id={"searchHeader"} className={"search-tag-line"}>
                         Search What You Desire
                     </h2>
-                </div>
+                </div>}
             </div>
         </>
     );

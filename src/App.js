@@ -7,6 +7,8 @@ import SignupPage from "./pages/SignupPage";
 import MoviePage from "./pages/MoviePage";
 import {ForcedNoRequireAuth, RequireAuth} from "./auth/Authentication";
 import AdvanceSearchPage from "./pages/AdvanceSearchPage";
+import MovieListPage from "./pages/MovieListPage";
+import TVListPage from "./pages/TVListPage";
 
 function App() {
     return (
@@ -24,6 +26,18 @@ function App() {
                        element={
                            <RequireAuth>
                                <AdvanceSearchPage />
+                           </RequireAuth>
+                       }/>/>
+                <Route exact path="/watched/movies"
+                       element={
+                           <RequireAuth>
+                               <MovieListPage />
+                           </RequireAuth>
+                       }/>/>
+                <Route exact path="/watched/tv"
+                       element={
+                           <RequireAuth>
+                               <TVListPage />
                            </RequireAuth>
                        }/>/>
                 <Route exact path="/signin"

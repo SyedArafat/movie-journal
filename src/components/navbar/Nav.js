@@ -81,8 +81,8 @@ function Nav({dynamicClass, callback, setLoading, showSearchIcon = true}) {
                     {/*<div className=>*/}
                     <div className="left">
                         <Link onClick={emptySearch} to={"/"}><Logo/></Link>
-                        <Link to="/"><span>Movies</span></Link>
-                        <span>TV Shows</span>
+                        <Link to="/watched/movies"><span>Movies</span></Link>
+                        <Link to={"/watched/tv"}><span>TV Shows</span></Link>
                         <span>History</span>
                         <Link to="/advance-search"><span>Advance Search</span></Link>
                         {/*</Routes>*/}
@@ -165,7 +165,7 @@ function Nav({dynamicClass, callback, setLoading, showSearchIcon = true}) {
                 <div className="topnav">
                     <Link onClick={emptySearch} className={'active'} to={"/"}><Logo/></Link>
                     <div id="myLinks">
-                        <Link to="/"><span>Movies</span></Link>
+                        <Link to="/watched/movies"><span>Movies</span></Link>
                         {login ?
                             <>
                                 <Link to="/advance-search"><span>Search</span></Link>
