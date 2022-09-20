@@ -29,7 +29,7 @@ function WatchedContentListPage() {
     useEffect(() => {
         setLoading(true);
         let endpoint = `${BACKEND_WATCHED_CONTENT}`;
-         manageCall(endpoint);
+        manageCall(endpoint);
     }, []);
 
     const manageCall = (endpoint) => {
@@ -99,13 +99,17 @@ function WatchedContentListPage() {
 
             <div id={"rmdbSearchbar"} className={`rmdb-searchbar outside-search second-filter`}>
 
-                <select defaultValue={""} onChange={(e) => {setSortBy(e.target.value)}} className={"search-select filter-select"}>
+                <select defaultValue={""} onChange={(e) => {
+                    setSortBy(e.target.value)
+                }} className={"search-select filter-select"}>
                     <option value="">Sort By</option>
                     <option value="watched_time">Watched Date</option>
                     <option value="created_at">Stored Time</option>
                 </select>
 
-                <select defaultValue={""} onChange={(e) => {setSortType(e.target.value)}} className={"search-select filter-select second-filter-content"}>
+                <select defaultValue={""} onChange={(e) => {
+                    setSortType(e.target.value)
+                }} className={"search-select filter-select second-filter-content"}>
                     <option value="">Sort Type</option>
                     <option value="desc">New To Old</option>
                     <option value="asc">Old To New</option>
