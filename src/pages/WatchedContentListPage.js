@@ -22,6 +22,8 @@ function WatchedContentListPage() {
     const [totalPages, setTotalPages] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [contentType, setContentType] = useState('multi');
+    const [sortBy, setSortBy] = useState("");
+    const [sortType, setSortType] = useState("");
 
 
     useEffect(() => {
@@ -55,7 +57,7 @@ function WatchedContentListPage() {
         setLoading(true);
         let uri = `${BACKEND_WATCHED_CONTENT}?query=${searchQuery}&content_type=${contentType}&page=1`;
         manageCall(uri);
-        setLoading(false);
+        // setLoading(false);
     }
 
     const nextPageLoad = async () => {
@@ -97,13 +99,13 @@ function WatchedContentListPage() {
 
             <div id={"rmdbSearchbar"} className={`rmdb-searchbar outside-search second-filter`}>
 
-                <select defaultValue={""} className={"search-select filter-select"}>
+                <select defaultValue={""} onChange={(e) => {setSortBy(e.target.value)}} className={"search-select filter-select"}>
                     <option value="">Sort By</option>
-                    <option value="movie">Watched Date</option>
-                    <option value="tv">Stored Time</option>
+                    <option value="watched_time">Watched Date</option>
+                    <option value="created_at">Stored Time</option>
                 </select>
 
-                <select defaultValue={""} className={"search-select filter-select second-filter-content"}>
+                <select defaultValue={""} onChange={(e) => {setSortType(e.target.value)}} className={"search-select filter-select second-filter-content"}>
                     <option value="">Sort Type</option>
                     <option value="desc">New To Old</option>
                     <option value="asc">Old To New</option>
