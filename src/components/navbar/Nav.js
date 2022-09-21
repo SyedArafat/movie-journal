@@ -74,119 +74,102 @@ function Nav({dynamicClass, callback, setLoading, showSearchIcon = true}) {
             window.removeEventListener("scroll", e);
         };
     }, [])
-    return (
-        <>
-            <div className={`navbar d-flex space-between flex-center flex-middle nav-for-desktop-view`}>
-                <div className={`custom-container nav  ${dynamicClass} ${show && "nav-black"}`}>
-                    {/*<div className=>*/}
-                    <div className="left">
-                        <Link onClick={emptySearch} to={"/"}><Logo/></Link>
-                        <Link to="/watched/contents"><span>Watched List</span></Link>
-                        <Link to={"/wishlist/contents"}><span>Wish List</span></Link>
-                        {/*<span>History</span>*/}
-                        <Link to="/advance-search"><span>Advance Search</span></Link>
-                        {/*</Routes>*/}
-                    </div>
+    return (<>
+        <div className={`navbar d-flex space-between flex-center flex-middle nav-for-desktop-view`}>
+            <div className={`custom-container nav  ${dynamicClass} ${show && "nav-black"}`}>
+                {/*<div className=>*/}
+                <div className="left">
+                    <Link onClick={emptySearch} to={"/"}><Logo/></Link>
+                    <Link to="/watched/contents"><span>Watched List</span></Link>
+                    <Link to={"/wishlist/contents"}><span>Wish List</span></Link>
+                    <Link to="/advance-search"><span>Advance Search</span></Link>
+                </div>
 
-                    <div className="right">
-                        {login ?
-                            <div>
-                                <div className="righticons d-flex flex-end flex-middle">
-                                    {showSearchIcon && <>
-                                        <input onChange={doSearch} className="search expandright" id="searchright"
-                                               type="search"
-                                               name="q" placeholder="Search"/>
-                                        <label className="" htmlFor="searchright">
-                                            <SearchIcon onClick={clickSearch} fontSize={"large"}
-                                                        className={"icon button searchbutton"}/>
-                                        </label>
-                                    </>}
-                                    <div className="dropdown notification">
-                                        <img src="/images/icons/notification.svg" alt="notificatio icon"/>
-                                        <div className="dropdown-content">
-                                            {/*<a href="#" className="profile-item d-flex flex-middle">*/}
-                                            {/*    <img src="/images/icons/user2.png" alt="user profile icon"*/}
-                                            {/*         className="user-icon"/>*/}
-                                            {/*    <span>You have new notification from <span>User 123</span></span>*/}
-                                            {/*</a>                                        */}
-                                            <a className="profile-item d-flex flex-middle">
-                                                <span>No new notifications.</span>
-                                            </a>
-                                        </div>
-                                    </div>
+                <div className="right">
+                    {login ? <div>
+                        <div className="righticons d-flex flex-end flex-middle">
+                            {showSearchIcon && <>
+                                <input onChange={doSearch} className="search expandright" id="searchright"
+                                       type="search"
+                                       name="q" placeholder="Search"/>
+                                <label className="" htmlFor="searchright">
+                                    <SearchIcon onClick={clickSearch} fontSize={"large"}
+                                                className={"icon button searchbutton"}/>
+                                </label>
+                            </>}
+                            <div className="dropdown notification">
+                                <img src="/images/icons/notification.svg" alt="notificatio icon"/>
+                                <div className="dropdown-content">
+                                    <a className="profile-item d-flex flex-middle">
+                                        <span>No new notifications.</span>
+                                    </a>
+                                </div>
+                            </div>
 
-                                    <div className="dropdown">
-                                        <img src={`${process.env.PUBLIC_URL}/images/icons/user2.png`}
-                                             alt="user profile icon"
-                                             className="user-icon"/>
-                                        <span className="profile-arrow"></span>
+                            <div className="dropdown">
+                                <img src={`${process.env.PUBLIC_URL}/images/icons/user2.png`}
+                                     alt="user profile icon"
+                                     className="user-icon"/>
+                                <span className="profile-arrow"></span>
 
-                                        <div className="dropdown-content">
-                                            <div className="profile-links">
-                                                <a className="profile-item d-flex flex-middle">
-                                                    <AccountBox/>
-                                                    <span>{GetName()}</span>
-                                                </a>
-                                                <div className={"line"}></div>
-                                                <a onClick={handleLogout}
-                                                   className="profile-item d-flex flex-middle">
-                                                    <Logout/>
-                                                    <span>Logout</span>
-                                                </a>
+                                <div className="dropdown-content">
+                                    <div className="profile-links">
+                                        <a className="profile-item d-flex flex-middle">
+                                            <AccountBox/>
+                                            <span>{GetName()}</span>
+                                        </a>
+                                        <div className={"line"}></div>
+                                        <a onClick={handleLogout}
+                                           className="profile-item d-flex flex-middle">
+                                            <Logout/>
+                                            <span>Logout</span>
+                                        </a>
 
-                                            </div>
-
-                                        </div>
                                     </div>
 
                                 </div>
                             </div>
-                            :
-                            <>
-                                {showSearchIcon && <div className="righticons d-flex flex-end flex-middle">
-                                    <input onChange={doSearch} className="search expandright" id="searchright"
-                                           type="search"
-                                           name="q" placeholder="Search"/>
-                                    <label className="" htmlFor="searchright">
-                                        <SearchIcon onClick={clickSearch} fontSize={"large"}
-                                                    className={"icon button searchbutton"}/>
-                                    </label>
-                                </div>}
-                                <SigninButton>Sign In</SigninButton>
 
-                            </>
-                        }
+                        </div>
+                    </div> : <>
+                        {showSearchIcon && <div className="righticons d-flex flex-end flex-middle">
+                            <input onChange={doSearch} className="search expandright" id="searchright"
+                                   type="search"
+                                   name="q" placeholder="Search"/>
+                            <label className="" htmlFor="searchright">
+                                <SearchIcon onClick={clickSearch} fontSize={"large"}
+                                            className={"icon button searchbutton"}/>
+                            </label>
+                        </div>}
+                        <SigninButton>Sign In</SigninButton>
 
-                    </div>
-                    {/*</div>*/}
+                    </>}
+
                 </div>
             </div>
-            <div className={'nav-for-mobile-view'}>
-                <div className="topnav">
-                    <Link onClick={emptySearch} className={'active'} to={"/"}><Logo/></Link>
-                    <div id="myLinks">
-                        <Link to="/watched/contents"><span>Watched List</span></Link>
-                        {login ?
-                            <>
-                                <Link to="/advance-search"><span>Search</span></Link>
-                                <a href="#" style={{backgroundColor: "#e50914"}} onClick={handleLogout}
-                                   className="profile-item d-flex flex-middle">
-                                    {/*<Logout />*/}
-                                    <span>Logout</span>
-                                </a>
-                            </> :
-                            <SigninButton>Sign In</SigninButton>
-                        }
+        </div>
+        <div className={'nav-for-mobile-view'}>
+            <div className="topnav">
+                <Link onClick={emptySearch} className={'active'} to={"/"}><Logo/></Link>
+                <div id="myLinks">
+                    <Link to="/watched/contents"><span>Watched List</span></Link>
+                    <Link to="/wishlist/contents"><span>Wished List</span></Link>
+                    {login ? <>
+                        <Link to="/advance-search"><span>Search</span></Link>
+                        <a href="#" style={{backgroundColor: "#e50914"}} onClick={handleLogout}
+                           className="profile-item d-flex flex-middle">
+                            <span>Logout</span>
+                        </a>
+                    </> : <SigninButton>Sign In</SigninButton>}
 
 
-                    </div>
-                    <a className="icon" onClick={menuButtonClick}>
-                        <FontAwesomeIcon icon={faList}/>
-                    </a>
                 </div>
+                <a className="icon" onClick={menuButtonClick}>
+                    <FontAwesomeIcon icon={faList}/>
+                </a>
             </div>
-        </>
-    );
+        </div>
+    </>);
 }
 
 export default Nav;

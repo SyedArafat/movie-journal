@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {
     BACKDROP_SIZE,
-    BACKEND_ADVANCE_SEARCH,
-    BACKEND_WATCHED_CONTENT,
     BACKEND_WISHLIST_CONTENT,
     IMAGE_BASE_URL
 } from "../config/config";
@@ -25,7 +23,6 @@ function WishListPage() {
     const [totalPages, setTotalPages] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [contentType, setContentType] = useState('multi');
-
 
     useEffect(() => {
         setLoading(true);
@@ -55,18 +52,14 @@ function WishListPage() {
         console.log("asd");
         setSearchQuery(searchTerm);
         setContentType(searchType);
-        // if (searchTerm !== "") {
         let uri = `${BACKEND_WISHLIST_CONTENT}?query=${searchTerm}&content_type=${searchType}`;
         manageCall(uri);
-        // }
-        // setLoading(false);
     }
 
     const nextPageLoad = async () => {
         setLoading(true);
         let exception = false;
 
-        // if (searchQuery !== "") {
         let uri = `${BACKEND_WISHLIST_CONTENT}?query=${searchQuery}&content_type=${contentType}&page=${currentPage + 1}`;
         let request = await GetApi(uri).catch((error) => {
             setLoading(false);
@@ -77,7 +70,6 @@ function WishListPage() {
             setContent(allContents);
             setCurrentPage(request.data.page);
             setTotalPages(request.data.total_pages);
-            // setShowSearch(true);
         }
 
         setLoading(false);

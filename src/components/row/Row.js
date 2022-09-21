@@ -6,6 +6,8 @@ import {IMAGE_BASE_URL} from "../../config/config";
 import ConditionalMovieModalWrapper from "../Movies/Modal/ConditionalMovieModalWrapper";
 import {HomeApiGet} from "../../api/MediaContentClient";
 import {DeleteToken} from "../../auth/Authentication";
+import {useNavigate} from "react-router-dom";
+import {getMediaType} from "../../helpers";
 
 const base_url = `${IMAGE_BASE_URL}w500`;
 
@@ -19,6 +21,9 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
     const [activeItem, setActiveItem] = useState(false);
     const [reload, setReload] = useState(false);
     const [showScrolls, setShowScrolls] = useState(false);
+
+    const [isMobile] = useState(window.innerWidth <= 768);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -38,10 +43,10 @@ function Row({title, fetchUrl, isLargeRow, setLoading}) {
     const handleClick = (movie) => {
         setShowCardFeature(true);
         setActiveItem(movie);
-        if (movie.media_type === "tv") {
-            setIsTV(true);
-        } else {
-            setIsTV(false);
+        setIsTV(getMediaType(movie) === "tv");
+
+        if(isMobile) {
+            navigate(getMediaType(movie) === "tv" ? "/tv/" + movie.id : "/movie/" + movie.id);
         }
 
         handleOpen();
