@@ -29,6 +29,7 @@ function HomePage() {
             if(!exception) {
                 setMovies(request.data.results);
                 setShowSearch(true);
+
             }
         } else {
             setShowSearch(false);
@@ -64,7 +65,7 @@ function HomePage() {
                             </>
                     }
                 </div>
-                : <SearchResults movies={movies}/>
+                : <SearchResults dynamicClass={"rmdb-moviethumb"} movies={movies}/>
             }
             <Footer/>
 

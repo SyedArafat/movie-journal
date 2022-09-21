@@ -2,9 +2,9 @@ import {IMAGE_BASE_URL} from "../../config/config";
 import React, {useState} from "react";
 import BadgeWatch from "../Movies/BadgeWatch";
 import ConditionalMovieModalWrapper from "../Movies/Modal/ConditionalMovieModalWrapper";
-import {contentTitle} from "../../helpers";
+import {contentTitle, getMediaType} from "../../helpers";
 
-function SearchedMovies({movie}) {
+function SearchedMovies({movie, dynamicClass}) {
 
     const POSTER_SIZE = "w342";
 
@@ -17,7 +17,7 @@ function SearchedMovies({movie}) {
         if(movie.media_type === "person") return false;
         setShowCardFeature(true);
         setActiveItem(movie);
-        if (movie.first_air_date !== undefined) {
+        if (getMediaType(movie) === "tv") {
             setIsTV(true);
         }
 
@@ -25,8 +25,9 @@ function SearchedMovies({movie}) {
     }
 
     return (
-        <div className="rmdb-actor search-movie">
+        <div className={`rmdb-actor search-movie ${dynamicClass}`}>
             <img
+                className={"clickable"}
                 onClick={() => handleClick(movie)}
                 src={movie.poster_path || movie.profile_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}${movie?.poster_path || movie?.profile_path }` : `${process.env.PUBLIC_URL}/images/no_image.jpg`}
                 alt="Poster Thumb"
