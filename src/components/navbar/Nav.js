@@ -82,7 +82,7 @@ function Nav({dynamicClass, callback, setLoading, showSearchIcon = true}) {
                     <div className="left">
                         <Link onClick={emptySearch} to={"/"}><Logo/></Link>
                         <Link to="/watched/contents"><span>Watched List</span></Link>
-                        <Link to={"/watched/tv"}><span>Wish List</span></Link>
+                        <Link to={"/wishlist/contents"}><span>Wish List</span></Link>
                         {/*<span>History</span>*/}
                         <Link to="/advance-search"><span>Advance Search</span></Link>
                         {/*</Routes>*/}

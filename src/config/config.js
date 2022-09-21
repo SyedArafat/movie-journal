@@ -19,6 +19,7 @@ const BACKEND_HOME_API_AUTH = "/api/users/home";
 const BACKEND_HOME_API_NON_AUTH = "/api/public/home";
 const BACKEND_MEDIA_CONTENT_API = "/api/media/content";
 const BACKEND_WATCHED_CONTENT = "/api/watched/content";
+const BACKEND_WISHLIST_CONTENT = "/api/wished/content";
 const BACKEND_MEDIA_REMOVE_API = "/api/media/content/remove";
 const BACKEND_SEASON_DETAILS_API = "/api/media/tv/season"
 const BACKEND_LOGIN_URI = "/api/auth/login";
@@ -48,5 +49,6 @@ export {
     BACKEND_SEASON_DETAILS_API,
     THUMB_SIZE,
     BACKEND_ADVANCE_SEARCH,
-    BACKEND_WATCHED_CONTENT
+    BACKEND_WATCHED_CONTENT,
+    BACKEND_WISHLIST_CONTENT
 }

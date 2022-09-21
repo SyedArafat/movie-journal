@@ -1,19 +1,23 @@
-import Nav from "../components/navbar/Nav";
 import React, {useEffect, useState} from "react";
-import Loader from "../components/Loader";
-import SearchBar from "../components/AdvanceSearch/SearchBar";
-import Footer from "../compounds/FooterCompound";
-import SearchResults from "../components/Search/SearchResults";
+import {
+    BACKDROP_SIZE,
+    BACKEND_ADVANCE_SEARCH,
+    BACKEND_WATCHED_CONTENT,
+    BACKEND_WISHLIST_CONTENT,
+    IMAGE_BASE_URL
+} from "../config/config";
 import {GetApi} from "../api/MediaContentClient";
 import {DeleteToken} from "../auth/Authentication";
-import {BACKDROP_SIZE, BACKEND_WATCHED_CONTENT, IMAGE_BASE_URL} from "../config/config";
+import Nav from "../components/navbar/Nav";
 import FeatureContent from "../components/banner/FeatureContent";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSearch} from "@fortawesome/free-solid-svg-icons";
-import LoadMoreBtn from "../components/AdvanceSearch/LoadMoreBtn";
 import {contentTitle} from "../helpers";
+import Loader from "../components/Loader";
+import SearchBar from "../components/AdvanceSearch/SearchBar";
+import SearchResults from "../components/Search/SearchResults";
+import LoadMoreBtn from "../components/AdvanceSearch/LoadMoreBtn";
+import Footer from "../compounds/FooterCompound";
 
-function WatchedContentListPage() {
+function WishListPage() {
     const [loading, setLoading] = useState(false);
     const [content, setContent] = useState([]);
     const [featureMovie, setFeatureMovie] = useState(false);
@@ -21,13 +25,11 @@ function WatchedContentListPage() {
     const [totalPages, setTotalPages] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [contentType, setContentType] = useState('multi');
-    const [sortBy, setSortBy] = useState("");
-    const [sortType, setSortType] = useState("");
 
 
     useEffect(() => {
         setLoading(true);
-        let endpoint = `${BACKEND_WATCHED_CONTENT}`;
+        let endpoint = `${BACKEND_WISHLIST_CONTENT}`;
         manageCall(endpoint);
     }, []);
 
@@ -48,15 +50,15 @@ function WatchedContentListPage() {
     }
 
     const setSearchItems = (searchTerm, searchType) => {
+        setLoading(true);
         searchTerm = searchTerm.trim();
+        console.log("asd");
         setSearchQuery(searchTerm);
         setContentType(searchType);
-    }
-
-    const executeSearch = async () => {
-        setLoading(true);
-        let uri = `${BACKEND_WATCHED_CONTENT}?query=${searchQuery}&content_type=${contentType}&order_by=${sortBy}&order_type=${sortType}&page=1`;
+        // if (searchTerm !== "") {
+        let uri = `${BACKEND_WISHLIST_CONTENT}?query=${searchTerm}&content_type=${searchType}`;
         manageCall(uri);
+        // }
         // setLoading(false);
     }
 
@@ -65,7 +67,7 @@ function WatchedContentListPage() {
         let exception = false;
 
         // if (searchQuery !== "") {
-        let uri = `${BACKEND_WATCHED_CONTENT}?query=${searchQuery}&content_type=${contentType}&order_by=${sortBy}&order_type=${sortType}&page=${currentPage + 1}`;
+        let uri = `${BACKEND_WISHLIST_CONTENT}?query=${searchQuery}&content_type=${contentType}&page=${currentPage + 1}`;
         let request = await GetApi(uri).catch((error) => {
             setLoading(false);
             exception = true;
@@ -96,32 +98,7 @@ function WatchedContentListPage() {
             <Loader loading={loading}/>
             <SearchBar showSearchHeader={false} dynamicClass={"outside-search first-filter"} callback={setSearchItems}/>
 
-            <div id={"rmdbSearchbar"} className={`rmdb-searchbar outside-search second-filter`}>
-
-                <select defaultValue={""} onChange={(e) => {
-                    setSortBy(e.target.value)
-                }} className={"search-select filter-select"}>
-                    <option value="">Sort By</option>
-                    <option value="watched_time">Watched Date</option>
-                    <option value="created_at">Stored Time</option>
-                </select>
-
-                <select defaultValue={""} onChange={(e) => {
-                    setSortType(e.target.value)
-                }} className={"search-select filter-select second-filter-content"}>
-                    <option value="">Sort Type</option>
-                    <option value="desc">New To Old</option>
-                    <option value="asc">Old To New</option>
-                </select>
-
-                <button onClick={executeSearch} className="banner-button positive-button search-button"><FontAwesomeIcon
-                    icon={faSearch}/> {"\u00a0\u00a0"}
-                    Search
-                </button>
-
-            </div>
-
-            <SearchResults heading={"Recent Watched"} headerClass={"list-header"} dynamicClass={"rmdb-moviethumb"}
+            <SearchResults heading={"Wished List"} headerClass={"list-header"} dynamicClass={"rmdb-moviethumb"}
                            movies={content}/>
 
             {(currentPage < totalPages && !loading) ?
@@ -135,4 +112,4 @@ function WatchedContentListPage() {
     );
 }
 
-export default WatchedContentListPage;
+export default WishListPage;
