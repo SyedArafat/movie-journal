@@ -2,7 +2,7 @@ import {IMAGE_BASE_URL} from "../../config/config";
 import React, {useState} from "react";
 import BadgeWatch from "../Movies/BadgeWatch";
 import ConditionalMovieModalWrapper from "../Movies/Modal/ConditionalMovieModalWrapper";
-import {contentTitle} from "../../helpers";
+import {contentTitle, getMediaType} from "../../helpers";
 
 function SearchedMovies({movie, dynamicClass}) {
 
@@ -17,7 +17,7 @@ function SearchedMovies({movie, dynamicClass}) {
         if(movie.media_type === "person") return false;
         setShowCardFeature(true);
         setActiveItem(movie);
-        if (movie.first_air_date !== undefined) {
+        if (getMediaType(movie) === "tv") {
             setIsTV(true);
         }
 

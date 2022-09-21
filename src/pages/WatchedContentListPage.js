@@ -8,11 +8,10 @@ import {GetApi} from "../api/MediaContentClient";
 import {DeleteToken} from "../auth/Authentication";
 import {BACKDROP_SIZE, BACKEND_WATCHED_CONTENT, IMAGE_BASE_URL} from "../config/config";
 import FeatureContent from "../components/banner/FeatureContent";
-import searchBar from "../components/AdvanceSearch/SearchBar";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faMinusCircle, faSearch} from "@fortawesome/free-solid-svg-icons";
-import {faEye} from "@fortawesome/free-regular-svg-icons";
+import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import LoadMoreBtn from "../components/AdvanceSearch/LoadMoreBtn";
+import {contentTitle} from "../helpers";
 
 function WatchedContentListPage() {
     const [loading, setLoading] = useState(false);
@@ -55,7 +54,7 @@ function WatchedContentListPage() {
 
     const executeSearch = async () => {
         setLoading(true);
-        let uri = `${BACKEND_WATCHED_CONTENT}?query=${searchQuery}&content_type=${contentType}&page=1`;
+        let uri = `${BACKEND_WATCHED_CONTENT}?query=${searchQuery}&content_type=${contentType}&order_by=${sortBy}&order_type=${sortType}&page=1`;
         manageCall(uri);
         // setLoading(false);
     }
@@ -65,7 +64,7 @@ function WatchedContentListPage() {
         let exception = false;
 
         // if (searchQuery !== "") {
-        let uri = `${BACKEND_WATCHED_CONTENT}?query=${searchQuery}&content_type=${contentType}&page=${currentPage + 1}`;
+        let uri = `${BACKEND_WATCHED_CONTENT}?query=${searchQuery}&content_type=${contentType}&order_by=${sortBy}&order_type=${sortType}&page=${currentPage + 1}`;
         let request = await GetApi(uri).catch((error) => {
             setLoading(false);
             exception = true;
@@ -89,8 +88,7 @@ function WatchedContentListPage() {
                 <div>
                     <FeatureContent
                         image={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${featureMovie?.backdrop_path}`}
-                        title={featureMovie?.original_title}
-                        text={featureMovie?.overview}
+                        title={contentTitle(featureMovie)}
                     />
 
                 </div>}
