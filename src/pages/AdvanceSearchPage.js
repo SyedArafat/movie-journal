@@ -77,7 +77,7 @@ function AdvanceSearchPage() {
             <Loader loading={loading}/>
             <SearchBar callback={searchItems} />
             {showSearch && <SearchResults dynamicClass={"rmdb-moviethumb"} movies={movies}/>}
-            {(currentPage <= totalPages && !loading && showSearch) ?
+            {(currentPage < totalPages && !loading && showSearch) ?
                 <LoadMoreBtn text="Load More" onClick={nextPageLoad} />
                 : null
             }
