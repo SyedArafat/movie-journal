@@ -100,3 +100,9 @@
   padding: .5rem calc(var(--img-gap) * 2 + var(--handle-size));
   align-items: center;
 }
+
+@media screen and (max-width: 768px) {
+  .handle {
+    display: none;
+  }
+}
