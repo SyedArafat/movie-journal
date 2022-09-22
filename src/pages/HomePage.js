@@ -43,6 +43,7 @@ function HomePage() {
             {showSearch === false ?
                 <div>
                     <Banner setLoading={setLoading}/>
+
                     {
                         (!Authed()) ?
                             <>
