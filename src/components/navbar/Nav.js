@@ -156,10 +156,10 @@ function Nav({dynamicClass, callback, setLoading, showSearchIcon = true}) {
                     <Link to="/wishlist/contents"><span>Wished List</span></Link>
                     {login ? <>
                         <Link to="/advance-search"><span>Search</span></Link>
-                        <a href="#" style={{backgroundColor: "#e50914"}} onClick={handleLogout}
+                        <Link to={"/#"} style={{backgroundColor: "#e50914"}} onClick={handleLogout}
                            className="profile-item d-flex flex-middle">
                             <span>Logout</span>
-                        </a>
+                        </Link>
                     </> : <SigninButton>Sign In</SigninButton>}
 
 

@@ -409,6 +409,7 @@ a {
 }
 
 .topnav a.icon {
+  padding: 1.25em;
   background: black;
   display: block;
   position: absolute;
@@ -416,10 +417,10 @@ a {
   top: 0;
 }
 
-/*.topnav a:hover {*/
-/*  background-color: #ddd;*/
-/*  color: black;*/
-/*}*/
+#myLinks a:hover {
+  background-color: #ddd;
+  color: black;
+}
 
 .active {
   background-color: #1f1e1e;
