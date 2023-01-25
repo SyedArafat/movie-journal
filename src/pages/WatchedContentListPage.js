@@ -102,6 +102,7 @@ function WatchedContentListPage() {
                     setSortBy(e.target.value)
                 }} className={"search-select filter-select"}>
                     <option value="">Sort By</option>
+                    <option value="rating">Own Rating</option>
                     <option value="watched_time">Watched Date</option>
                     <option value="created_at">Stored Time</option>
                 </select>
@@ -109,9 +110,9 @@ function WatchedContentListPage() {
                 <select defaultValue={""} onChange={(e) => {
                     setSortType(e.target.value)
                 }} className={"search-select filter-select second-filter-content"}>
-                    <option value="">Sort Type</option>
-                    <option value="desc">New To Old</option>
-                    <option value="asc">Old To New</option>
+                    <option value="desc">Sort Type</option>
+                    <option value="desc">Descending</option>
+                    <option value="asc">Ascending</option>
                 </select>
 
                 <button onClick={executeSearch} className="banner-button positive-button search-button"><FontAwesomeIcon

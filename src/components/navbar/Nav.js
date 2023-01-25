@@ -50,6 +50,10 @@ function Nav({dynamicClass, callback, setLoading, showSearchIcon = true}) {
 
     }
 
+    let profileClickEvent = (url) => {
+        navigate(url, {replace: true});
+    }
+
     const menuButtonClick = () => {
         let x = document.getElementById("myLinks");
         if (x.style.display === "block") {
@@ -114,7 +118,9 @@ function Nav({dynamicClass, callback, setLoading, showSearchIcon = true}) {
 
                                 <div className="dropdown-content">
                                     <div className="profile-links">
-                                        <a className="profile-item d-flex flex-middle">
+                                        <a onClick={()=>{
+                                            profileClickEvent("profile");
+                                        }} className="profile-item d-flex flex-middle">
                                             <AccountBox/>
                                             <span>{GetName()}</span>
                                         </a>

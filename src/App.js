@@ -9,6 +9,7 @@ import {ForcedNoRequireAuth, RequireAuth} from "./auth/Authentication";
 import AdvanceSearchPage from "./pages/AdvanceSearchPage";
 import WatchedContentListPage from "./pages/WatchedContentListPage";
 import WishListPage from "./pages/WishListPage";
+import Profile from "./pages/Profile";
 
 function App() {
     return (
@@ -38,6 +39,12 @@ function App() {
                        element={
                            <RequireAuth>
                                <WishListPage />
+                           </RequireAuth>
+                       }/>/>
+                <Route exact path="/profile"
+                       element={
+                           <RequireAuth>
+                               <Profile />
                            </RequireAuth>
                        }/>/>
                 <Route exact path="/signin"
