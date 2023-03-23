@@ -50,9 +50,10 @@ function Nav({dynamicClass, callback, setLoading, showSearchIcon = true}) {
 
     }
 
-    let profileClickEvent = (url) => {
-        navigate(url, {replace: true});
-    }
+    // let profileClickEvent = (url) => {
+    //     console.log(process.env.REACT_APP_BASE_URL);
+    //     window.location.href = `${process.env.REACT_APP_BASE_URL}profile`;
+    // }
 
     const menuButtonClick = () => {
         let x = document.getElementById("myLinks");
@@ -118,12 +119,10 @@ function Nav({dynamicClass, callback, setLoading, showSearchIcon = true}) {
 
                                 <div className="dropdown-content">
                                     <div className="profile-links">
-                                        <a onClick={()=>{
-                                            profileClickEvent("profile");
-                                        }} className="profile-item d-flex flex-middle">
+                                        <Link to={'/profile'} className="profile-item d-flex flex-middle">
                                             <AccountBox/>
                                             <span>{GetName()}</span>
-                                        </a>
+                                        </Link>
                                         <div className={"line"}></div>
                                         <a onClick={handleLogout}
                                            className="profile-item d-flex flex-middle">
