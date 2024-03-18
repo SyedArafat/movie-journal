@@ -7,6 +7,12 @@ const api = axios.create({
 });
 
 api.defaults.headers.common["Accept"] = "application/json";
-api.defaults.headers.common["Authorization"] =`Bearer ${GetToken()}`;
+
+if (GetToken() !== null) {
+    api.defaults.headers.common["Authorization"] = `Bearer ${GetToken()}`;
+}
+// api.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+// api.defaults.headers.common["Access-Control-Allow-Headers"] = "Origin, X-Requested-With, Content-Type, Accept";
+// api.defaults.headers.common["Origin"] = "http://localhost:3000";
 
 export default api;

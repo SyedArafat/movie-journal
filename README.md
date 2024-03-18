@@ -6,6 +6,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+## Deploye in firebase Command
+note first make sure to change the .env REACT_APP_BACKEND_API_BASE_URL={live_url}
+and the config.js BACKEND_API_BASE_URL value
+
+### `firebase login` to login in the app
+
+### `npm run build` to generate build production script
+
+### `firebase deploy --only hosting` to deploy in server
+
+* if any problem arises regarding permission or project access please first logout from firebase (firebase logout) then
+do the procedures from start. It should work
+
 ### `npm start`
 
 Runs the app in the development mode.\
