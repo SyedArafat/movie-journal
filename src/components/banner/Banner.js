@@ -9,31 +9,27 @@ import {contentTitle, movieTitle, releaseYear} from "../../helpers";
 import {Link, useNavigate} from "react-router-dom";
 import {faEye} from "@fortawesome/free-regular-svg-icons";
 import MovieThumb from "../MoviePage/MovieThumb.component";
-import RatingAndDate from "../MoviePage/RatingAndDate";
-import Director from "../MoviePage/Director";
-import MovieRating from "../Movies/MovieRating";
-import {faMinusCircle, faPen, faPlayCircle, faPlus} from "@fortawesome/free-solid-svg-icons";
 
 
-function Banner({setLoading}) {
-    const [movie, setMovie] = useState(false);
+function Banner({setLoading, movie}) {
+    // const [movie, setMovie] = useState(false);
 
-    useEffect(() => {
-        let uri = "?component=banner";
-        if (!movie) {
-            setLoading(true);
-            HomeApiGet(uri).then((response) => {
-                setMovie(response.data);
-                setLoading(false);
-
-            }).catch((error) => {
-                if (error.response.status === 401) {
-                    DeleteToken();
-                    window.location.reload();
-                }
-            })
-        }
-    }, [movie]);
+    // useEffect(() => {
+    //     let uri = "?component=banner";
+    //     if (!movie) {
+    //         setLoading(true);
+    //         HomeApiGet(uri).then((response) => {
+    //             setMovie(response.data);
+    //             setLoading(false);
+    //
+    //         }).catch((error) => {
+    //             if (error.response.status === 401) {
+    //                 DeleteToken();
+    //                 window.location.reload();
+    //             }
+    //         })
+    //     }
+    // }, [movie]);
 
     let navigate = useNavigate();
 
