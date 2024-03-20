@@ -28,13 +28,13 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
     const [rating, setRating] = useState(personalChoice.rating);
     const [review, setReview] = useState(personalChoice.review);
     const [watchedSeasons, setWatchedSeasons] = useState(personalChoice.watched_seasons);
-    const [error, setError] = useState("");
+    const [, setError] = useState("");
     const [watched, setWatched] = useState(personalChoice?.watch_status);
     const [inWishlist, setInWishlist] = useState(personalChoice?.in_wishlist);
     const [date, setDate] = useState(personalChoice?.watched_time === null ? new Date() :
         new Date(personalChoice?.watched_time));
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
+    // const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [modalLoader, setModalLoader] = useState(false);
 

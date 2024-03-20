@@ -11,15 +11,12 @@ import SignFormButton from "../components/SignForm/SignFormButton";
 import SignFormText from "../components/SignForm/SignFormText";
 import SignFormCaptcha from "../components/SignForm/SignFormCaptcha";
 import FooterCompound from "../compounds/FooterCompound";
-// import React from "@types/react";
-// import React from "@types/react";
 
 function Profile() {
     const [profile, setProfile] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [name, setName] = useState("");
-    const [emailAddress, setEmailAddress] = useState("");
-    const [password, setPassword] = useState("");
+    const [, setName] = useState("");
+    const [, setEmailAddress] = useState("");
     useEffect(() => {
         GetApi("api/auth/user").then((response) => {
             setProfile(response?.data);

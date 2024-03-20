@@ -8,7 +8,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import {Checkbox} from "@mui/material";
 
 function RatingAndDate({movie, setDate, watched_date}) {
-    const [watchedDate, setWatchedDate] = useState(new Date());
+    const [, setWatchedDate] = useState(new Date());
     const [isForgot, setIsForgot] = useState(false);
     const handleCheckbox = (event) => {
         setIsForgot(event.target.checked);

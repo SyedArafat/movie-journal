@@ -17,9 +17,8 @@ import TextField from "@mui/material/TextField";
 
 function ReviewModal({movie, handleAlertOpen, storedRating, storedDate, setLoading, setIsUpdated, storedReview, setReview, setUserComment, handleClose}) {
     const [comment, setComment] = useState(storedReview);
-    const [success, setSuccess] = useState(false);
-    const [error, setError] = useState("");
-    // const [isForgot, setIsForgot] = useState(false);
+    const [, setSuccess] = useState(false);
+    const [, setError] = useState("");
 
     let reviewClickEvent = async () => {
         if (comment.length <= 30) {
