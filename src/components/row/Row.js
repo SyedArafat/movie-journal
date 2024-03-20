@@ -1,48 +1,26 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import "./Row.css";
 import AllCardsWrapper from "../Movies/AllCardsWrapper";
 import React from 'react';
 import {IMAGE_BASE_URL} from "../../config/config";
 import ConditionalMovieModalWrapper from "../Movies/Modal/ConditionalMovieModalWrapper";
-import {HomeApiGet} from "../../api/MediaContentClient";
-import {DeleteToken} from "../../auth/Authentication";
 import {useNavigate} from "react-router-dom";
 import {getMediaType} from "../../helpers";
 
 const base_url = `${IMAGE_BASE_URL}w500`;
 
 
-function Row({title, fetchUrl, isLargeRow, setLoading, movies}) {
+function Row({title, isLargeRow, movies}) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
-    // const [movies, setMovies] = useState(data);
     const [isTV, setIsTV] = useState(false);
     const [showCardFeature, setShowCardFeature] = useState(false);
     const [activeItem, setActiveItem] = useState(false);
     const [reload, setReload] = useState(false);
     const [showScrolls, setShowScrolls] = useState(false);
-    console.log(movies)
 
     const [isMobile] = useState(window.innerWidth <= 768);
     const navigate = useNavigate();
-
-
-    // useEffect(() => {
-    //     setLoading(true);
-    //     HomeApiGet(fetchUrl).then((response) => {
-    //         // if (fetchUrl === "") {
-    //         //     console.log(response)
-    //         // }
-    //         setMovies(response.data);
-    //         setLoading(false);
-    //
-    //     }).catch((error) => {
-    //         if (error.response.status === 401) {
-    //             DeleteToken();
-    //             window.location.reload();
-    //         }
-    //     })
-    // }, [fetchUrl, reload]);
 
     const handleClick = (movie) => {
         setShowCardFeature(true);

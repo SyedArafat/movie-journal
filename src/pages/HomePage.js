@@ -1,7 +1,6 @@
 import Nav from "../components/navbar/Nav";
 import Banner from "../components/banner/Banner";
 import Row from "../components/row/Row";
-import requests from "../config/requests";
 import Footer from "../compounds/FooterCompound";
 import {BACKEND_EXTERNAL_SEARCH, BACKEND_HOME_API_AUTH, BACKEND_HOME_API_NON_AUTH} from "../config/config";
 import React, {useEffect, useState} from "react";
@@ -54,6 +53,32 @@ function HomePage() {
         setLoading(false);
     }
 
+    const renderRows = () => {
+        if (!Authed()) {
+            return (
+                <>
+                    {homeData.trending && <Row setLoading={setLoading} isLargeRow={true} title="Trending Now"
+                                               movies={homeData.trending}/>}
+                    {homeData.netflixoriginals && <Row setLoading={setLoading} isLargeRow={true} title="NETFLIX ORIGINALS"
+                                                       movies={homeData.netflixoriginals}/>}
+                    {homeData.toprated && <Row setLoading={setLoading} isLargeRow={true} title="Top Rated"
+                                               movies={homeData.toprated}/>}
+                </>
+            );
+        } else {
+            return (
+                <>
+                    {homeData.recentwatchedmovie && <Row setLoading={setLoading} isLargeRow={true} title="Watched Movies"
+                                                         movies={homeData.recentwatchedmovie}/>}
+                    {homeData.recentwatchedtv && <Row setLoading={setLoading} isLargeRow={true} title="Watched TV"
+                                                      movies={homeData.recentwatchedtv}/>}
+                    {homeData.trending && <Row setLoading={setLoading} isLargeRow={true} title="Trending Now"
+                                               movies={homeData.trending}/>}
+                </>
+            );
+        }
+    };
+
     return (
         <div className="App">
             <Nav callback={searchItems} setLoading={setLoading}/>
@@ -61,26 +86,7 @@ function HomePage() {
             {showSearch === false && homeData ?
                 <div>
                     <Banner setLoading={setLoading} movie={homeData.banner}/>
-
-                    {
-                        (!Authed()) ?
-                            <>
-                                {homeData.trending && <Row setLoading={setLoading} isLargeRow={true} title="Trending Now"
-                                     fetchUrl={requests.fetchTrending} movies={homeData.trending}/>}
-                                {homeData.netflixoriginals && <Row setLoading={setLoading} isLargeRow={true} title="NETFLIX ORIGINALS"
-                                     fetchUrl={requests.fetchNetflixOriginals} movies={homeData.netflixoriginals}/>}
-                                {homeData.toprated && <Row setLoading={setLoading} isLargeRow={true} title="Top Rated"
-                                     fetchUrl={requests.fetchTopRated} movies={homeData.toprated}/>}
-                            </> :
-                            <>
-                                {homeData.recentwatchedmovie && <Row setLoading={setLoading} isLargeRow={true} title="Watched Movies"
-                                     fetchUrl={requests.recentWatchedMovies} movies={homeData.recentwatchedmovie}/>}
-                                {homeData.recentwatchedtv && <Row setLoading={setLoading} isLargeRow={true} title="Watched TV"
-                                     fetchUrl={requests.recentWatchedTV} movies={homeData.recentwatchedtv}/>}
-                                {homeData.trending && <Row setLoading={setLoading} isLargeRow={true} title="Trending Now"
-                                     fetchUrl={requests.fetchTrending} movies={homeData.trending}/>}
-                            </>
-                    }
+                    {renderRows()}
                 </div>
                 : <SearchResults dynamicClass={"rmdb-moviethumb"} movies={movies}/>
             }
