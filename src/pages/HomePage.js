@@ -85,7 +85,7 @@ function HomePage() {
             <Loader loading={loading}/>
             {showSearch === false && homeData ?
                 <div>
-                    <Banner setLoading={setLoading} movie={homeData.banner}/>
+                    <Banner movie={homeData.banner}/>
                     {renderRows()}
                 </div>
                 : <SearchResults dynamicClass={"rmdb-moviethumb"} movies={movies}/>

@@ -1,38 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import './Banner.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import MovieKeyData from "../Movies/MovieKeyData";
 import {BACKDROP_SIZE, IMAGE_BASE_URL, POSTER_SIZE} from "../../config/config";
-import {HomeApiGet} from "../../api/MediaContentClient";
-import {DeleteToken} from "../../auth/Authentication";
 import {contentTitle, movieTitle, releaseYear} from "../../helpers";
 import {Link, useNavigate} from "react-router-dom";
 import {faEye} from "@fortawesome/free-regular-svg-icons";
 import MovieThumb from "../MoviePage/MovieThumb.component";
 
 
-function Banner({setLoading, movie}) {
-    // const [movie, setMovie] = useState(false);
-
-    // useEffect(() => {
-    //     let uri = "?component=banner";
-    //     if (!movie) {
-    //         setLoading(true);
-    //         HomeApiGet(uri).then((response) => {
-    //             setMovie(response.data);
-    //             setLoading(false);
-    //
-    //         }).catch((error) => {
-    //             if (error.response.status === 401) {
-    //                 DeleteToken();
-    //                 window.location.reload();
-    //             }
-    //         })
-    //     }
-    // }, [movie]);
-
+function Banner({movie}) {
     let navigate = useNavigate();
-
 
     let detailsClickEvent = (parma) => {
         navigate(parma, {replace: true});
