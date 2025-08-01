@@ -23,12 +23,32 @@
     padding: 25px 20px 0px 20px;
     box-sizing: border-box;
     color: #fff;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    /*padding: 20px;*/
+    /*margin-top: 5%;*/
+}
+
+.search-button {
+    height: 3.2em;
+    border-radius: 10px;
+    padding: 0 20px;
+    background: rgb(67 138 170 / 67%);
+    color: #fff;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
 
 .rmdb-searchbar-content {
-    max-width: 1280px;
+    max-width: 85em;
     width: 100%;
-    height: 55px;
+    height: 48px;
     background:#353535;
     margin: 0 auto;
     border-radius: 40px;
@@ -44,9 +64,9 @@
 }
 
 .rmdb-searchbar-input {
-    font-size: 20px;
+    font-size: 16px;
     position: relative;
-    margin: 8px 0 0 60px;
+    margin: 3px 0 0 60px;
     border: 0;
     background: transparent;
     height: 40px;
@@ -59,28 +79,28 @@
 }
 
 /* <select> styles */
-.search-select {
+.search-select,
+.search-select-content {
     /* Reset */
     appearance: none;
+    font-size: 14px;
     border: 0;
     outline: 0;
-    font: inherit;
+    /*font: inherit;*/
     /* Personalize */
     width: 20em;
-    height: 3em;
-    padding: 0 4em 0 1em;
+    height: 3.2em;
     background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg) no-repeat right 0.8em center / 1.4em,
     linear-gradient(to left, rgba(255, 255, 255, 0.2) 3em, rgba(255, 255, 255, 0.2) 3em);
     color: white;
-    border-radius: 0.25em;
     box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
     cursor: pointer;
     position: absolute;
     right: 0%;
     padding: 10px;
-    margin-top: 3px;
+    /*margin-top: 3px;*/
     border-radius: 21px;
-    padding-left: 25px;
+    padding-left: 15px;
 }
 
 .filter-select {
@@ -89,7 +109,8 @@
 }
 
 .second-filter-content {
-    left: 14em;
+    max-width: 1280px;
+    margin: 0 auto;
 }
 
 .search-tag-line {
@@ -104,23 +125,42 @@
 }
 
 .outside-search {
-    height: 6em;
+    height: 5em;
 }
 
 .second-filter {
-    padding-top: 1.3em;
+    padding-top: .2em;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 1424px) {
+    .search-button {
+        width: 30%;
+        /*margin-top: 1.5em;*/
+        margin: 0;
+    }
+    .search-select {
+        /*margin-top: 1.5em;*/
+        width: 30%;
+        left: 0;
+        /*background: none;*/
+    }
+}
+
+@media screen and (max-width: 639px) {
     .rmdb-searchbar-input {
         margin: 8px 0 0 60px;
         font-size: 28px;
         color: #fff;
     }
+    .search-button {
+        margin-top: 1.5em;
+        width: 100%;
+    }
     .rmdb-searchbar {
         height: 16em;
     }
-    .search-select {
+    .search-select,
+    .search-select-content {
         margin-top: 1.5em;
         width: 100%;
         left: 0;
@@ -139,7 +179,7 @@
         /*display: none;*/
     }
     .first-filter {
-        height: 10em;
+        height: 13em;
     }
     .second-filter {
         padding-top: 0;

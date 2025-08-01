@@ -15,15 +15,6 @@ function ContentList() {
             <SearchBar showSearchHeader={false} dynamicClass={"outside-search first-filter"} callback={searchItems}/>
 
             <div id={"rmdbSearchbar"} className={`rmdb-searchbar outside-search second-filter`}>
-
-                {/*<h2>Watched Movies</h2>*/}
-                {/*<div className="rmdb-searchbar-content">*/}
-                {/*<input*/}
-                {/*    type="text"*/}
-                {/*    className="rmdb-searchbar-input"*/}
-                {/*    placeholder="Search"*/}
-                {/*    // onChange={inputChanged}*/}
-                {/*/>*/}
                 <select defaultValue={"0"} className={"search-select filter-select"}>
                     <option value="0">Sort By</option>
                     <option value="movie">Watched Date</option>

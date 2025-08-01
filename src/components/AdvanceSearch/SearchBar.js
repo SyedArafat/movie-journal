@@ -37,7 +37,7 @@ function SearchBar({callback, dynamicClass, showSearchHeader = true}) {
                         placeholder="Search"
                         onChange={inputChanged}
                     />
-                    <select defaultValue={"multi"} onChange={setType} className={"search-select"}>
+                    <select defaultValue={"multi"} onChange={setType} className={"search-select-content"}>
                         <option value="multi">Select Content Type</option>
                         {/*<option value="multi">All</option>*/}
                         <option value="movie">Movies</option>

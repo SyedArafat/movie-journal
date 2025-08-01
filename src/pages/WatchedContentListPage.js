@@ -122,7 +122,7 @@ function WatchedContentListPage() {
 
             </div>
 
-            <SearchResults heading={"Recent Watched"} headerClass={"list-header"} dynamicClass={"rmdb-moviethumb"}
+            <SearchResults heading={" "} headerClass={"list-header"} dynamicClass={"rmdb-moviethumb"}
                            movies={content}/>
 
             {(currentPage < totalPages && !loading) ?
