@@ -14,7 +14,7 @@ const FourColGrid = ({ header, loading, children, dynamicClass, headerClass }) =
 
   return (
     <div className={`rmdb-grid ${dynamicClass}`}>
-      {header && !loading ? <h1 className={`${headerClass}`}>{header}</h1> : null}
+      {header && !loading ? <h2 className={`${headerClass}`}>{header}</h2> : null}
       <div className="rmdb-grid-content">
          {renderElements()}
       </div>

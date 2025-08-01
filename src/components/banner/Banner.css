@@ -42,6 +42,11 @@
 }
 
 .banner-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
   width: 45rem;
   line-height: 1.8;
   padding-top: 1rem;

@@ -1,11 +1,10 @@
 .rmdb-grid h1 {
-  font-family: 'Abel', sans-serif;
   font-size:42px;
 }
 
 .rmdb-grid-content {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-gap: 25px;
   position: relative;
   background: #1a1d1a;
@@ -62,6 +61,19 @@
     margin-top: 2em;
     margin-right: 0;
     width: 100%;
+  }
+}
+
+/* Responsive Layout */
+@media screen and (max-width: 1024px) {
+  .rmdb-grid-content {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .rmdb-grid-content {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 

@@ -7,7 +7,7 @@ import {
 import MovieInfo from "../components/MoviePage/MovieInfo.component";
 import MovieInfoBar from "../components/MoviePage/MovieInfoBar.component";
 import Nav from "../components/navbar/Nav";
-import FourColGrid from "../components/MoviePage/element/FourColGrid/FourColGrid.component";
+import FourColGrid from "../components/MoviePage/element/DynamicColGrid/FourColGrid.component";
 import Actor from "../components/MoviePage/element/Actor/Actor.component";
 import Footer from "../compounds/FooterCompound";
 import Seasons from "../components/TV/Seasons";

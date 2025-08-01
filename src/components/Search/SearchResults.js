@@ -1,4 +1,4 @@
-import FourColGrid from "../MoviePage/element/FourColGrid/FourColGrid.component";
+import FourColGrid from "../MoviePage/element/DynamicColGrid/FourColGrid.component";
 import React from "react";
 import SearchedMovies from "./SearchedMovies";
 

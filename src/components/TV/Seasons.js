@@ -1,4 +1,4 @@
-import FourColGrid from "../MoviePage/element/FourColGrid/FourColGrid.component";
+import FourColGrid from "../MoviePage/element/DynamicColGrid/FourColGrid.component";
 import React, {useEffect, useState} from "react";
 import {Form} from "react-bootstrap";
 import "./EpisodeStyle.css";

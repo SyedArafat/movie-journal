@@ -1,10 +1,19 @@
 .rmdb-heroimage {
-    background-size: 100%, cover !important;
-    background-position: center, center !important;
+    background-size: 65% 100% !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-color: #000 !important; /* or match your design */
     width: 100%;
     height: 400px;
     position: relative;
     animation: animateHeroimage 1s;
+}
+
+@media screen and (max-width: 768px) {
+    .rmdb-heroimage {
+        background-size: contain !important;
+        height: 250px;
+    }
 }
 
 @keyframes animateHeroimage {
@@ -34,15 +43,13 @@
 }
 
 .rmdb-heroimage-text h1 {
-    font-family: 'Abel', sans-serif;
-    font-size:48px;
+    font-size:2.1rem;
     color: #fff;
 }
 
 .rmdb-heroimage-text p {
-    font-family: 'Abel', sans-serif;
-    font-size: 22px;
-    line-height: 26px;
+    font-size: 0.9rem;
+    line-height: 1.8;
     color: #fff;
 }
 

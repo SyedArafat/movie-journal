@@ -11,7 +11,8 @@ const POSTER_SIZE = 'w500';
 
 // const BACKEND_API_BASE_URL = "https://api.wwt.llc";
 // const BACKEND_API_BASE_URL = "https://proxy-server-vpef.onrender.com";
-const BACKEND_API_BASE_URL = "http://localhost:8888";
+const BACKEND_API_BASE_URL = "https://movie-journal.yeamin.xyz";
+// const BACKEND_API_BASE_URL = "http://localhost:8888";
 
 const BACKEND_REGISTER_URI = "/api/auth/register";
 const BACKEND_EXTERNAL_SEARCH = "/api/search/media/content";
