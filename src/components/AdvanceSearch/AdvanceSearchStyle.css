@@ -184,7 +184,8 @@
         /*display: none;*/
     }
     .first-filter {
-        height: 13em;
+        padding: 0 20px;
+        height: 12em;
     }
     .second-filter {
         padding-top: 0;
