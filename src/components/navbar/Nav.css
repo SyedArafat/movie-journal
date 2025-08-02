@@ -422,11 +422,6 @@ a {
   color: black;
 }
 
-.active {
-  background-color: #1f1e1e;
-  color: white;
-}
-
 @media (max-width: 800px){
   .nav-for-desktop-view{
     display: none;
@@ -436,6 +431,51 @@ a {
 @media (min-width: 801px) {
   .nav-for-mobile-view {
     display: none;
+  }
+}
+
+.nav-item {
+  position: relative;
+  padding: 8px 16px;
+  /*border-radius: 20px;*/
+  transition: all 0.3s ease-in-out;
+  color: #bbb;
+  font-weight: 500;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+/* Active: pill shape + glowing underline */
+.nav-item.active {
+  background-color: rgba(13, 217, 255, 0.08);
+  color: #0dd9ff;
+  box-shadow: 0 0 6px rgba(13, 217, 255, 0.15);
+}
+
+/* Animated underline */
+.nav-item.active::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  bottom: 6px;
+  height: 2px;
+  width: calc(100% - 24px);
+  background-color: #0dd9ff;
+  border-radius: 2px;
+  animation: underlineIn 0.3s ease forwards;
+}
+
+@keyframes underlineIn {
+  from {
+    width: 0%;
+    opacity: 0;
+  }
+  to {
+    width: calc(100% - 24px);
+    opacity: 1;
   }
 }
 

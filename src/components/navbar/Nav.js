@@ -10,6 +10,7 @@ import {BACKEND_LOGOUT_URI} from "../../config/config";
 import {AccountBox, Logout} from "@mui/icons-material";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faList} from "@fortawesome/free-solid-svg-icons";
+import { NavLink } from "react-router-dom";
 
 
 function Nav({dynamicClass, callback, setLoading, showSearchIcon = true}) {
@@ -85,9 +86,17 @@ function Nav({dynamicClass, callback, setLoading, showSearchIcon = true}) {
                 {/*<div className=>*/}
                 <div className="left">
                     <Link onClick={emptySearch} to={"/"}><Logo/></Link>
-                    <Link to="/watched/content"><span>Watched List</span></Link>
-                    <Link to={"/wishlist"}><span>Wish List</span></Link>
-                    <Link to="/advance-search"><span>Advance Search</span></Link>
+                    <NavLink to="/watched/content" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
+                        <span>Watched List</span>
+                    </NavLink>
+
+                    <NavLink to="/wishlist" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
+                        <span>Wish List</span>
+                    </NavLink>
+
+                    <NavLink to="/advance-search" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
+                        <span>Advance Search</span>
+                    </NavLink>
                 </div>
 
                 <div className="right">
@@ -157,8 +166,8 @@ function Nav({dynamicClass, callback, setLoading, showSearchIcon = true}) {
             <div className="topnav">
                 <Link onClick={emptySearch} className={'active'} to={"/"}><Logo/></Link>
                 <div id="myLinks">
-                    <Link to="/watched/contents"><span>Watched List</span></Link>
-                    <Link to="/wishlist/contents"><span>Wished List</span></Link>
+                    <Link to="/watched/content"><span>Watched List</span></Link>
+                    <Link to="/wishlist"><span>Wished List</span></Link>
                     {login ? <>
                         <Link to="/advance-search"><span>Search</span></Link>
                         <Link to={"/#"} style={{backgroundColor: "#e50914"}} onClick={handleLogout}
