@@ -6,7 +6,7 @@ function SearchResults({movies, dynamicClass, headerClass = "search-header", hea
     return (
         <div>
             <div style={{margin: "0px 20px"}} className="rmdb-movie-grid">
-                <FourColGrid header={movies.length !== 0 ? heading : "No Record Found"} dynamicClass={"background-grid"}
+                <FourColGrid header={movies.length !== 0 ? heading : " "} dynamicClass={"background-grid"}
                              headerClass={headerClass}>
                     {movies.map((movie, i) => (
                         <SearchedMovies dynamicClass={dynamicClass} key={i} movie={movie}/>

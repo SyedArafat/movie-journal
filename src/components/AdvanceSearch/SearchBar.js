@@ -44,12 +44,12 @@ function SearchBar({callback, dynamicClass, showSearchHeader = true}) {
                         <option value="tv">Tv Shows</option>
                     </select>
                 </div>
-                { showSearchHeader &&
-                <div>
-                    <h2 id={"searchHeader"} className={"search-tag-line"}>
-                        Search What You Desire
-                    </h2>
-                </div>}
+                {showSearchHeader &&
+                    <div className="tagline-wrapper">
+                        <h2 id={"searchHeader"} className={"search-tag-line"}>
+                            Search What You Desire
+                        </h2>
+                    </div>}
             </div>
         </>
     );

@@ -29,13 +29,13 @@ function App() {
                                <AdvanceSearchPage />
                            </RequireAuth>
                        }/>/>
-                <Route exact path="/watched/contents"
+                <Route exact path="/watched/content"
                        element={
                            <RequireAuth>
                                <WatchedContentListPage />
                            </RequireAuth>
                        }/>/>
-                <Route exact path="/wishlist/contents"
+                <Route exact path="/wishlist"
                        element={
                            <RequireAuth>
                                <WishListPage />

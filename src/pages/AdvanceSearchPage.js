@@ -76,6 +76,12 @@ function AdvanceSearchPage() {
             <Nav showSearchIcon={false} dynamicClass={"single-page-nav"} setLoading={setLoading}/>
             <Loader loading={loading}/>
             <SearchBar callback={searchItems} />
+            {showSearch && movies.length === 0 &&
+            <div className="empty-state">
+                <h2>Empty List</h2>
+                <p>You haven't added any movies in wishlist.</p>
+                <img src={"images/svg/undraw_video-files_cxl9.svg"} alt="No Data" className="empty-image"/>
+            </div> }
             {showSearch && <SearchResults dynamicClass={"rmdb-moviethumb"} movies={movies}/>}
             {(currentPage < totalPages && !loading && showSearch) ?
                 <LoadMoreBtn text="Load More" onClick={nextPageLoad} />

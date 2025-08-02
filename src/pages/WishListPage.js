@@ -49,7 +49,6 @@ function WishListPage() {
     const setSearchItems = (searchTerm, searchType) => {
         setLoading(true);
         searchTerm = searchTerm.trim();
-        console.log("asd");
         setSearchQuery(searchTerm);
         setContentType(searchType);
         let uri = `${BACKEND_WISHLIST_CONTENT}?query=${searchTerm}&content_type=${searchType}`;
@@ -90,8 +89,17 @@ function WishListPage() {
             <Loader loading={loading}/>
             <SearchBar showSearchHeader={false} dynamicClass={"outside-search first-filter"} callback={setSearchItems}/>
 
-            <SearchResults heading={"Wished List"} headerClass={"list-header"} dynamicClass={"rmdb-moviethumb"}
-                           movies={content}/>
+            {
+                !loading && content.length === 0 ?
+                    <div className="empty-state">
+                        <h2>Empty List</h2>
+                        <p>You haven't added any movies in wishlist.</p>
+                        <img src={"images/svg/undraw_video-files_cxl9.svg"} alt="No Data" className="empty-image"/>
+                    </div> :
+                    <SearchResults heading={"Wished List"} headerClass={"list-header"} dynamicClass={"rmdb-moviethumb"}
+                                   movies={content}/>
+            }
+
 
             {(currentPage < totalPages && !loading) ?
                 <LoadMoreBtn text="Load More" onClick={nextPageLoad}/>

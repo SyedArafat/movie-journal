@@ -121,9 +121,17 @@ function WatchedContentListPage() {
                 </button>
 
             </div>
+            {
+            !loading && content.length === 0 ?
+                <div className="empty-state">
+                    <h2>Empty List</h2>
+                    <p>We couldn’t find any results for your request.</p>
+                    <img src={"/images/svg/undraw_file-search_cbur.svg"} alt="No Data" className="empty-image"/>
+                </div> :
 
-            <SearchResults heading={" "} headerClass={"list-header"} dynamicClass={"rmdb-moviethumb"}
+                <SearchResults heading={" "} headerClass={"list-header"} dynamicClass={"rmdb-moviethumb"}
                            movies={content}/>
+            }
 
             {(currentPage < totalPages && !loading) ?
                 <LoadMoreBtn text="Load More" onClick={nextPageLoad}/>

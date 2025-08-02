@@ -115,13 +115,18 @@
 
 .search-tag-line {
     text-align: center;
-    font-size: xx-large;
     font-family: cursive;
     padding-top: 1.1em;
     /*height: 10em;*/
     padding-bottom: 3em;
     /*margin-bottom: 4em;*/
     /*background: #1c1c1c;*/
+}
+
+.tagline-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .outside-search {
