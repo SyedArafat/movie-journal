@@ -166,17 +166,31 @@ function Nav({dynamicClass, callback, setLoading, showSearchIcon = true}) {
             <div className="topnav">
                 <Link onClick={emptySearch} className={'active'} to={"/"}><Logo/></Link>
                 <div id="myLinks">
-                    <Link to="/watched/content"><span>Watched List</span></Link>
-                    <Link to="/wishlist"><span>Wished List</span></Link>
-                    {login ? <>
-                        <Link to="/advance-search"><span>Search</span></Link>
-                        <Link to={"/#"} style={{backgroundColor: "#e50914"}} onClick={handleLogout}
-                           className="profile-item d-flex flex-middle">
-                            <span>Logout</span>
-                        </Link>
-                    </> : <SigninButton>Sign In</SigninButton>}
-
-
+                    <NavLink to="/watched/content"
+                             className={({isActive}) => isActive ? "mobile-link active" : "mobile-link"}>
+                        <span>Watched List</span>
+                    </NavLink>
+                    <NavLink to="/wishlist" className={({isActive}) => isActive ? "mobile-link active" : "mobile-link"}>
+                        <span>Wished List</span>
+                    </NavLink>
+                    {login ? (
+                        <>
+                            <NavLink to="/advance-search"
+                                     className={({isActive}) => isActive ? "mobile-link active" : "mobile-link"}>
+                                <span>Search</span>
+                            </NavLink>
+                            <NavLink
+                                to="/#"
+                                onClick={handleLogout}
+                                className="mobile-link logout-link"
+                                style={{backgroundColor: "#e50914"}}
+                            >
+                                <span>Logout</span>
+                            </NavLink>
+                        </>
+                    ) : (
+                        <SigninButton>Sign In</SigninButton>
+                    )}
                 </div>
                 <a className="icon" onClick={menuButtonClick}>
                     <FontAwesomeIcon icon={faList}/>

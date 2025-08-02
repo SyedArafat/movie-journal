@@ -479,6 +479,48 @@ a {
   }
 }
 
+.mobile-link {
+  padding: 14px 24px;
+  color: #bbb;
+  text-align: center;
+  font-weight: 500;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  border-radius: 2px;
+  margin: 6px 16px;
+  background-color: #1c1c1c;
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-link:hover {
+  background-color: #2a2a2a;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.mobile-link.active {
+  background-color: #ffffff;
+  color: #111;
+  font-weight: 600;
+  box-shadow: 0 6px 14px rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+@keyframes slideIn {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: calc(100% - 48px);
+    opacity: 1;
+  }
+}
+
+
 
 
 
