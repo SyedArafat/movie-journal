@@ -1,6 +1,6 @@
 import Nav from "../components/navbar/Nav";
-import React, { useEffect, useState } from "react";
-import { GetApi } from "../api/MediaContentClient";
+import React, {useEffect, useState} from "react";
+import {GetApi, PostApi} from "../api/MediaContentClient";
 import Loader from "../components/Loader";
 import HeaderWrapper from "../components/Header/HeaderWrapper";
 import NavBar from "../components/Header/NavBar";
@@ -33,8 +33,8 @@ function Profile() {
                 setProfile(data);
                 setName(data.name || "");
                 setEmailAddress(data.email || "");
-                setPhone(data.phone || "");
-                setDob(data.dob || "");
+                setPhone(data.mobile || "");
+                setDob(data.date_of_birth || "");
                 setLoading(false);
             })
             .catch((error) => {
@@ -53,7 +53,36 @@ function Profile() {
 
     const handleUpdate = (e) => {
         e.preventDefault();
-        alert("Profile updated!");
+        setLoading(true);
+        let data = {
+            "name": name,
+            "phone": phone,
+            "dob": dob,
+        };
+        PostApi("api/user/update", data)
+            .then((response) => {
+                setName(name);
+                setEmailAddress(emailAddress);
+                setPhone(phone);
+                setDob(dob);
+                setLoading(false);
+            })
+            .catch((error) => {
+                setLoading(false);
+                if (error.response.status === 401) {
+                    DeleteToken();
+                    navigate("/signin");
+                } else {
+                    setAlert({
+                        type: "error",
+                        message: "Oops! Something went wrong. Please try again."
+                    });
+                }
+            });
+        setAlert({
+            type: "success",
+            message: "Profile update successful",
+        })
         setEditMode(false);
     };
 
@@ -66,8 +95,8 @@ function Profile() {
                     onClose={() => setAlert(null)}
                 />
             )}
-            <Nav showSearchIcon={false} dynamicClass={"single-page-nav"} />
-            <Loader loading={loading} />
+            <Nav showSearchIcon={false} dynamicClass={"single-page-nav"}/>
+            <Loader loading={loading}/>
 
             {profile && (
                 <div>
@@ -77,7 +106,7 @@ function Profile() {
                             backgroundImage: `url("${process.env.PUBLIC_URL}/images/misc/home-bg.jpg")`,
                         }}
                     >
-                        <NavBar className="navbar-profile" />
+                        <NavBar className="navbar-profile"/>
 
                         <SignFormWrapper style={{
                             maxWidth: "500px",
@@ -87,11 +116,11 @@ function Profile() {
                             borderRadius: "1rem",
                             boxShadow: "0 0 15px rgba(0,0,0,0.1)",
                         }}>
-                            <SignFormTitle style={{ textAlign: "center", marginBottom: "1em" }}>
+                            <SignFormTitle style={{textAlign: "center", marginBottom: "1em"}}>
                                 My Profile
                             </SignFormTitle>
 
-                            <div style={{ textAlign: "center", marginBottom: "1em" }}>
+                            <div style={{textAlign: "center", marginBottom: "1em"}}>
                                 <img
                                     src={profile.avatar || `${process.env.PUBLIC_URL}/images/user-profile-svgrepo-com.svg`}
                                     alt="User Avatar"
@@ -105,27 +134,47 @@ function Profile() {
                                 />
                             </div>
 
-                            <form onSubmit={handleUpdate} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <form onSubmit={handleUpdate}
+                                  style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
                                 <div>
                                     <label style={labelStyle}>Name:</label>
                                     <input
                                         type="text"
                                         value={name}
-                                        onChange={({ target }) => setName(target.value)}
+                                        onChange={({target}) => setName(target.value)}
                                         disabled={!editMode}
                                         style={inputStyle(editMode)}
                                     />
                                 </div>
 
                                 <div>
-                                    <label style={labelStyle}>Email:</label>
-                                    <input
-                                        type="email"
-                                        value={emailAddress}
-                                        onChange={({ target }) => setEmailAddress(target.value)}
-                                        disabled={!editMode}
-                                        style={inputStyle(editMode)}
-                                    />
+                                    <div style={{position: 'relative'}}>
+                                        <label style={labelStyle}>Email:</label>
+                                        <input
+                                            type="email"
+                                            value={emailAddress}
+                                            disabled={true}
+                                            style={{
+                                                ...inputStyle(false),
+                                                paddingRight: '2.5rem', // space for the icon
+                                            }}
+                                        />
+                                        <span
+                                            title="Email cannot be edited"
+                                            style={{
+                                                position: 'absolute',
+                                                right: '10px',
+                                                top: '68%',
+                                                transform: 'translateY(-50%)',
+                                                fontSize: '1.1rem',
+                                                color: '#999',
+                                                pointerEvents: 'none',
+                                            }}
+                                        >
+                                            🔒
+                                        </span>
+                                    </div>
+
                                 </div>
 
                                 <div>
@@ -133,7 +182,7 @@ function Profile() {
                                     <input
                                         type="tel"
                                         value={phone}
-                                        onChange={({ target }) => setPhone(target.value)}
+                                        onChange={({target}) => setPhone(target.value)}
                                         disabled={!editMode}
                                         style={inputStyle(editMode)}
                                     />
@@ -144,7 +193,7 @@ function Profile() {
                                     <input
                                         type="date"
                                         value={dob}
-                                        onChange={({ target }) => setDob(target.value)}
+                                        onChange={({target}) => setDob(target.value)}
                                         disabled={!editMode}
                                         style={inputStyle(editMode)}
                                     />
@@ -157,14 +206,13 @@ function Profile() {
                                         gap: '1rem',
                                         marginTop: '1rem'
                                     }}>
-                                        <SignFormButton type="submit" style={{ flex: 1 }}>
-                                            Save Changes
+                                        <SignFormButton type="submit" style={{flex: 1}}>
+                                            Update
                                         </SignFormButton>
                                         <SignFormButton
                                             type="button"
                                             onClick={() => {
                                                 setEditMode(false);
-                                                // Reset to original profile values
                                                 setName(profile.name || "");
                                                 setEmailAddress(profile.email || "");
                                                 setPhone(profile.phone || "");
@@ -187,7 +235,7 @@ function Profile() {
 
                             </form>
 
-                            <SignFormText style={{ marginTop: "1em", fontSize: "0.9em", color: "#444" }}>
+                            <SignFormText style={{marginTop: "1em", fontSize: "0.9em", color: "#444"}}>
                                 You can update your personal info above.
                             </SignFormText>
 
@@ -198,7 +246,7 @@ function Profile() {
 
                     </HeaderWrapper>
 
-                    <FooterCompound />
+                    <FooterCompound/>
                 </div>
             )}
         </div>
@@ -206,8 +254,6 @@ function Profile() {
 }
 
 export default Profile;
-
-// ========== Style Helpers ==========
 
 const labelStyle = {
     fontWeight: "bold",

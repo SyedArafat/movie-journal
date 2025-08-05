@@ -22,7 +22,16 @@ const GetApi = async (uri) => {
         })
 };
 
+const PostApi = async (uri, data) => {
+    return await api.post(`${uri}`, data, {
+        "headers": {
+            "Authorization": `Bearer ${GetToken()}`
+        }
+    })
+};
+
 export {
     HomeApiGet,
-    GetApi
+    GetApi,
+    PostApi,
 }
