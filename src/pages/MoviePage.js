@@ -35,6 +35,7 @@ function MoviePage() {
     const [comment, setComment] = useState("");
     const [alertOpen, setAlertOpen] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
+    const [alert, setAlert] = useState(null);
 
 
     const [movies, setMovies] = useState(false);
@@ -49,6 +50,19 @@ function MoviePage() {
             let request = await GetApi(uri).catch((error) => {
                 setLoading(false);
                 exception = true;
+                if (error.response?.status === 401) {
+                    DeleteToken();
+                    setAlert({
+                        type: "error",
+                        message: "User is not authorized"
+                    });
+                    navigte("/signin");
+                } else {
+                    setAlert({
+                        type: "error",
+                        message: "Oops! Something went wrong. Please try again."
+                    });
+                }
             });
             if (!exception) {
                 setMovies(request.data.results);
@@ -69,6 +83,11 @@ function MoviePage() {
                 if (error.response.status === 401) {
                     DeleteToken();
                     navigte("/signin");
+                } else {
+                    setAlert({
+                        type: "error",
+                        message: "Oops! Something went wrong. Please try again."
+                    });
                 }
             });
             setMovie(response.data.content_details);
@@ -110,6 +129,13 @@ function MoviePage() {
 
     return (
         <div className="rmdb-movie">
+            {alert && (
+                <Alert
+                    type={alert.type}
+                    message={alert.message}
+                    onClose={() => setAlert(null)}
+                />
+            )}
             <Snackbar open={alertOpen}
                       anchorOrigin={{
                           vertical: 'top',

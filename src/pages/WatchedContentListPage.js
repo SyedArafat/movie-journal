@@ -12,6 +12,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import LoadMoreBtn from "../components/AdvanceSearch/LoadMoreBtn";
 import {contentTitle} from "../helpers";
+import Alert from "../components/Alert/Alert";
+import {useNavigate} from "react-router-dom";
 
 function WatchedContentListPage() {
     const [loading, setLoading] = useState(false);
@@ -23,6 +25,8 @@ function WatchedContentListPage() {
     const [contentType, setContentType] = useState('multi');
     const [sortBy, setSortBy] = useState("");
     const [sortType, setSortType] = useState("");
+    const navigate = useNavigate();
+    const [alert, setAlert] = useState(null);
 
 
     useEffect(() => {
@@ -40,9 +44,15 @@ function WatchedContentListPage() {
             setLoading(false);
 
         }).catch((error) => {
+            setLoading(false);
             if (error.response.status === 401) {
                 DeleteToken();
-                window.location.reload();
+                navigate("/signin");
+            } else {
+                setAlert({
+                    type: "error",
+                    message: "Oops! Something went wrong. Please try again."
+                });
             }
         })
     }
@@ -69,6 +79,15 @@ function WatchedContentListPage() {
         let request = await GetApi(uri).catch((error) => {
             setLoading(false);
             exception = true;
+            if (error.response.status === 401) {
+                DeleteToken();
+                navigate("/signin");
+            } else {
+                setAlert({
+                    type: "error",
+                    message: "Oops! Something went wrong. Please try again."
+                });
+            }
         });
         if (!exception) {
             let allContents = ([...content, ...request.data.results]);
@@ -84,6 +103,13 @@ function WatchedContentListPage() {
 
     return (
         <div>
+            {alert && (
+                <Alert
+                    type={alert.type}
+                    message={alert.message}
+                    onClose={() => setAlert(null)}
+                />
+            )}
             <Nav showSearchIcon={false} dynamicClass={"single-page-nav"}/>
             {featureMovie &&
                 <div>

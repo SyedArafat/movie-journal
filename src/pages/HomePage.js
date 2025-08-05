@@ -6,14 +6,18 @@ import {BACKEND_EXTERNAL_SEARCH, BACKEND_HOME_API_AUTH, BACKEND_HOME_API_NON_AUT
 import React, {useEffect, useState} from "react";
 import SearchResults from "../components/Search/SearchResults";
 import Loader from "../components/Loader";
-import {Authed} from "../auth/Authentication";
+import {Authed, DeleteToken} from "../auth/Authentication";
 import {GetApi} from "../api/MediaContentClient";
+import Alert from "../components/Alert/Alert";
+import {useNavigate} from "react-router-dom";
 
 function HomePage() {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
     const [movies, setMovies] = useState([]);
     const [homeData, setHomeData] = useState([]);
+    const [alert, setAlert] = useState(null);
 
     useEffect(() => {
         const url = Authed() ? BACKEND_HOME_API_AUTH : BACKEND_HOME_API_NON_AUTH;
@@ -23,7 +27,19 @@ function HomePage() {
                 const response = await GetApi(url);
                 setHomeData(response.data);
             } catch (error) {
-                console.error("Error fetching data:", error);
+                if (error.response?.status === 401) {
+                    DeleteToken();
+                    setAlert({
+                        type: "error",
+                        message: "User is not authorized"
+                    });
+                    navigate("/signin");
+                } else {
+                    setAlert({
+                        type: "error",
+                        message: "Oops! Something went wrong. Please try again."
+                    });
+                }
             } finally {
                 setLoading(false);
             }
@@ -81,12 +97,30 @@ function HomePage() {
 
     return (
         <div className="App">
+            {alert && (
+                <Alert
+                    type={alert.type}
+                    message={alert.message}
+                    onClose={() => setAlert(null)}
+                />
+            )}
             <Nav callback={searchItems} setLoading={setLoading}/>
             <Loader loading={loading}/>
             {showSearch === false && homeData ?
                 <div>
-                    <Banner movie={homeData.banner}/>
-                    {renderRows()}
+                    {
+                        !loading && homeData.length === 0 ?
+                            <div className="empty-state">
+                                <h2>Opps !!!</h2>
+                                <p>Something went wrong. Please try again.</p>
+                                <img src={"images/svg/404_error.svg"} alt="No Data" className="empty-image empty-image-home"/>
+                            </div> :
+                            <>
+                                <Banner movie={homeData.banner}/>
+                                {renderRows()}
+                            </>
+                    }
+
                 </div>
                 : <SearchResults dynamicClass={"rmdb-moviethumb"} movies={movies}/>
             }

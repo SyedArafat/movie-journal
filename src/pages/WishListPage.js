@@ -14,6 +14,8 @@ import SearchBar from "../components/AdvanceSearch/SearchBar";
 import SearchResults from "../components/Search/SearchResults";
 import LoadMoreBtn from "../components/AdvanceSearch/LoadMoreBtn";
 import Footer from "../compounds/FooterCompound";
+import Alert from "../components/Alert/Alert";
+import {useNavigate} from "react-router-dom";
 
 function WishListPage() {
     const [loading, setLoading] = useState(false);
@@ -23,6 +25,8 @@ function WishListPage() {
     const [totalPages, setTotalPages] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [contentType, setContentType] = useState('multi');
+    const navigate = useNavigate();
+    const [alert, setAlert] = useState(null);
 
     useEffect(() => {
         setLoading(true);
@@ -39,9 +43,15 @@ function WishListPage() {
             setLoading(false);
 
         }).catch((error) => {
+            setLoading(false);
             if (error.response.status === 401) {
                 DeleteToken();
-                window.location.reload();
+                navigate("/signin");
+            } else {
+                setAlert({
+                    type: "error",
+                    message: "Oops! Something went wrong. Please try again."
+                });
             }
         })
     }
@@ -63,6 +73,15 @@ function WishListPage() {
         let request = await GetApi(uri).catch((error) => {
             setLoading(false);
             exception = true;
+            if (error.response.status === 401) {
+                DeleteToken();
+                navigate("/signin");
+            } else {
+                setAlert({
+                    type: "error",
+                    message: "Oops! Something went wrong. Please try again."
+                });
+            }
         });
         if (!exception) {
             let allContents = ([...content, ...request.data.results]);
@@ -77,6 +96,13 @@ function WishListPage() {
 
     return (
         <div>
+            {alert && (
+                <Alert
+                    type={alert.type}
+                    message={alert.message}
+                    onClose={() => setAlert(null)}
+                />
+            )}
             <Nav showSearchIcon={false} dynamicClass={"single-page-nav"}/>
             {featureMovie &&
                 <div>

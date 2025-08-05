@@ -7,6 +7,9 @@ import Footer from "../compounds/FooterCompound";
 import SearchBar from "../components/AdvanceSearch/SearchBar";
 import SearchResults from "../components/Search/SearchResults";
 import LoadMoreBtn from "../components/AdvanceSearch/LoadMoreBtn";
+import {DeleteToken} from "../auth/Authentication";
+import {useNavigate} from "react-router-dom";
+import Alert from "../components/Alert/Alert";
 
 function AdvanceSearchPage() {
     const [loading, setLoading] = useState(false);
@@ -16,6 +19,8 @@ function AdvanceSearchPage() {
     const [totalPages, setTotalPages] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [contentType, setContentType] = useState('multi');
+    const navigate = useNavigate();
+    const [alert, setAlert] = useState(null);
 
     const searchItems = async (searchTerm, searchType) => {
         searchTerm = searchTerm.trim();
@@ -30,6 +35,15 @@ function AdvanceSearchPage() {
             let request = await GetApi(uri).catch((error) => {
                 setLoading(false);
                 exception = true;
+                if (error.response.status === 401) {
+                    DeleteToken();
+                    navigate("/signin");
+                } else {
+                    setAlert({
+                        type: "error",
+                        message: "Oops! Something went wrong. Please try again."
+                    });
+                }
             });
             if (!exception) {
                 setMovies(request.data.results);
@@ -56,6 +70,15 @@ function AdvanceSearchPage() {
             let request = await GetApi(uri).catch((error) => {
                 setLoading(false);
                 exception = true;
+                if (error.response.status === 401) {
+                    DeleteToken();
+                    navigate("/signin");
+                } else {
+                    setAlert({
+                        type: "error",
+                        message: "Oops! Something went wrong. Please try again."
+                    });
+                }
             });
             if (!exception) {
                 let allMovies = ([...movies, ...request.data.results]);
@@ -73,6 +96,13 @@ function AdvanceSearchPage() {
 
     return (
         <>
+            {alert && (
+                <Alert
+                    type={alert.type}
+                    message={alert.message}
+                    onClose={() => setAlert(null)}
+                />
+            )}
             <Nav showSearchIcon={false} dynamicClass={"single-page-nav"} setLoading={setLoading}/>
             <Loader loading={loading}/>
             <SearchBar callback={searchItems} />
