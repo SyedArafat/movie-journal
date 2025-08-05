@@ -13,6 +13,7 @@ import FooterCompound from "../compounds/FooterCompound";
 import Alert from "../components/Alert/Alert";
 import {useNavigate} from "react-router-dom";
 import {DeleteToken} from "../auth/Authentication";
+import {SetName} from "../auth/Authentication";
 
 function Profile() {
     const [profile, setProfile] = useState(null);
@@ -62,6 +63,7 @@ function Profile() {
         PostApi("api/user/update", data)
             .then((response) => {
                 setName(name);
+                SetName(name);
                 setEmailAddress(emailAddress);
                 setPhone(phone);
                 setDob(dob);

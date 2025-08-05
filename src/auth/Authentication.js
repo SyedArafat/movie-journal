@@ -12,6 +12,10 @@ const GetName = () => {
     return localStorage.getItem(NAME_TAG);
 }
 
+const SetName = (name) => {
+    localStorage.setItem(NAME_TAG, name);
+}
+
 const DeleteToken = () => {
     SetToken(null, null, null);
 }
@@ -36,5 +40,6 @@ export {
     GetToken,
     SetToken,
     DeleteToken,
-    GetName
+    GetName,
+    SetName,
 }
