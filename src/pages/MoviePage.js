@@ -35,6 +35,7 @@ function MoviePage() {
     const [comment, setComment] = useState("");
     const [alertOpen, setAlertOpen] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
+    const [toastMessageType, setToastMessageType] = useState("success");
     const [alert, setAlert] = useState(null);
 
 
@@ -109,8 +110,8 @@ function MoviePage() {
         directors = credits.crew.filter((member) => member.job === "Director");
     }
 
-    if (credits.crew !== undefined) {
-        actors = credits.cast.slice(0, 4);
+    if (credits.cast !== undefined) {
+        actors = credits.cast.slice(0, 5);
     }
 
     const handleAlertClose = (event, reason) => {
@@ -121,8 +122,9 @@ function MoviePage() {
         setAlertOpen(false);
     };
 
-    const handleAlertOpen = (message) => {
+    const handleAlertOpen = (message, type = 'success') => {
         setToastMessage(message);
+        setToastMessageType(type);
         setAlertOpen(true);
 
     }
@@ -142,7 +144,7 @@ function MoviePage() {
                           horizontal: 'right'
                       }}
                       autoHideDuration={5000} onClose={handleAlertClose}>
-                <Alert onClose={handleAlertClose} severity="success" sx={{ width: '100%' }}>
+                <Alert onClose={handleAlertClose} severity={toastMessageType} sx={{ width: '100%' }}>
                     { toastMessage }
                 </Alert>
             </Snackbar>
@@ -163,7 +165,7 @@ function MoviePage() {
                                     handleAlertOpen={handleAlertOpen}
                                 />
 
-                                <MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue}/>
+                                <MovieInfoBar movie={movie} time={movie.runtime} budget={movie.budget} revenue={movie.revenue}/>
 
 
                             </div>

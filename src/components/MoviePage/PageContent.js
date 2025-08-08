@@ -28,13 +28,11 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
     const [rating, setRating] = useState(personalChoice.rating);
     const [review, setReview] = useState(personalChoice.review);
     const [watchedSeasons, setWatchedSeasons] = useState(personalChoice.watched_seasons);
-    const [, setError] = useState("");
     const [watched, setWatched] = useState(personalChoice?.watch_status);
     const [inWishlist, setInWishlist] = useState(personalChoice?.in_wishlist);
     const [date, setDate] = useState(personalChoice?.watched_time === null ? new Date() :
         new Date(personalChoice?.watched_time));
     const [open, setOpen] = React.useState(false);
-    // const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [modalLoader, setModalLoader] = useState(false);
 
@@ -78,7 +76,6 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                 // console.log(GetToken());
             });
         }
-        handleAlertOpen("Feedback Recorded Successfully");
         setLoading(false);
     }
     let removeClickEvent = async () => {
@@ -93,7 +90,6 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
             setInWishlist(false);
             setWatched(false);
             setRating(0);
-            setError("");
             setDate(null);
             if (type === "tv") {
                 await api.get(`${BACKEND_IS_WATCHED_URI}/${type}/${movie.id}`, {
@@ -114,11 +110,11 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
 
         } catch (err) {
             if (!err?.response) {
-                setError("No Server Response");
+                handleAlertOpen("No Server Response", "error");
             } else if (err.response?.status === 400) {
-                setError("Invalid Input Data");
+                handleAlertOpen("Invalid Input Data", "error");
             } else {
-                setError("Something Went Wrong! Try again Later");
+                handleAlertOpen("Something Went Wrong! Try again Later", "error");
             }
         }
         setLoading(false);
@@ -130,13 +126,15 @@ function PageContent({movie, directors, type, personalChoice, setLoading, setSea
                     "Authorization": `Bearer ${GetToken()}`
                 }
             });
+            handleAlertOpen("Feedback Recorded Successfully");
+
         } catch (err) {
             if (!err?.response) {
-                setError("No Server Response");
+                handleAlertOpen("Something Went Wrong! Try again Later", 'error');
             } else if (err.response?.status === 400) {
-                setError("Invalid Input Data");
+                handleAlertOpen("Invalid Input Data", 'error');
             } else {
-                setError("Something Went Wrong! Try again Later");
+                handleAlertOpen("Something Went Wrong! Try again Later", 'error');
             }
         }
     }

@@ -75,7 +75,7 @@ function HomePage() {
                 <>
                     {homeData.trending && <Row setLoading={setLoading} isLargeRow={true} title="Trending Now"
                                                movies={homeData.trending}/>}
-                    {homeData.netflixoriginals && <Row setLoading={setLoading} isLargeRow={true} title="NETFLIX ORIGINALS"
+                    {homeData.netflixoriginals && <Row setLoading={setLoading} isLargeRow={true} title="Netflix Originals"
                                                        movies={homeData.netflixoriginals}/>}
                     {homeData.toprated && <Row setLoading={setLoading} isLargeRow={true} title="Top Rated"
                                                movies={homeData.toprated}/>}
@@ -90,6 +90,9 @@ function HomePage() {
                                                       movies={homeData.recentwatchedtv}/>}
                     {homeData.trending && <Row setLoading={setLoading} isLargeRow={true} title="Trending Now"
                                                movies={homeData.trending}/>}
+
+                    {homeData?.recentwatchedtv?.length === 0 && <Row setLoading={setLoading} isLargeRow={true} title="Top Rated"
+                                                                     movies={homeData.toprated}/>}
                 </>
             );
         }
